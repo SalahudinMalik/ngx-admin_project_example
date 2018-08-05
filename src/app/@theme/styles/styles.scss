@@ -1,0 +1,66 @@
+// themes - our custom or/and out of the box themes
+@import 'themes';
+
+// framework component themes (styles tied to theme variables)
+@import '~@nebular/theme/styles/globals';
+@import '~@nebular/auth/styles/all';
+
+// global app font size
+@import './font-size';
+
+// loading progress bar theme
+@import './pace.theme';
+
+@import './bootstrap-rtl';
+
+// install the framework and custom global styles
+@include nb-install() {
+
+  // framework global styles
+  @include nb-theme-global();
+  @include nb-auth-global();
+
+  // loading progress bar
+  @include ngx-pace-theme();
+
+  // fixed in rc.9 and can be removed after upgrade
+  .custom-control .custom-control-indicator {
+    border-radius: 50%; // TODO: quickfix for https://github.com/akveo/nebular/issues/275
+  }
+  @include bootstrap-rtl();
+};
+
+.tree-menu .tree-menu-option:hover {
+
+  background-color: transparent;
+  margin-bottom: 40px;
+}
+
+.fa {
+  padding: 5px;
+  padding-bottom: 40px;
+}
+
+.node-content-wrapper:hover, .node-content-wrapper-active, 
+.node-content-wrapper.node-content-wrapper-active:hover, 
+.node-content-wrapper-active.node-content-wrapper-focused,
+.node-content-wrapper-focused {
+ background-color: rgba(233, 221, 212, 0.29);
+padding-bottom: 26px;
+}
+
+.node-content-wrapper:hover .tree-menu {
+display: inline !important;
+}
+@import "~ngx-toastr/toastr.css";
+
+// bootstrap style toast
+// or import a bootstrap 4 alert styled design (SASS ONLY)
+// should be after your bootstrap imports, it uses bs4 variables, mixins, functions
+@import "~ngx-toastr/toastr-bs4-alert";
+
+// if you'd like to use it without importing all of bootstrap it requires
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~ngx-toastr/toastr-bs4-alert";

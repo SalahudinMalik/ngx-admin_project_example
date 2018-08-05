@@ -1,0 +1,42 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <fieldset>
+        <div class="modal-header">
+            <span>{{ modalHeader }}</span>
+            <button class="close" aria-label="Close" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <label> Id </label>
+            <div class=" form-group">
+                <!-- <input type="number" placeholder="CNIC Number" class="form-control"/> -->
+                <input type="text" placeholder="Id" class="form-control" [formControl]="form.controls['id']" readonly value="{{modalContent.id}}"
+                />
+
+            </div>
+            <div class="form-group">
+                <label>{{modalFor}}</label>
+
+                <!-- <select class="sizeDrop pointer" id="v" (change)=selectChangeHandler($event.target.value,i) [(ngModel)]="sizeSelection[i]">
+                    <option *ngFor="let size of items?.rates let s=index" [ngValue]="size">
+                        {{size?.size|uppercase}} (Rs.{{size?.price}}) </option>
+                </select> -->
+                <select (change)=selectRoleChange($event.target.value) [(ngModel)]="modalContent.role.id" class="form-control" [formControl]="form.controls['userOrRole']">
+                    <option *ngFor="let r of roles" value="{{r.id}}" [attr.selected]="r?.id === modalContent?.role.id ? '' : null">{{r.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Routes</label>
+                <select (change)=selectRouteChange($event.target.value) [(ngModel)]="modalContent.route.id" class="form-control" [formControl]="form.controls['route']">
+                    <option *ngFor="let r of routes" value="{{r.id}}">{{r.end_point}}</option>
+                </select>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" [disabled]="!roleUpdated&&!routeUpdated" class="btn btn-md btn-primary">Update</button>
+        </div>
+
+    </fieldset>
+</form>

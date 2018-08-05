@@ -1,0 +1,50 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <fieldset>
+    <div class="row " id="outer">
+      <div id="inner" class="col-lg-6">
+        <nb-card>
+          <nb-card-header>Add Base Station</nb-card-header>
+          <nb-card-body>
+            <!-- <select class="form-control" id="exampleFormControlSelect1" [formControl]="form.controls['expensivecategory']" [ngClass]="{'form-control-danger': form.controls['expensivecategory'].hasError('required') && form.controls['expensivecategory'].touched}">
+              <option [selected]=true>-</option>
+              <option *ngFor="let cate of category">{{cate.name}}</option>
+          </select>
+         <div style="color:red" class="form-control-feedback" *ngIf="form.controls['expensivecategory'].hasError('required') && form.controls['expensivecategory'].touched">Expense Category is required.</div> 
+      </div> -->
+            <div class=" form-group ">
+              <!-- <input type="number" placeholder="name Number" class="form-control"/> -->
+              <input type="text" placeholder="Name" class="form-control" [formControl]="form.controls['name']" [ngClass]="{'form-control-danger': form.controls['name'].hasError('required')  && form.controls['name'].touched}"
+              />
+              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched">Name is required</div>
+            </div>
+
+            <div class="form-group">
+              <input type="text" placeholder="lat" class="form-control" [formControl]="form.controls['lat']" [ngClass]="{'form-control-danger': form.controls['lat'].hasError('required') && form.controls['lat'].touched}">
+              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['lat'].hasError('required') && form.controls['lat'].touched">lat is required.</div>
+
+            </div>
+            <div class=" form-group">
+              <input type="text" placeholder="lng" class="form-control" [formControl]="form.controls['lng']" [ngClass]="{'form-control-danger': form.controls['lng'].hasError('required') && form.controls['lng'].touched}">
+              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['lng'].hasError('required') && form.controls['lng'].touched">lng is required.</div>
+            </div>
+
+            <div class=" form-group">
+              <input type="text" placeholder="Band Width" class="form-control" [formControl]="form.controls['bandwidth']" [ngClass]="{'form-control-danger': form.controls['bandwidth'].hasError('required') && form.controls['bandwidth'].touched}">
+              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['bandwidth'].hasError('required') && form.controls['bandwidth'].touched">bandwidth is required.</div>
+            </div>
+
+            <div class=" form-group">
+              <input type="text" placeholder="Max User" class="form-control" [formControl]="form.controls['maxusers']" [ngClass]="{'form-control-danger': form.controls['maxusers'].hasError('required') && form.controls['maxusers'].touched}">
+              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['maxusers'].hasError('required') && form.controls['maxusers'].touched">Maxusers is required.</div>
+            </div>
+
+            <div class="float-right">
+              <button type="submit" [disabled]="!form.valid && btnSave" class="btn btn-primary btn-md">Save</button>
+            </div>
+
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </fieldset>
+</form>

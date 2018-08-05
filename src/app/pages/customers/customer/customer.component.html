@@ -1,0 +1,88 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <fieldset>
+        <div class="row " id="outer">
+            <div id="inner" [ngClass]="{'col-lg-6':showTimeline,'col-lg-12':!showTimeline}">
+                <nb-card>
+                    <nb-card-header>Customer Information
+                        <span (click)="enableEdit()" *ngIf="editable" class="updateIcon">
+                            <i class="nb-edit"></i>
+
+                        </span>
+                        <span (click)="disableEdit()" *ngIf="!editable&&showTimeline" class="updateIcon">
+
+                            <i class="nb-close"></i>
+                        </span>
+                    </nb-card-header>
+                    <nb-card-body>
+                        <!-- <select class="form-control" id="exampleFormControlSelect1" [formControl]="form.controls['expensivecategory']" [ngClass]="{'form-control-danger': form.controls['expensivecategory'].hasError('required') && form.controls['expensivecategory'].touched}">
+              <option [selected]=true>-</option>
+              <option *ngFor="let cate of category">{{cate.name}}</option>
+          </select>
+         <div style="color:red" class="form-control-feedback" *ngIf="form.controls['expensivecategory'].hasError('required') && form.controls['expensivecategory'].touched">Expense Category is required.</div> 
+      </div> -->
+                        <div class="row">
+                            <div class="col-sm-6  form-group">
+                                <label>First Name</label>
+                                <input type="text" id="normal-field" placeholder="First Name" class="form-control" [formControl]="form.controls['firstName']"
+                                    [ngClass]="{'form-control-danger': form.controls['firstName'].hasError('required') && form.controls['firstName'].touched}"
+                                />
+                                <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['firstName'].hasError('required') && form.controls['firstName'].touched">First Name is required.</div>
+                            </div>
+                            <div class="col-sm-6  form-group">
+                                <label>Last Name</label>
+                                <input type="text" placeholder="Last Name" class="form-control" [formControl]="form.controls['lastName']" [ngClass]="{'form-control-danger': form.controls['lastName'].hasError('required') && form.controls['lastName'].touched}"
+                                />
+                                <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched">Last Name is required.</div>
+                            </div>
+                        </div>
+                        <div class=" form-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="Email" class="form-control" [formControl]="form.controls['email']" [ngClass]="{'form-control-danger': form.controls['email'].hasError('required') && form.controls['email'].touched}">
+                            <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched">email is required.</div>
+                            <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['email'].hasError('email') && form.controls['email'].touched">email is invalid</div>
+                        </div>
+                        <div *ngIf="!showTimeline" class=" form-group">
+                            <label>Password</label>
+                            <input type="password" placeholder="Password" class="form-control" [formControl]="form.controls['password']" [ngClass]="{'form-control-danger': form.controls['password'].hasError('required') && form.controls['password'].touched}">
+                            <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['password'].hasError('required')  && form.controls['password'].touched">password is required.</div>
+                        </div>
+                        <div class=" form-group">
+                            <label>CNIC</label>
+                            <!-- <input type="number" placeholder="CNIC Number" class="form-control"/> -->
+                            <input type="text" placeholder="CNIC Number" class="form-control" [formControl]="form.controls['cnicNo']" [ngClass]="{'form-control-danger': form.controls['cnicNo'].hasError('required')  && form.controls['cnicNo'].touched}"
+                            />
+                            <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['cnicNo'].hasError('required') && form.controls['cnicNo'].touched">CNIC is required</div>
+                            <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['cnicNo'].hasError('maxlength')">CNIC must be 13 digits with 2 dashes.</div>
+                            <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['cnicNo'].hasError('minlength')">CNIC must be 13 digits with 2 dashes.</div>
+                            <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['cnicNo'].hasError('pattern')">CNIC must be in format i.e 12345-1234567-1.</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mobile Number</label>
+                            <input type="text" placeholder="Mobile Number" class="form-control" [formControl]="form.controls['mobileNo']" [ngClass]="{'form-control-danger': form.controls['mobileNo'].hasError('required') && form.controls['mobileNo'].touched}">
+                            <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['mobileNo'].hasError('required') && form.controls['mobileNo'].touched">Mobile Number is required.</div>
+                            <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['mobileNo'].hasError('maxlength') ">Mobile Number must be 11 digits.</div>
+                            <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['mobileNo'].hasError('minlength') ">Mobile Number must be 11 digits.</div>
+                            <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['mobileNo'].hasError('pattern') ">Mobile Number must be in number formate.</div>
+                        </div>
+
+                        <div class="float-right">
+                            <button *ngIf="!showTimeline" type="submit" [disabled]="!form.valid" class="btn btn-primary btn-md">
+                                Save</button>
+                            <button *ngIf="showTimeline" type="submit" [disabled]="!disableUpdate" class="btn btn-primary btn-md">
+                                Update
+                            </button>
+
+                        </div>
+
+
+
+
+                    </nb-card-body>
+                </nb-card>
+
+            </div>
+
+        </div>
+    </fieldset>
+</form>

@@ -1,0 +1,63 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <fieldset>
+    <div class="row " id="outer">
+      <div id="inner" class="col-lg-6">
+        <nb-card>
+          <nb-card-header>Notifications</nb-card-header>
+          <nb-card-body>
+
+
+            <div class=" form-group ">
+              <label>Expiring In</label>
+              <input type="number" placeholder="in Days" class="form-control" [formControl]="form.controls['expiringIn']" [ngClass]="{'form-control-danger': form.controls['expiringIn'].hasError('required')  && form.controls['expiringIn'].touched}"
+              />
+
+
+            </div>
+            <div class=" form-group ">
+
+              <div class="row">
+
+                <div class="col-md-3">
+                  <p>Every Day:</p>
+                </div>
+                <div class="col-md-9">
+                  <select class="form-control" [formControl]="form.controls['everyDay']" [ngClass]="{'form-control-danger': form.controls['everyDay'].hasError('required') && form.controls['everyDay'].touched}">
+                    <!-- <option *ngFor="let d of days" [ngValue]="d">{{d.day}}</option> -->
+                    <option value="every" selected>Every Day</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+
+                <div class="col-md-3">
+                  <p>Time:</p>
+                </div>
+
+
+
+                <div class="col-md-6 hrs">
+                  <input type="time" max="24" placeholder="HH" class="form-control" [formControl]="form.controls['time']" [ngClass]="{'form-control-danger': form.controls['time'].hasError('required')  && form.controls['time'].touched}"
+                  />
+                </div>
+                <div class="col-md-3 min">
+                  <!-- <input type="number" placeholder="MM" max="59" class="form-control" [formControl]="form.controls['min']" [ngClass]="{'form-control-danger': form.controls['min'].hasError('required')  && form.controls['min'].touched}"
+                  /> -->
+                </div>
+
+
+              </div>
+            </div>
+
+
+            <div class="float-right">
+              <button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-md">Save</button>
+            </div>
+
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </fieldset>
+</form>

@@ -1,0 +1,40 @@
+<form class="form" dealerGroup="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <fieldset>
+    <div class="row " id="outer">
+      <div id="inner" class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+        <nb-card>
+          <nb-card-header>Dealer Packages</nb-card-header>
+          <nb-card-body>
+            <div class=" form-group" ng-if="dealerObj">
+              <div class="row vertical-center">
+                <div class="col-lg-2">
+                  <label>Dealers</label>
+                </div>
+                <div class="col-lg-6">
+                  <select [(ngModel)]="selectedDealer" (change)="dealerChange()" class="form-control" [formControl]="form.controls['dealerGroup']"
+                    [ngClass]="{'form-control-danger': form.controls['dealerGroup'].hasError('required') && form.controls['dealerGroup'].touched}">
+                    <option *ngFor="let d of dealerObj" [ngValue]="d">{{d.first_name}}</option>
+                  </select>
+                  <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['dealerGroup'].hasError('required') && form.controls['dealerGroup'].touched">Dealer is required.</div>
+                </div>
+                <div class="col-lg-3">
+                  <button type="button" class="btn btn-primary btn-md" [disabled]="selectedDealer == undefined" (click)="addPackage()">Add Package</button>
+                </div>
+              </div>
+            </div>
+            <ng2-smart-table [settings]="settings" [source]="source" *ngIf="dataArray" (userRowSelect)="onUserRowSelect($event)" (deleteConfirm)="onDeleteConfirm($event)">
+            </ng2-smart-table>
+
+            <!-- <div class="float-right">
+              <button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-md">Save</button>
+            </div> -->
+
+          </nb-card-body>
+        </nb-card>
+
+      </div>
+
+
+    </div>
+  </fieldset>
+</form>

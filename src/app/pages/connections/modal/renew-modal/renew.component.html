@@ -1,0 +1,48 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <fieldset>
+        <div class="modal-header">
+            <span>{{ modalHeader }} Connection</span>
+            <button class="close" aria-label="Close" (click)="closeModal()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <div class=" form-group">
+                <label>Customer Name</label>
+                <input value="{{modalContent.customers.first_name}} {{modalContent.customers.last_name}}" type="text" class="form-control"
+                    [formControl]="form.controls['name']" readonly/>
+
+            </div>
+            <div class=" form-group">
+                <label>Package Name</label>
+                <input value="{{modalContent.packages.package_name}}" type="text" class="form-control" [formControl]="form.controls['packageName']"
+                    readonly />
+            </div>
+
+            <div class=" form-group">
+                <label>Wireless</label>
+                <input type="text" value="{{modalContent.is_wireless}}" class="form-control" [formControl]="form.controls['isWireless']"
+                    readonly />
+
+            </div>
+            <!-- <div class=" form-group">
+                <label>Registration Data</label>
+                <input type="date" value="{{modalContent.registration_date}}" class="form-control" [formControl]="form.controls['registrationDate']"
+                    readonly />
+
+            </div> -->
+
+            <div class=" form-group">
+                <label>Price</label>
+                <input [(ngModel)]="price" type="number" class="form-control" [ngClass]="{'form-control-danger': form.controls['price'].hasError('required') && form.controls['price'].touched}"
+                    [formControl]="form.controls['price']" />
+
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" [disabled]="!price" class="btn btn-md btn-primary">Renew</button>
+        </div>
+    </fieldset>
+</form>

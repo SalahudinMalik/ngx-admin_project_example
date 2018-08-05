@@ -1,0 +1,24 @@
+<div class="" class="col-md-6 offset-md-3">
+  <select *ngIf="permission.Admin" [(ngModel)]="dealerId" (ngModelChange)="findOne(dealerId)" class="form-control ">
+    <option class="col-md-6 offset-md-3" [ngValue]="d.id" *ngFor="let d of dealers">{{d.first_name}}</option>
+    <!-- <option class="col-md-6 offset-md-3" [ngValue]="dealers.id" *ngIf="dealers">{{dealers.first_name}}</option> -->
+
+  </select>
+
+  <select *ngIf="permission.Dealer" [(ngModel)]="dealerId" class="form-control ">
+    <option class="col-md-6 offset-md-3" [ngValue]="dealers.id" selected>{{dealers.first_name}}</option>
+    <!-- <option class="col-md-6 offset-md-3" [ngValue]="dealers.id" *ngIf="dealers">{{dealers.first_name}}</option> -->
+
+  </select>
+
+</div>
+<br/>
+<br/>
+<ngui-map zoom="13.87" center="28.4219741, 70.3141817">
+  <polygon [editable]="true" [paths]="paths"></polygon>
+  <drawing-manager [drawingMode]="'polygon'" [drawingControl]="true" [drawingControlOptions]="{position: 2,drawingModes: ['polygon']}"
+    [polygonOptions]="polygonoptions"></drawing-manager>
+</ngui-map>
+<br/>
+<button [disabled]="!coordLength" class="btn btn-hero-danger btn-demo col-md-3" (click)="reset()">Reset Selection</button>
+<button [disabled]="!coordLength" style="float: right;" class="btn btn-hero-primary btn-demo col-md-3 offset-md-3" (click)="createMapOfDealer()">Save</button>

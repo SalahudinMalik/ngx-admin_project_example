@@ -1,0 +1,69 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <fieldset>
+    <div class="row " id="outer">
+      <div id="inner" class="col-lg-6">
+        <nb-card>
+          <nb-card-header>Add Complaints</nb-card-header>
+          <nb-card-body>
+            <!-- <select class="form-control" id="exampleFormControlSelect1" [formControl]="form.controls['expensivecategory']" [ngClass]="{'form-control-danger': form.controls['expensivecategory'].hasError('required') && form.controls['expensivecategory'].touched}">
+              <option [selected]=true>-</option>
+              <option *ngFor="let cate of category">{{cate.name}}</option>
+          </select>
+         <div style="color:red" class="form-control-feedback" *ngIf="form.controls['expensivecategory'].hasError('required') && form.controls['expensivecategory'].touched">Expense Category is required.</div> 
+      </div> -->
+            <div class=" form-group ">
+              <label>Username</label>
+              <input type="text" placeholder="Connection Name" class="form-control" [formControl]="form.controls['connection']" [ngClass]="{'form-control-danger': form.controls['connection'].hasError('required')  && form.controls['connection'].touched}"
+              />
+
+              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['connection'].hasError('required') && form.controls['connection'].touched">Connection name is required</div>
+            </div>
+            <div class=" form-group ">
+              <!-- <input type="number" placeholder="CNIC Number" class="form-control"/> -->
+              <label>Subject</label>
+              <input type="text" placeholder="Subject" class="form-control" [formControl]="form.controls['subject']" [ngClass]="{'form-control-danger': form.controls['subject'].hasError('required')  && form.controls['subject'].touched}"
+              />
+
+              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['subject'].hasError('required') && form.controls['subject'].touched">Subject is required</div>
+            </div>
+            <!-- <label class="ml-1">Bandwidth</label>
+          <div class="row">
+           
+            <div class="col-sm-6  input-group">
+              <span class="btn btn-primary input-group-text">
+               <span class="nb-arrow-dropdown"></span>
+              </span>
+              <input type="number" id="normal-field" placeholder="Down" class="form-control " [formControl]="form.controls['bDown']" [ngClass]="{'form-control-danger': form.controls['bDown'].hasError('required') && form.controls['bDown'].touched}"/>
+               <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['bDown'].hasError('required') && form.controls['bDown'].touched">Bandwidth Down is required.</div>
+            </div>
+            <div class="col-sm-6  input-group">
+                <span  class="btn btn-primary input-group-text">
+                    <span class="nb-arrow-dropup"></span>
+                   </span>
+              <input type="number" placeholder="Up" class="form-control"[formControl]="form.controls['bUp']" [ngClass]="{'form-control-danger': form.controls['bUp'].hasError('required') && form.controls['bUp'].touched}"/>
+               <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['bUp'].hasError('required') && form.controls['bUp'].touched">Bandwidth Up is required.</div>
+            </div>
+          </div> -->
+
+            <div class="form-group">
+              <label>Description</label>
+              <textarea rows="4" placeholder="Complaint description" class="form-control" [formControl]="form.controls['complaint']" [ngClass]="{'form-control-danger': form.controls['complaint'].hasError('required') && form.controls['complaint'].touched}"></textarea>
+
+              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['complaint'].hasError('required') && form.controls['complaint'].touched">Complaint is required.</div>
+
+            </div>
+            <!-- <div class=" form-group">
+              <input type="text" placeholder="Assign to" class="form-control" [formControl]="form.controls['assignto']" [ngClass]="{'form-control-danger': form.controls['assignto'].hasError('required') && form.controls['assignto'].touched}">
+              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['assignto'].hasError('required') && form.controls['assignto'].touched">Assignto is required.</div>
+            </div> -->
+
+            <div class="float-right">
+              <button type="submit" [disabled]="!form.valid && btnSave" class="btn btn-primary btn-md">Save</button>
+            </div>
+
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </fieldset>
+</form>

@@ -1,0 +1,85 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="modal-header">
+        <span>Add New Item</span>
+        <button class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <select [formControl]="form.controls['clientType']" (change)="typeChange()" class="form-control">
+            <option value="0">Dealer</option>
+            <option value="1">Customer</option>
+            <option value="2">Supplier</option>
+            <option hidden disabled [selected]="true">Please Select Client Type</option>
+        </select>
+        <div class="row">
+            <div class="col-lg-12 mt-1 mb-3 ">
+                <label>Select Warehouse</label>
+                <select [(ngModel)]="selectedWareHouse" class="form-control" [formControl]="form.controls['wareHouse']" [ngClass]="{'form-control-danger': form.controls['wareHouse'].hasError('required') && form.controls['wareHouse'].touched}">
+                    <option *ngFor="let wareHouse of wareHouses" [ngValue]="wareHouse.id">{{wareHouse.name}}</option>
+                    <option hidden disabled [selected]="true">Please Select Ware House</option>
+                </select>
+                <div class="m-1" *ngIf="form.controls['wareHouse'].hasError('required') && form.controls['wareHouse'].touched">Ware House is required.</div>
+            </div>
+        </div>
+        <div class="row mt-1 mb-3 ">
+            <div class="col-lg-6">
+                <label>Select Client</label>
+                <select [(ngModel)]="selectedSupplier" class="form-control" [formControl]="form.controls['client']" [ngClass]="{'form-control-danger': form.controls['client'].hasError('required') && form.controls['client'].touched}">
+                    <option *ngFor="let client of clientData" [ngValue]="client.id">{{client.first_name}}</option>
+                    <option hidden disabled [selected]="true">Please Select client</option>
+                </select>
+                <div class="m-1" *ngIf="form.controls['client'].hasError('required') && form.controls['client'].touched">Client is required.</div>
+            </div>
+            <div class="col-lg-6">
+                <label>Select Item</label>
+                <select [(ngModel)]="selectedItem" class="form-control" [formControl]="form.controls['item']" [ngClass]="{'form-control-danger': form.controls['item'].hasError('required') && form.controls['item'].touched}">
+                    <option *ngFor="let item of items" [ngValue]="item.id">{{item.name}}</option>
+                    <option hidden disabled [selected]="true">Please Select Item</option>
+                </select>
+                <div class="m-1" *ngIf="form.controls['item'].hasError('required') && form.controls['item'].touched">Item is required.</div>
+            </div>
+        </div>
+        <div class="row mt-1 mb-3 ">
+            <div class="col-lg-6">
+                <input type="date" class="form-control" [formControl]="form.controls['date']" [ngClass]="{'form-control-danger': form.controls['date'].hasError('required') && form.controls['date'].touched}"
+                />
+                <div class="m-1" *ngIf="form.controls['date'].hasError('required') && form.controls['date'].touched">Date is required</div>
+            </div>
+            <div class="col-lg-6">
+                <input type="text" placeholder="Area" class="form-control" [formControl]="form.controls['area']" [ngClass]="{'form-control-danger': form.controls['area'].hasError('required') && form.controls['area'].touched}"
+                />
+                <div class="m-1" *ngIf="form.controls['area'].hasError('required') && form.controls['area'].touched">Area is required</div>
+            </div>
+        </div>
+        <div class="row mt-1 mb-3 ">
+            <div class="col-lg-6">
+                <input type="number" placeholder="Price" class="form-control" [formControl]="form.controls['price']" [ngClass]="{'form-control-danger': form.controls['date'].hasError('required') && form.controls['price'].touched}"
+                />
+                <div class="m-1" *ngIf="form.controls['price'].hasError('required') && form.controls['price'].touched">Price is required</div>
+            </div>
+            <div class="col-lg-6">
+                <input type="number" placeholder="Quantity" class="form-control" [formControl]="form.controls['quantity']" [ngClass]="{'form-control-danger': form.controls['quantity'].hasError('required') && form.controls['quantity'].touched}"
+                />
+                <div class="m-1" *ngIf="form.controls['quantity'].hasError('required') && form.controls['quantity'].touched">Quantity is required</div>
+            </div>
+        </div>
+        <div class="row mt-1 mb-3 ">
+            <div class="col-lg-6">
+                <input type="text" placeholder="Invoice Number " class="form-control" [formControl]="form.controls['invoiceNo']" [ngClass]="{'form-control-danger': form.controls['invoiceNo'].hasError('required') && form.controls['invoiceNo'].touched}"
+                />
+                <div class="m-1" *ngIf="form.controls['invoiceNo'].hasError('required') && form.controls['invoiceNo'].touched">Invoice Number is required</div>
+            </div>
+            <div class="col-lg-6">
+                <input type="text" placeholder="Description" class="form-control" [formControl]="form.controls['description']" [ngClass]="{'form-control-danger': form.controls['description'].hasError('required') && form.controls['description'].touched}"
+                />
+                <div class="m-1" *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched">Description is required</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" [disabled]="!form.valid" class="btn btn-md btn-primary">Add</button>
+    </div>
+</form>

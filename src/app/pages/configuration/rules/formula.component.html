@@ -1,0 +1,52 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <nb-card style="background-color: teal" style="padding: 2rem">
+        <div formArrayName="formulaentry">
+            <div class="form-group" *ngFor="let item of formulaentry.controls; let PI=index" [formGroupName]="PI">
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <label class="col-sm-2 col-form-label" for="variable">Variable</label>
+                    <div class="col-sm-4 center-block">
+                        <select class="form-control select" formControlName="variable">
+                            <div class="col-sm-4"></div>
+                            <option *ngFor="let variable of variables" [ngValue]="variable.variable" id="variable">{{variable.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-1"></div>
+                    <button type="button" class="col-sm-1" class="btn btn-md btn-icon btn-danger state-value" (click)="deleteJEA(PI)">
+                        <i class="nb-trash"></i>
+                    </button>
+                    <div class="col-sm-2"></div>
+                </div>
+                <div class="row mt-2" [attr.id]="'operatorSelect' +PI">
+                    <div class="col-sm-2"></div>
+                    <label class="col-sm-2 col-form-label" for="variable">Operator</label>
+                    <div class="col-sm-4 center-block">
+                        <select style="width: 100px" class="form-control select center-block" formControlName="operator">
+                            <option *ngFor="let operator of operators" [ngValue]="operator" id="operator">{{operator}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-2"></div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4 center-block">
+                    <button type="button" class="btn btn-md btn-icon btn-primary state-value center-block" (click)="addJEA()">
+                        <i class="nb-plus"></i>
+                    </button>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <button style="float:right" type="submit" [disabled]="!form.valid" class="btn btn-primary btn-md">Save</button>
+
+            </div>
+        </div>
+    </nb-card>
+
+    <!-- {{this.form.value | json}} -->
+</form>

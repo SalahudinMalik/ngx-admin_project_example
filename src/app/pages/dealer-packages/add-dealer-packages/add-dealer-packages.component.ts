@@ -38,7 +38,7 @@ export class AddDealerPackagesComponent implements OnInit {
     private modalService: NgbModal,
     private dpService: DealerPackageService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   settings = {
     // pager : {
@@ -73,22 +73,18 @@ export class AddDealerPackagesComponent implements OnInit {
   ngOnInit() {
     this.userService.getAllUser().subscribe((data: any) => {
       this.dealerObj = data.users;
-      // console.log('user'  , data);
     });
     this.form = this.fb.group({
-      dealerGroup: [null, Validators.compose([Validators.required])]
+      dealerGroup: [null, Validators.required]
     });
   }
 
   dealerChange() {
-    console.log(this.selectedDealer.id, "dealer changeed");
     this.dataArray = [];
-    this.dpService
-      .getAllDealerPackages(this.selectedDealer.id)
+    this.dpService.getAllDealerPackages(this.selectedDealer.id)
       .subscribe((result: any) => {
         if (result.totalCount > 0) {
           for (let dp of result.dealerPackages) {
-            // console.log('dp' , dp)
             let dpData = {
               id: "",
               packageId: "",
@@ -103,12 +99,14 @@ export class AddDealerPackagesComponent implements OnInit {
           }
           this.refresh();
         }
+      },
+      err =>{
+        this.toastr.error(err.error.err || err.error);
       });
     this.refresh();
   }
 
   addPackage() {
-    // console.log('click')
     const activeModal = this.modalService.open(PackageComponent, {
       size: "sm",
       container: "nb-layout"
@@ -120,13 +118,11 @@ export class AddDealerPackagesComponent implements OnInit {
     activeModal.result.then(
       (result1: any) => {
         if (result1 != undefined) {
-          console.log("closed", result1);
           this.dataArray.push(result1);
           this.refresh();
         }
       },
       () => {
-        console.log("Backdrop click");
       }
     );
   }
@@ -147,29 +143,24 @@ export class AddDealerPackagesComponent implements OnInit {
     //           packagePrice: ""
     //         };
     //         dpData.id = dp.id;
-    //         // console.log('dp' , dp.packages.id);
     //         dpData.packageId = dp.packages.id;
     //         dpData.packageName = dp.packages.package_name;
     //         dpData.packagePrice = dp.price;
     //         dbArray.push(dpData);
     //       }
     //     }
-    //     //  console.log('dataArray' ,this.dataArray , 'dbArray', dbArray);
     //     let dif = _.differenceWith(this.dataArray, dbArray, _.isEqual);
     //     // this.refresh();
-    //     // console.log('diff' ,dif);
     //     for (let d of dif) {
     //       let saveData: any = {
     //         dealer_id: this.selectedDealer.id,
     //         package_id: d.packageId,
     //         price: d.packagePrice
     //       };
-    //       // console.log('saveData ', saveData)
     //       this.dpService.saveDealerPackages(saveData).subscribe(
     //         (result: any) => {
     //           // notify = true;
-    //           // console.log('result' ,result)
-    //           this.toastr.success("Data inserted successfully.");
+    //           this.toastr.success("Data added successfully.");
     //         },
     //         error => {
     //           // notify = false;
@@ -178,19 +169,17 @@ export class AddDealerPackagesComponent implements OnInit {
     //       );
     //     }
     //   });
-    // console.log('submit')
   }
   onDeleteConfirm(event): void {
     if (window.confirm("Are you sure you want to delete?")) {
       event.confirm.resolve();
-      console.log("event.data.id", event.data.id);
       this.dpService.deleteDealerPackages(event.data.id).subscribe(
         data1 => {
           this.toastr.success("Deleted Successfully");
           this.dealerChange();
         },
-        error => {
-          this.toastr.error("Deletion Error");
+        err => {
+          this.toastr.error(err.error.err || err.error);
         }
       );
     } else {

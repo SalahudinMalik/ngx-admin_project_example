@@ -9,7 +9,7 @@
               <option [selected]=true>-</option>
               <option *ngFor="let cate of category">{{cate.name}}</option>
           </select>
-         <div style="color:red" class="form-control-feedback" *ngIf="form.controls['expensivecategory'].hasError('required') && form.controls['expensivecategory'].touched">Expense Category is required.</div> 
+         <div  class="form-control-feedback" *ngIf="form.controls['expensivecategory'].hasError('required') && form.controls['expensivecategory'].touched">Expense Category is required.</div> 
       </div> -->
             <div class=" form-group" ng-if="roles">
               <label>Role Type</label>
@@ -23,7 +23,7 @@
               <select [(ngModel)]="selectedRole" class="form-control" [formControl]="form.controls['role']" [ngClass]="{'form-control-danger': form.controls['role'].hasError('required') && form.controls['role'].touched}">
                 <option *ngFor="let r of roles" [ngValue]="r">{{r.name}}</option>
               </select>
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['role'].hasError('required') && form.controls['role'].touched">Role is required.</div>
+              <div  class="m-1" *ngIf="form.controls['role'].hasError('required') && form.controls['role'].touched">Role is required.</div>
             </div>
             <div class="row">
               <div class="col-sm-6  form-group">
@@ -31,39 +31,39 @@
                 <input type="text" id="normal-field" placeholder="First Name" class="form-control" [formControl]="form.controls['firstName']"
                   [ngClass]="{'form-control-danger': form.controls['firstName'].hasError('required') && form.controls['firstName'].touched}"
                 />
-                <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['firstName'].hasError('required') && form.controls['firstName'].touched">First Name is required.</div>
+                <div  class="m-1" *ngIf="form.controls['firstName'].hasError('required') && form.controls['firstName'].touched">First Name is required.</div>
               </div>
               <div class="col-sm-6  form-group">
                 <label>Last Name</label>
                 <input type="text" placeholder="Last Name" class="form-control" [formControl]="form.controls['lastName']" [ngClass]="{'form-control-danger': form.controls['lastName'].hasError('required') && form.controls['lastName'].touched}"
                 />
-                <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched">Last Name is required.</div>
+                <div  class="m-1" *ngIf="form.controls['lastName'].hasError('required') && form.controls['lastName'].touched">Last Name is required.</div>
               </div>
             </div>
             <div class=" form-group">
               <label>Email</label>
               <input type="email" placeholder="Email" class="form-control" [formControl]="form.controls['email']" [ngClass]="{'form-control-danger': form.controls['email'].hasError('required') && form.controls['email'].touched}">
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched">email is required.</div>
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['email'].hasError('email') && form.controls['email'].touched">email is invalid</div>
+              <div  class="m-1" *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched">email is required.</div>
+              <div  class="m-1" *ngIf="form.controls['email'].hasError('email') && form.controls['email'].touched">email is invalid</div>
             </div>
             <div class=" form-group">
               <label>Username</label>
               <input type="text" placeholder="Username" class="form-control" [formControl]="form.controls['userName']" [ngClass]="{'form-control-danger': form.controls['userName'].hasError('required') && form.controls['userName'].touched}">
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf=" form.controls['userName'].hasError('required')  && form.controls['userName'].touched">Username is required.</div>
+              <div  class="m-1" *ngIf=" form.controls['userName'].hasError('required')  && form.controls['userName'].touched">Username is required.</div>
             </div>
             <div class=" form-group">
               <label>Password</label>
               <input type="password" placeholder="Password" class="form-control" [formControl]="form.controls['password']" [ngClass]="{'form-control-danger':!btnSave && form.controls['password'].hasError('required') && form.controls['password'].touched}">
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf="!btnSave && form.controls['password'].hasError('required')  && form.controls['password'].touched">password is required.</div>
+              <div  class="m-1" *ngIf="!btnSave && form.controls['password'].hasError('required')  && form.controls['password'].touched">password is required.</div>
             </div>
 
             <div class="form-group">
               <label>Mobile Number</label>
               <input type="text" placeholder="Mobile Number" class="form-control" [formControl]="form.controls['mobileNo']" [ngClass]="{'form-control-danger': form.controls['mobileNo'].hasError('required') && form.controls['mobileNo'].touched}">
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['mobileNo'].hasError('required') && form.controls['mobileNo'].touched">Mobile Number is required.</div>
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['mobileNo'].hasError('maxlength') ">Mobile Number must be 11 digits.</div>
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['mobileNo'].hasError('minlength') ">Mobile Number must be 11 digits.</div>
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['mobileNo'].hasError('pattern') ">Mobile Number must be in number formate.</div>
+              <div  class="m-1" *ngIf="form.controls['mobileNo'].hasError('required') && form.controls['mobileNo'].touched">Mobile Number is required.</div>
+              <div  class="m-1" *ngIf="form.controls['mobileNo'].hasError('maxlength') ">Mobile Number must be 11 digits.</div>
+              <div  class="m-1" *ngIf="form.controls['mobileNo'].hasError('minlength') ">Mobile Number must be 11 digits.</div>
+              <div  class="m-1" *ngIf="form.controls['mobileNo'].hasError('pattern') ">Mobile Number must be in number formate.</div>
             </div>
 
 
@@ -119,23 +119,23 @@
                   <option value="Area3">Area3</option>
                   <option value="Area4">Area4</option>
                 </select>
-                <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['role'].hasError('required') && form.controls['role'].touched">Designated Areas is required.</div>
+                <div  class="m-1" *ngIf="form.controls['role'].hasError('required') && form.controls['role'].touched">Designated Areas is required.</div>
                </div>
                <div class=" form-group">
                 <input type="number" id="normal-field" placeholder="Package Wholesale Price " class="form-control" [formControl]="form.controls['packagewsp']" [ngClass]="{'form-control-danger': form.controls['packagewsp'].hasError('required') && form.controls['packagewsp'].touched}"/>
-                 <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['packagewsp'].hasError('required') && form.controls['packagewsp'].touched">Package Wholesale Price is required.</div>
+                 <div  class="m-1" *ngIf="form.controls['packagewsp'].hasError('required') && form.controls['packagewsp'].touched">Package Wholesale Price is required.</div>
               </div>
               <div class=" form-group">
                 <input type="number" id="normal-field" placeholder="Package Retail Price" class="form-control" [formControl]="form.controls['packagerp']" [ngClass]="{'form-control-danger': form.controls['packagerp'].hasError('required') && form.controls['packagerp'].touched}"/>
-                 <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['packagerp'].hasError('required') && form.controls['packagerp'].touched">Package Retail Price is required.</div>
+                 <div  class="m-1" *ngIf="form.controls['packagerp'].hasError('required') && form.controls['packagerp'].touched">Package Retail Price is required.</div>
               </div>
               <div class=" form-group">
                 <input type="number" id="normal-field" placeholder="Grace Amount" class="form-control" [formControl]="form.controls['graceAmount']" [ngClass]="{'form-control-danger': form.controls['graceAmount'].hasError('required') && form.controls['graceAmount'].touched}"/>
-                 <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['graceAmount'].hasError('required') && form.controls['graceAmount'].touched">Grace Amount is required.</div>
+                 <div  class="m-1" *ngIf="form.controls['graceAmount'].hasError('required') && form.controls['graceAmount'].touched">Grace Amount is required.</div>
               </div>
               <div class=" form-group">
                 <input type="number" id="normal-field" placeholder="Grace Period" class="form-control" [formControl]="form.controls['gracePeriod']" [ngClass]="{'form-control-danger': form.controls['gracePeriod'].hasError('required') && form.controls['gracePeriod'].touched}"/>
-                 <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['gracePeriod'].hasError('required') && form.controls['gracePeriod'].touched">Grace Period is required.</div>
+                 <div  class="m-1" *ngIf="form.controls['gracePeriod'].hasError('required') && form.controls['gracePeriod'].touched">Grace Period is required.</div>
               </div>
             
               

@@ -4,6 +4,9 @@ import { RolePermissionsComponent } from "./role-permissions/role-permissions.co
 import { PermissionsComponent } from "./permissions.component";
 import { UserPermissionsComponent } from "./user-permissions/user-permissions.component";
 import { UpdateComponent } from "./update-modal/update.component";
+import { AssignViewsComponent } from "./assign-views/assign-views.component";
+import { CreateComponent } from "./create-rp/create.component";
+import { CreateUpComponent } from './create-up/create-up.component';
 const routes: Routes = [
   {
     path: "",
@@ -16,6 +19,18 @@ const routes: Routes = [
       {
         path: "userPermissions",
         component: UserPermissionsComponent
+      },
+      {
+        path: "assign-views",
+        component: AssignViewsComponent
+      },
+      {
+        path: "create",
+        component: CreateComponent
+      },
+      {
+        path: "createup",
+        component: CreateUpComponent
       }
     ]
   }
@@ -25,11 +40,14 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PermissionsRoutingModule {}
+export class PermissionsRoutingModule { }
 
 export const routedComponents = [
   RolePermissionsComponent,
   UserPermissionsComponent,
   PermissionsComponent,
-  UpdateComponent
+  UpdateComponent,
+  AssignViewsComponent,
+  CreateComponent,
+  CreateUpComponent
 ];

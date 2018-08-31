@@ -15,7 +15,7 @@
                     [ngClass]="{'form-control-danger': form.controls['dealerGroup'].hasError('required') && form.controls['dealerGroup'].touched}">
                     <option *ngFor="let d of dealerObj" [ngValue]="d">{{d.first_name}}</option>
                   </select>
-                  <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['dealerGroup'].hasError('required') && form.controls['dealerGroup'].touched">Dealer is required.</div>
+                  <div  class="m-1" *ngIf="form.controls['dealerGroup'].hasError('required') && form.controls['dealerGroup'].touched">Dealer is required.</div>
                 </div>
                 <div class="col-lg-3">
                   <button type="button" class="btn btn-primary btn-md" [disabled]="selectedDealer == undefined" (click)="addPackage()">Add Package</button>

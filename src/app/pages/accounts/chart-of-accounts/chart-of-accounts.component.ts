@@ -1,126 +1,191 @@
-import { Component, OnInit } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
-import { ViewChild } from '@angular/core'
-import { TreeComponent, TREE_ACTIONS, KEYS, IActionMapping, ITreeOptions } from 'angular-tree-component';
-import * as _ from 'lodash';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InputComponent } from './input.component';
+import { Component, ViewChild, OnInit, AfterContentInit } from "@angular/core";
+import "ag-grid-enterprise";
+import { NgbModal } from "../../../../../node_modules/@ng-bootstrap/ng-bootstrap";
+import { InputComponent } from "./input.component";
+import { Router } from "../../../../../node_modules/@angular/router";
+import { GenericStockService } from "../../../@core/data/generic-stock.service";
+import { LicenseManager } from "ag-grid-enterprise/main";
+declare global {
+  interface Window { windows: any; }
+}
 @Component({
-  selector: 'ngx-chart-of-accounts',
+  selector: "ngx-chart-of-accounts",
   templateUrl: './chart-of-accounts.component.html',
   styleUrls: ['./chart-of-accounts.component.scss']
 })
-
 export class ChartOfAccountsComponent implements OnInit {
-
-  public operation: number = 0;
-  nodes = [
+  private gridApi;
+  private gridColumnApi;
+  private rowData: any[];
+  private columnDefs = [
     {
-      name: 'New York',
-      children: [
-        { name: 'Manhattan' },
-        { name: 'New Jersey' }
-      ]
+      field: "account_id",
+      headerName: "Account ID",
     },
     {
-      name: 'Virgnia',
-      children: [
-        { name: 'Herndon' },
-        {
-          name: 'Fairfax',
-          children: [
-            { name: 'Main Street' },
-            { name: 'Jermantown' },
-            { name: 'George Mason University' }
-          ]
-        }
-      ]
-    }
+      field: "balance",
+      headerName: "Balance",
+    },
   ];
-  options: ITreeOptions = {
-    displayField: 'name',
-    isExpandedField: 'expanded',
-    idField: 'id',
-    hasChildrenField: 'children',
-    actionMapping: {
-      mouse: {
-        dblClick: (tree, node, $event) => {
-          if (node.hasChildren) TREE_ACTIONS.TOGGLE_EXPANDED(tree, node, $event);
-        }
+  private components;
+  private groupDefaultExpanded;
+  private getDataPath;
+  private getRowNodeId;
+  private autoGroupColumnDef;
+  private parentSelected: boolean;
+  public parent_id: number;
+  public root_type:number;
+  constructor(private modalService: NgbModal, public router: Router, public genericService: GenericStockService) {
+    this.setLicenceKey();
+    this.components = { fileCellRenderer: getFileCellRenderer() };
+    this.groupDefaultExpanded = -1;
+    this.getDataPath = function (data) {
+      return data.hierarchy;
+    };
+    this.getRowNodeId = function (data) {
+      return data.id;
+    };
+    this.autoGroupColumnDef = {
+      field: name,
+      headerName: "Name",
+      width: 450,
+      cellRendererParams: {
+        checkbox: true,
+        suppressCount: true,
+        innerRenderer: "fileCellRenderer"
       }
-    },
-    animateExpand: true,
-    animateSpeed: 30,
-    animateAcceleration: 1.2
+    };
   }
-
-  constructor(
-    private http: Http,
-    private modalService: NgbModal,
-  ) { }
-
-  ngOnInit() {
-  }
-
-  @ViewChild(TreeComponent)
-  private tree: TreeComponent;
-
-  actionClick(node, tree, op) {
-    // const inputs = document.getElementsByClassName('actionPane');
-    // for (let i = 0; i < inputs.length; i++) {
-    //   // inputs[i].style.visibility = 'hidden';
-    // }
-    switch (op) {
-      case 1:
-        this.openPopup(node, tree , 'Edit' , 1);
-        break;
-      case 2:
-        this.openPopup(node, tree , 'Add Node' , 2);
-        break;
-      case 3:
-        this.openPopup(node, tree , 'Add Catagery', 3);
-        break;
-      default: alert('Invalid Action');
+  onSelectionChanged(event) {
+    var selectedNode = this.gridApi.getSelectedNodes()[0];
+    this.parent_id = selectedNode.data.account_id;
+    this.root_type = selectedNode.data.root_type;
+    if (selectedNode) {
+      this.parentSelected = true;
+    } else {
+      this.parentSelected = false;
     }
-    // const wrapper = document.getElementsByClassName('node-content-wrapper');
-    // for (let i = 0; i < wrapper.length; i++) {
-    //   // wrapper[i].style.height = '20px';
-    // }
-    // document.getElementById(node.data.id).style.visibility = 'visible';
-    // if (op == 1)
-    //   term.value = node.data.name;
-    // else
-    //   term.value = '';
-    // this.operation = op;
-    // document.getElementById('content' + node.data.id).style.height = '50px';
   }
-
-
-  openPopup(node , tree , header , ops) {
-    const activeModal = this.modalService.open(InputComponent, { size: 'lg', container: 'nb-layout' });
-    activeModal.componentInstance.modalHeader = header;
-    activeModal.componentInstance.modalOperation = ops;
-    activeModal.componentInstance.modalNode = node;
-    activeModal.componentInstance.modalTree = tree;
-    activeModal.result.then(() => {
-      console.log('When user closes');
-      this.tree.treeModel.update();
-    }, () => { console.log('Backdrop click')
+  setLicenceKey() {
+    LicenseManager.setLicenseKey("5d41402abc4b2a76b9719d911017c5921");
+  }
+  addNewGroup() {
+    let hierarchy: any = "";
+    const activeModal = this.modalService.open(InputComponent, {
+      size: "sm",
+      container: "nb-layout"
     });
-
-
-  }
-  deleteNode(node, tree) {
-    if (confirm('Are you sure to delete ' + node.data.name)) {
-      const parentNode = node.realParent ? node.realParent : node.treeModel.virtualRoot;
-      _.remove(parentNode.data.children, function (child) {
-        return child === node.data;
-      });
-      tree.treeModel.update();
-      if (node.parent.data.children.length === 0) {
-        node.parent.data.hasChildren = false;
+    activeModal.componentInstance.modalHeader = "Add  Account";
+    activeModal.componentInstance.parent_id = this.parent_id;
+    activeModal.componentInstance.root_type = this.root_type;
+    activeModal.result.then(
+      () => {
+        this.getChartOfAccounts();
+      },
+      () => {
       }
-    }
+    );
   }
-
+  viewLedger() {
+    var selectedNode = this.gridApi.getSelectedNodes()[0];
+    this.router.navigate(["/pages/accounts/general-ledger", selectedNode.data.account_id]);
+  }
+  removeSelected() {
+    var selectedNode = this.gridApi.getSelectedNodes()[0];
+    if (!selectedNode) {
+      console.warn("No nodes selected!");
+      return;
+    }
+    this.gridApi.updateRowData({ remove: getRowsToRemove(selectedNode) });
+  }
+  moveSelectedNodeToTarget(targetRowId) {
+    var selectedNode = this.gridApi.getSelectedNodes()[0];
+    if (!selectedNode) {
+      console.warn("No nodes selected!");
+      return;
+    }
+    var targetNode = this.gridApi.getRowNode(targetRowId);
+    var invalidMove = selectedNode.key === targetNode.key || isSelectionParentOfTarget(selectedNode, targetNode);
+    if (invalidMove) {
+      console.warn("Invalid selection - must not be parent or same as target!");
+      return;
+    }
+    var rowsToUpdate = getRowsToUpdate(selectedNode, targetNode.data.hierarchy);
+    this.gridApi.updateRowData({ update: rowsToUpdate });
+  }
+  onGridReady(params) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
+  }
+  ngOnInit() {
+    this.getChartOfAccounts();
+  }
+  public getChartOfAccounts() {
+    this.genericService.find('/account/chartOfAccount').subscribe((data: any) => {
+      this.rowData = data;
+    }, err => {
+    });
+  }
+}
+function getNextId() {
+  if (!window['nextId']) {
+    window['nextId'] = 13;
+  } else {
+    window['nextId']++;
+  }
+  return window['nextId'];
+}
+function getFileCellRenderer() {
+  function FileCellRenderer() { }
+  FileCellRenderer.prototype.init = function (params) {
+    var tempDiv = document.createElement("div");
+    var value = params.value;
+    var icon = getFileIcon(params.value);
+    tempDiv.innerHTML = icon
+      ? '<span><i class="' + icon + '"></i>' + '<span class="filename"></span>' + value + "</span>"
+      : value;
+    this.eGui = tempDiv.firstChild;
+  };
+  FileCellRenderer.prototype.getGui = function () {
+    return this.eGui;
+  };
+  return FileCellRenderer;
+}
+function getRowsToRemove(node) {
+  var res = [];
+  for (var i = 0; i < node.childrenAfterGroup.length; i++) {
+    res = res.concat(getRowsToRemove(node.childrenAfterGroup[i]));
+  }
+  return node.data ? res.concat([node.data]) : res;
+}
+function isSelectionParentOfTarget(selectedNode, targetNode) {
+  var children = selectedNode.childrenAfterGroup;
+  for (var i = 0; i < children.length; i++) {
+    if (targetNode && children[i].key === targetNode.key) return true;
+    isSelectionParentOfTarget(children[i], targetNode);
+  }
+  return false;
+}
+function getRowsToUpdate(node, parentPath) {
+  var res = [];
+  var newPath = parentPath.concat([node.key]);
+  if (node.data) {
+    node.data.hierarchy = newPath;
+  }
+  for (var i = 0; i < node.childrenAfterGroup.length; i++) {
+    var updatedChildRowData = getRowsToUpdate(node.childrenAfterGroup[i], newPath);
+    res = res.concat(updatedChildRowData);
+  }
+  return node.data ? res.concat([node.data]) : res;
+}
+function getFileIcon(filename) {
+  return filename.endsWith(".mp3") || filename.endsWith(".wav")
+    ? "fa fa-file-audio-o"
+    : filename.endsWith(".xls")
+      ? "fa fa-file-excel-o"
+      : filename.endsWith(".txt")
+        ? "fa fa fa-file-o"
+        : filename.endsWith(".pdf")
+          ? "fa fa-file-pdf-o"
+          : "fa fa-folder";
 }

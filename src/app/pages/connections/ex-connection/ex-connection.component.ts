@@ -1,11 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { LocalDataSource } from "../../../../../node_modules/ng2-smart-table";
-import { ConnectionsService } from "../../../@core/data/connections.service";
-import { CustomersService } from "../../../@core/data/customers.service";
-import { PackagesService } from "../../../@core/data/packages.service";
-import { UserService } from "../../../@core/data/appuser.service";
-import { async } from "../../../../../node_modules/@angular/core/testing";
 import { PermissionsService } from "../../../@core/data/permission.service";
+import { GenericStockService } from "../../../@core/data/generic-stock.service";
+import { ToastrService } from "../../../../../node_modules/ngx-toastr";
 
 @Component({
   selector: "ex-connection",
@@ -14,7 +11,6 @@ import { PermissionsService } from "../../../@core/data/permission.service";
 })
 export class ExConnectionComponent implements OnInit {
   delete: boolean;
-  conn_data: any = [];
   settings = {
     pager: {
       display: true,
@@ -29,6 +25,9 @@ export class ExConnectionComponent implements OnInit {
       },
       activation_date: {
         title: "Activation Date"
+      },
+      expiration_date: {
+        title: "Expiration Date"
       },
       contact: {
         title: "Contact"
@@ -47,29 +46,28 @@ export class ExConnectionComponent implements OnInit {
       confirmDelete: true
     }
   };
-
   source: LocalDataSource = new LocalDataSource();
   constructor(
-    private connectionsService: ConnectionsService,
-    private customerService: CustomersService,
-    private packageService: PackagesService,
-    private userService: UserService,
-    private role: PermissionsService
-  ) {}
+    private genericService: GenericStockService,
+    private role: PermissionsService,
+    public toaster: ToastrService
+  ) {
+    
+  }
 
   ngOnInit() {
-    if (this.role.role.Admin) {
+    if (this.role['tokenAuthService'].user.user.role.name == 'Admin') {
       this.delete = true;
       this.settings.actions.delete = this.delete;
-    } else if (this.role.role.Dealer) {
+    } else if (this.role['tokenAuthService'].user.user.role.name == 'Dealer') {
       this.delete = false;
       this.settings.actions.delete = this.delete;
     }
-    this.connectionsService.getAllConnRenewal().subscribe((result: any) => {
-      if (result.dataArray) {
-        console.log(result.dataArray);
-        this.source.load(result.dataArray);
-      }
-    });
+    this.getList();
+  }
+  getList() {
+    this.genericService.find('/connrenewal/finddata').subscribe(data => {
+      if (data.dataArray) { this.source = data.dataArray } else { this.toaster.error(data.msg); }
+    }, err => { this.toaster.error(err.error.err || err.error)});
   }
 }

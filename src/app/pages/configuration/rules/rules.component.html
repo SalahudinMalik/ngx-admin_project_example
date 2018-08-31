@@ -1,0 +1,50 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <nb-card style="padding: 2rem">
+    <div formArrayName="journalentryaccount">
+      <div class="row" style="text-align: center">
+        <div class="col-lg-3 form-group has-feedback">
+          <label>Account</label>
+        </div>
+        <div class="col-lg-4 form-group has-feedback">
+          <label>Debit</label>
+        </div>
+        <div class="col-lg-4 form-group has-feedback">
+          <label>Credit</label>
+        </div>
+        <div class="col-lg-1">
+        </div>
+      </div>
+      <div class="row" *ngFor="let item of journalentryaccount.controls; let pointIndex=index" [formGroupName]="pointIndex">
+        <div class="col-lg-3 form-group has-feedback">
+          <custom-search [dataToSearch]="accountsNames" (onSelection)='selectedAccount($event)'></custom-search>
+        </div>
+        <div class="col-lg-4 form-group has-feedback">
+          <input type="text" class="form-control" readonly (click)="createFormula('debit',$event)" formControlName="debit" id="debit"
+          />
+        </div>
+        <div class="col-lg-4 form-group has-feedback">
+          <input type="text" class="form-control" readonly (click)="createFormula('credit',$event)" formControlName="credit" id="credit"
+          />
+        </div>
+        <div class="col-lg-1">
+          <button type="button" class="btn btn-md btn-icon btn-danger state-value" (click)="deleteJEA(pointIndex)">
+            <i class="nb-trash"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-11"></div>
+        <div class="col-lg-1">
+          <button type="button" class="btn btn-md btn-icon btn-primary state-value" (click)="addJEA()">
+            <i class="nb-plus"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-12">
+        <button style="float:right" type="submit" [disabled]="!form.valid" class="btn btn-primary btn-md">Save</button>
+      </div>
+    </div>
+  </nb-card>
+</form>

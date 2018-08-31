@@ -48,8 +48,9 @@ export class UserListComponent implements OnInit {
       confirmDelete: true
     }
   };
-  dArray: any = [];
   source: LocalDataSource = new LocalDataSource();
+  dArray: any = [];
+
   token: any;
   constructor(
     private userService: UserService,
@@ -82,8 +83,8 @@ export class UserListComponent implements OnInit {
         data1 => {
           this.toastr.success("Deleted Successfully");
         },
-        error => {
-          this.toastr.error("Deletion Error , ", error);
+        err => {
+          this.toastr.error(err.error.err || err.error);
         }
       );
       this.source.refresh();
@@ -92,7 +93,6 @@ export class UserListComponent implements OnInit {
     }
   }
   public onUserRowSelect(event): void {
-    console.log(event);
     this.router.navigate(["/pages/user/showUser", event.data.id]);
   }
 }

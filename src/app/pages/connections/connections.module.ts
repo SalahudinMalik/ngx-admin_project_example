@@ -9,11 +9,11 @@ import { ThemeModule } from "../../@theme/theme.module";
 import { AngularFontAwesomeModule } from "angular-font-awesome";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { DatePipe } from "@angular/common";
-import { ConnectionsService } from "../../@core/data/connections.service";
-import { HttpClientModule, HttpClient } from "@angular/common/http";
-import { ListConnectionsComponent } from "./list-connections/list-connections.component";
+import { HttpClientModule } from "@angular/common/http";
 import { PipeModule } from "../../pipes/pipe.module";
+import { AngularFileUploaderModule } from "angular-file-uploader";
 import { RenewComponent } from "./modal/renew-modal/renew.component";
+import { ComponentsModule } from "../components/components.module";
 
 @NgModule({
   entryComponents: [RenewComponent],
@@ -25,9 +25,12 @@ import { RenewComponent } from "./modal/renew-modal/renew.component";
     HttpClientModule,
     TreeModule,
     AngularFontAwesomeModule,
-    PipeModule
+    PipeModule,
+    AngularFileUploaderModule,
+    ComponentsModule
+
   ],
-  declarations: [...routedComponents,],
-  providers: [DatePipe, ConnectionsService]
+  declarations: [...routedComponents],
+  providers: [DatePipe]
 })
-export class ConnectionsModule {}
+export class ConnectionsModule { }

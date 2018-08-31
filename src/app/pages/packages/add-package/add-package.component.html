@@ -18,33 +18,33 @@
               <option [selected]=true>-</option>
               <option *ngFor="let cate of category">{{cate.name}}</option>
           </select>
-         <div style="color:red" class="form-control-feedback" *ngIf="form.controls['expensivecategory'].hasError('required') && form.controls['expensivecategory'].touched">Expense Category is required.</div> 
+         <div  class="form-control-feedback" *ngIf="form.controls['expensivecategory'].hasError('required') && form.controls['expensivecategory'].touched">Expense Category is required.</div> 
       </div> -->
             <div class=" form-group ">
               <!-- <input type="number" placeholder="CNIC Number" class="form-control"/> -->
               <label>Package Name</label>
               <input type="text" placeholder="Package Name" class="form-control" [formControl]="form.controls['packageName']" [ngClass]="{'form-control-danger': form.controls['packageName'].hasError('required')  && form.controls['packageName'].touched}"
               />
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['packageName'].hasError('required') && form.controls['packageName'].touched">Package name is required</div>
+              <div  class="m-1" *ngIf="form.controls['packageName'].hasError('required') && form.controls['packageName'].touched">Package name is required</div>
             </div>
 
             <div class="form-group">
               <label>Bandwidth</label>
               <input type="number" placeholder="Bandwidth" class="form-control" [formControl]="form.controls['bandwidth']" [ngClass]="{'form-control-danger': form.controls['bandwidth'].hasError('required') && form.controls['bandwidth'].touched}">
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['bandwidth'].hasError('required') && form.controls['bandwidth'].touched">Bandwidth is required.</div>
+              <div  class="m-1" *ngIf="form.controls['bandwidth'].hasError('required') && form.controls['bandwidth'].touched">Bandwidth is required.</div>
 
             </div>
 
             <div class="form-group">
               <label>Data Limit</label>
               <input type="number" placeholder="Data Limit" class="form-control" [formControl]="form.controls['dataLimit']" [ngClass]="{'form-control-danger': form.controls['dataLimit'].hasError('required') && form.controls['dataLimit'].touched}">
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['dataLimit'].hasError('required') && form.controls['dataLimit'].touched">Data Limit is required.</div>
+              <div  class="m-1" *ngIf="form.controls['dataLimit'].hasError('required') && form.controls['dataLimit'].touched">Data Limit is required.</div>
 
             </div>
             <div class="form-group">
               <label>Cost Price</label>
               <input type="number" placeholder="Cost Price" class="form-control" [formControl]="form.controls['costPrice']" [ngClass]="{'form-control-danger': form.controls['costPrice'].hasError('required') && form.controls['costPrice'].touched}">
-              <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['costPrice'].hasError('required') && form.controls['costPrice'].touched">Cost Price is required.</div>
+              <div  class="m-1" *ngIf="form.controls['costPrice'].hasError('required') && form.controls['costPrice'].touched">Cost Price is required.</div>
 
             </div>
 

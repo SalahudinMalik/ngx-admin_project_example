@@ -1,0 +1,91 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <fieldset>
+    <div class="row " id="outer">
+      <div id="inner" class="col-lg-12">
+        <nb-card>
+          <nb-card-header>Customer Information
+            <button type="button" class="btn-icon btn btn-primary m-0 p-0" style="float: right;" (click)="getVerifyDoc()">
+              <i class="nb-loop"></i>
+            </button>
+          </nb-card-header>
+          <nb-card-body>
+            <div class="row">
+
+              <div class="inner" style="margin: 0 auto;" *ngIf="countDown">
+                <h2>{{countDown | async}} seconds</h2>
+              </div>
+              <div class="inner" style="margin: 0 auto;" *ngIf="countUp">
+                <h2>{{countUp | async}} seconds</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6  form-group">
+                <label>First Name</label>
+                <input type="text" disabled id="normal-field" placeholder="First Name" class="form-control" [formControl]="form.controls['firstName']"
+                />
+
+              </div>
+              <div class="col-sm-6  form-group">
+                <label>Last Name</label>
+                <input disabled type="text" placeholder="Last Name" class="form-control" [formControl]="form.controls['lastName']" />
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="control-label">Mobile Number</label>
+                  <input [(ngModel)]="mobileNumber" type="text" placeholder="XXXX-XXXXXXX" mask="0000-0000000" class="form-control" pattern="[0][3][01234][0123456789][0-9]{7}"
+                    [formControl]="form.controls['mobileNo']" disabled />
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class=" form-group">
+                  <label>CNIC</label>
+                  <input #cnic id="cnicInput" value="" type="text" placeholder="XXXXX-XXXXXXXX-X" mask="00000-0000000-0" class="form-control"
+                    [(ngModel)]="cnicNo" [formControl]="form.controls['cnicNo']" disabled />
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+
+              <div class="col-lg-6" *ngIf="cnicFront">
+                <label>CNIC Front</label>
+                <div class="form-inline verification-btns">
+                  <img src="{{cnicFront}}" class="cnic img-rounded img-responsive" alt="CNIC Front">
+                </div>
+              </div>
+              <div class="col-lg-6" *ngIf="cnicBack">
+                <label>CNIC Back</label>
+                <div class="form-inline verification-btns">
+                  <img src="{{cnicBack}}" class="cnic img-rounded img-responsive" alt="CNIC back">
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="regForm">
+              <div class="col-lg-12">
+                <label>Registration Form</label>
+                <div class="form-inline verification-btns">
+                  <img src="{{regForm}}" class="cnic img-rounded img-responsive" alt="Registration form">
+                </div>
+              </div>
+
+            </div>
+            <div class="float-right">
+              <button type="submit" (click)="rejectDoc()" [disabled]="incomingConnection == null" class="btn btn-primary btn-md m-1">
+                Reject
+              </button>
+
+
+              <button type="submit" [disabled]="incomingConnection == null" (click)="verifyDoc()" class="btn btn-primary btn-md m-1">
+                Verify
+              </button>
+            </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
+    </div>
+  </fieldset>
+</form>

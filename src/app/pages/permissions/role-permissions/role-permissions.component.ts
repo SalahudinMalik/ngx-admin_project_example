@@ -10,6 +10,7 @@ import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { PermissionsService } from "../../../@core/data/permission.service";
 import { UpdateComponent } from "../update-modal/update.component";
+import { CreateComponent } from "../create-rp/create.component";
 
 @Component({
   selector: "ngx-role-permissions",
@@ -53,7 +54,7 @@ export class RolePermissionsComponent implements OnInit {
     },
     actions: {
       add: false,
-
+      edit:false,
       delete: false
     },
 
@@ -65,7 +66,6 @@ export class RolePermissionsComponent implements OnInit {
 
   ngOnInit() {
     this.permissionService.getAllRolePermissions().subscribe((data: any) => {
-      console.log(data);
       this.permissionData = data;
       const d = data.rolesRoutes;
       d.forEach(element => {
@@ -84,26 +84,13 @@ export class RolePermissionsComponent implements OnInit {
         }
       });
     });
-
-    // this.obj.forEach(element => {
-    //   const d = {
-    //     id: element.id,
-    //     roles: element.roles.name,
-    //     routes: element.routes.end_point,
-    //     description: element.description
-    //   };
-
-    //   this.data.push(d);
-    // });
   }
 
   public refresh(): void {
     this.ngOnInit();
-    console.log("refresh ");
   }
 
   openUpdateModal(s) {
-    console.log("ASASASASA", s);
     const activeModal = this.modalService.open(UpdateComponent, {
       size: "lg",
       container: "nb-layout"
@@ -119,10 +106,22 @@ export class RolePermissionsComponent implements OnInit {
     activeModal.result.then(
       () => {
         this.refresh();
-        console.log("AASssssssas das das dasd ");
       },
       () => {
-        console.log("Backdrop click");
+      }
+    );
+  }
+  addPermissions(s) {
+    const activeModal = this.modalService.open(CreateComponent, {
+      size: "lg",
+      container: "nb-layout"
+    });
+    activeModal.componentInstance.modalHeader = "Update Role";
+    activeModal.result.then(
+      () => {
+        this.refresh();
+      },
+      () => {
       }
     );
   }

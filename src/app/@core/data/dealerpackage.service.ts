@@ -48,9 +48,10 @@ export class DealerPackageService {
     this.fullurl = "";
     let options = {
       headers: this.tokenAuthService._options.headers,
-      body: { dealer_id: dealer_id }
+      body: { dealer_id }
     };
-    this.fullurl = this.global.weburl + "/dealerpackages/find";
+    console.log(options)
+    this.fullurl = this.global.weburl + "/dealerpackages/find/"+dealer_id;
 
     return this.http
       .get<DealerPackage>(this.fullurl, options)
@@ -69,3 +70,4 @@ export class DealerPackageService {
     return Observable.throw(error.message || "Server Error");
   }
 }
+

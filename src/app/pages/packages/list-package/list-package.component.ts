@@ -79,11 +79,9 @@ export class ListPackageComponent implements OnInit {
     this.packageService.getPackages().subscribe((data1: any) => {
       this.data = data1.packages; // dsfdsfadsf
       this.source.load(this.data);
-      // console.log('this.data ' , this.data);
     });
   }
   public onUserRowSelect(event): void {
-    console.log(event);
     this.router.navigate(["/pages/packages/showPackage", event.data.id]);
   }
   onDeleteConfirm(event): void {

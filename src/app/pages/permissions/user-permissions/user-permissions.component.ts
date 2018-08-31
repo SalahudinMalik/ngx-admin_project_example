@@ -10,6 +10,7 @@ import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { PermissionsService } from "../../../@core/data/permission.service";
 import { UpdateComponent } from "../update-modal/update.component";
+import { CreateUpComponent } from "../create-up/create-up.component";
 
 @Component({
   selector: "ngx-user-permissions",
@@ -54,7 +55,7 @@ export class UserPermissionsComponent implements OnInit {
 
     actions: {
       add: false,
-
+      edit:false,
       delete: false
     },
 
@@ -66,16 +67,16 @@ export class UserPermissionsComponent implements OnInit {
 
   ngOnInit() {
     this.permissionService.getAllUserPermissions().subscribe((data: any) => {
-      console.log(data, "console user routes");
-      if (data.length > 0) {
+     
         this.permissionData = data;
+        console.log('user roles' , data);
         const d = data.usersRoutes;
         d.forEach(element => {
           const d = {
             id: element.id,
             users: element.user.first_name,
             routes: element.routes.end_point,
-            description: ""
+            description: element.description
           };
 
           this.data.push(d);
@@ -83,7 +84,7 @@ export class UserPermissionsComponent implements OnInit {
             this.source.load(this.data);
           }
         });
-      }
+
     });
 
     // this.obj.forEach(element => {
@@ -100,7 +101,6 @@ export class UserPermissionsComponent implements OnInit {
 
   public refresh(): void {
     this.ngOnInit();
-    console.log("refresh ");
   }
 
   openUpdateModal(s) {
@@ -117,16 +117,27 @@ export class UserPermissionsComponent implements OnInit {
     // activeModal.componentInstance.modalSrc = this.data;
     activeModal.result.then(
       a => {
-        console.log(a, "result");
         this.refresh();
-        console.log("AASssssssas das das dasd ");
       },
       () => {
-        console.log("Backdrop click");
       }
     );
   }
   print(event): void {
     // this.router.navigate(['print/customerprint', event.data.id]);
+  }
+  addPermissions(s) {
+    const activeModal = this.modalService.open(CreateUpComponent, {
+      size: "lg",
+      container: "nb-layout"
+    });
+    activeModal.componentInstance.modalHeader = "Add User Permissions";
+    activeModal.result.then(
+      () => {
+        this.refresh();
+      },
+      () => {
+      }
+    );
   }
 }

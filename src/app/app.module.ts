@@ -28,9 +28,8 @@ import { Globals } from "../Globals";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { PipeModule } from "./pipes/pipe.module";
 import { PermissionsModule } from "./pages/permissions/permissions.module";
-
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent,],
   imports: [
     BrowserModule,
     FormsModule,
@@ -56,15 +55,13 @@ import { PermissionsModule } from "./pages/permissions/permissions.module";
             class: NbAuthJWTToken,
             key: "token"
           },
-          // baseEndpoint: "http://192.168.31.92:1337/",
-          // baseEndpoint: 'http://localhost:1337/',
-          baseEndpoint: "http://139.99.46.84:1337/",
-          // baseEndpoint: "https://shy-sheep-93.localtunnel.me/",
+          // baseEndpoint: "http://35.240.250.237:1337/",
+          baseEndpoint: "http://192.168.31.93:1337/",
           login: {
             endpoint: "user/login",
             method: "post",
             redirect: {
-              success: "/pages",
+              success: "/",
               failure: null
             }
           },

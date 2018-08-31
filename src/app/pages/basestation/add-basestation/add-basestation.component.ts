@@ -1,94 +1,71 @@
-import { Component, OnInit , OnDestroy} from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { NgProgress } from '@ngx-progressbar/core';
-import { ActivatedRoute } from '@angular/router';
-import { BasestationService } from '../../../@core/data/basestation.service';
-import { Basestation } from '../../../models/basestation.model';
-import { DISABLED } from '@angular/forms/src/model';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
+import { ActivatedRoute } from "@angular/router";
+import { GenericStockService } from "../../../@core/data/generic-stock.service";
 
 @Component({
   selector: 'ngx-add-basestation',
   templateUrl: './add-basestation.component.html',
   styleUrls: ['./add-basestation.component.scss']
 })
-export class AddBaseStationComponent implements OnInit , OnDestroy {
-  id: any;
-  private sub: any;
-  btnSave: boolean;
+export class AddBaseStationComponent implements OnInit {
   public form: FormGroup;
-  constructor(private fb: FormBuilder ,
-    private BasestationService: BasestationService,
+  constructor(
+    private fb: FormBuilder,
+    private genericService: GenericStockService,
     private toastr: ToastrService,
-    private ngProgress: NgProgress,
     private route: ActivatedRoute
   ) { }
-
   ngOnInit() {
-    this.btnSave = true;
-
+    this.createForm();
+    this.patchValues();
+  }
+  createForm() {
     this.form = this.fb.group({
-      name: [null, Validators.compose([Validators.required])],
-      lat: [null, Validators.compose([Validators.required])],
-      lng: [null, Validators.compose([Validators.required])],
-      bandwidth: [null, Validators.compose([Validators.required])],
-      maxusers: [null, Validators.compose([Validators.required])],
-
+      name: [null, Validators.required],
+      lat: [null, Validators.required],
+      long: [null, Validators.required],
+      bandwidth: [null, Validators.required],
+      maxusers: [null, Validators.required],
+      address: [null, Validators.required]
     });
-    this.sub = this.route.params.subscribe(params => {
-      this.id = params['id']; // (+) converts string 'id' to a number
-      console.log('this.id ' + this.id);
-      if (this.id !== undefined) {
-        this.BasestationService.getOneBasestation(this.id)
-        .subscribe(data => {
-          this.form.patchValue({
-            name : data.name,
-            lat: data.lat,
-            lng: data.lng,
-            bandwidth: data.bandwidth,
-            maxusers: data.maxusers,
-
-          });
-         this.form.disable();
-         this.btnSave = true;
-
-         console.log('form.valid ' + this.form.valid + ' btnSave ' + this.btnSave)
-        });
-
-      }
-
-      // In a real app: dispatch action to load the details here.
-   });
-    console.log('this.id ' + this.id);
-
   }
   onSubmit() {
-
-    var date = new Date();
-
-
     const data = {
       name: this.form.value.name,
       lat: this.form.value.lat,
-      lng: this.form.value.lng,
-      bandwidth:this.form.value.bandwidth,
-      maxusers:this.form.value.maxusers,
+      long: this.form.value.long,
+      bandwidth: this.form.value.bandwidth,
+      max_connection: this.form.value.maxusers,
+      address: this.form.value.address
     }
-
-
-      this.BasestationService.saveBasestation(data)
-      .subscribe(
-        data1 => {
-            console.log('Data inserted')
-            this.toastr.success('Data inserted successfully.');
-        },
-       error => {
-        this.toastr.error('Data not inserted error occured.');
-        }
-      );
-
+    this.genericService.create('/basestation/create', data).subscribe(
+      data => {
+          this.toastr.success("Basestation added successfully.");
+          this.form.reset();
+      },
+      err => {
+        this.toastr.error(err.error.err || err.error);
+      }
+    );
   }
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+  patchValues() {
+    this.route.params.subscribe(params => {
+      const id = params["id"];
+      if (id !== undefined) {
+        this.genericService.findOne('/basestation/findOne', id).subscribe(data => {
+          this.form.patchValue({
+            name: data.name,
+            lat: data.lat,
+            long: data.long,
+            bandwidth: data.bandwidth,
+            maxusers: data.maxusers,
+            address: data.address,
+          });
+          this.form.disable();
+        });
+      }
+    });
   }
 }

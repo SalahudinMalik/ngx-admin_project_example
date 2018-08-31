@@ -3,19 +3,8 @@
     Customer List
     <i (click)="refresh()" class="ion-refresh float-right"></i>
   </nb-card-header>
-
   <nb-card-body>
     <ng2-smart-table [settings]="settings" (custom)="print($event)" [source]="source" (userRowSelect)="onUserRowSelect($event)" (deleteConfirm)="onDeleteConfirm($event)">
-
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>
-
-<!-- <div>
-  <input type="text" placeholder="Search" class="form-control" [(ngModel)]="searchInput" />
-  <span style="height:300px; overflow:scroll" *ngIf="searchInput">
-    <select size="5" class="form-control " id="browsers">
-      <option *ngFor="let m of dummyData|searchPipe:searchInput" [ngValue]="m">{{m.name}}, {{m.cnic}}</option>
-    </select>
-  </span>
-</div> -->

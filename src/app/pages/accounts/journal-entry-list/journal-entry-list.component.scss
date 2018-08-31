@@ -1,0 +1,18 @@
+:host /deep/ .cell_right {
+    background-color: yellow;
+    width: 100%;
+    color: yellow;
+
+    span{
+        width: 100%;
+    }
+    }
+    :host /deep/ .abc {
+        background-color: red;
+        width: 100%;
+        color: red;
+        
+        span{
+            width: 100%;
+        }
+        }

@@ -10,8 +10,8 @@ import { NgProgressModule } from "@ngx-progressbar/core";
 import { Ng2SmartTableModule } from "ng2-smart-table";
 import { DatePipe } from "@angular/common";
 import { UpdateComponent } from "./update-modal/update.component";
-// import { DeleteComponent } from "./customers-list/delete.component";
-// import { PipeModule } from "../../pipes/pipe.module";
+import { ComponentsModule } from "../components/components.module";
+
 
 @NgModule({
   entryComponents: [UpdateComponent],
@@ -21,10 +21,10 @@ import { UpdateComponent } from "./update-modal/update.component";
     PermissionsRoutingModule,
     ReactiveFormsModule,
     NgProgressModule,
-    Ng2SmartTableModule
-    // PipeModule
+    Ng2SmartTableModule,
+    ComponentsModule
   ],
-  declarations: [...routedComponents],
+  declarations: [...routedComponents, ],
   providers: [DatePipe]
 })
 export class PermissionsModule {}

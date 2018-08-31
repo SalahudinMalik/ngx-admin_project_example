@@ -1,0 +1,13 @@
+<div id="inner" class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+  <nb-card>
+    <nb-card-header>
+      Items
+      <i (click)="addWareHouse()" class="ion-plus float-right"></i>
+    </nb-card-header>
+    <nb-card-body>
+      <ng2-smart-table [settings]="settings" (custom)="print($event)" [source]="source" (userRowSelect)="onUserRowSelect($event)"
+        (deleteConfirm)="deleteWareHouse($event)">
+      </ng2-smart-table>
+    </nb-card-body>
+  </nb-card>
+</div>

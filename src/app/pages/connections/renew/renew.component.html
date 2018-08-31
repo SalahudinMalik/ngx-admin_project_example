@@ -1,0 +1,58 @@
+<form class="form" role="form" [formGroup]="conRenewForm" (ngSubmit)="onSubmit()">
+  <nb-card style="padding: 2rem">
+    <div class="row center-block">
+      <div class="col-lg-6 form-group center-block">
+        <label>Search and Select</label>
+        <custom-search [dataToSearch]="connectionsNames" [title]="'Search By User Name'" (onSelection)='selectedAccount($event)'></custom-search>
+      </div>
+      <div class="col-sm-6  form-group">
+        <label>Amount Paid</label>
+        <input placeholder="RS" style="height: 3.5rem;" type="number" class="form-control" formControlName='renewal_price' />
+      </div>
+    </div>
+  </nb-card>
+
+  <nb-card style="padding: 2rem">
+    <div class="row">
+      <div class="col-sm-6  form-group">
+        <label>Customer Name</label>
+        <input type="text" class="form-control" readonly formControlName='customer_name' />
+      </div>
+      <div class="col-sm-6  form-group">
+        <label>Customer Mobile</label>
+        <input type="text" class="form-control" readonly formControlName='customer_mobile' />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6  form-group">
+        <label>Dealer Name</label>
+        <input type="text" class="form-control" readonly formControlName='dealer_name' />
+      </div>
+      <div class="col-sm-6  form-group">
+        <label>Dealer Mobile</label>
+        <input type="text" class="form-control" readonly formControlName='dealer_mobile' />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6  form-group">
+        <label>Package Name</label>
+        <input type="text" class="form-control" readonly formControlName='package_name' />
+      </div>
+      <div class="col-sm-6  form-group">
+        <label>Connection Price</label>
+        <input type="text" class="form-control" readonly formControlName='connection_price' />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12  form-group">
+        <label>Connection Address</label>
+        <input type="text" class="form-control" readonly formControlName='connection_address' />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12  form-group">
+        <button type="submit" [disabled]="!conRenewForm.valid" class="btn btn-md btn-primary btn-block">Renew Connection</button>
+      </div>
+    </div>
+  </nb-card>
+</form>

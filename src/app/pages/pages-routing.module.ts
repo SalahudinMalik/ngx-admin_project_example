@@ -4,19 +4,21 @@ import { NgModule } from "@angular/core";
 import { PagesComponent } from "./pages.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { NotFoundComponent } from "./miscellaneous/not-found/not-found.component";
-import { NgxPermissionsGuard } from "ngx-permissions";
 import { UserGuard } from "./user.guard";
+import { WelcomeComponent } from "./welcome/welcome.component";
 
-const routes: Routes = [
+var routes: Routes = [
   {
     path: "",
     component: PagesComponent,
     children: [
       {
+        canActivate: [UserGuard],
         path: "dashboard",
-        component: DashboardComponent
+        component: DashboardComponent,
       },
       {
+        canActivate: [UserGuard],
         path: "accounts",
         loadChildren: "./accounts/accounts.module#AccountsModule"
       },
@@ -24,72 +26,80 @@ const routes: Routes = [
         path: "dealerpackage",
         loadChildren:
           "./dealer-packages/dealer-packages.module#DealerPackagesModule",
-        canActivate: [NgxPermissionsGuard],
-        data: {
-          permissions: {
-            only: ["Admin"]
-          }
-        }
+        canActivate: [UserGuard],
       },
       {
+        canActivate: [UserGuard],
         path: "notification",
         loadChildren: "./notification/notification.module#NotificationsModule"
       },
       {
+        canActivate: [UserGuard],
         path: "user",
         loadChildren: "./user/user.module#DealersModule",
-        canActivate: [NgxPermissionsGuard],
-        data: {
-          permissions: {
-            only: ["Admin"]
-          }
-        }
       },
       {
+        canActivate: [UserGuard],
         path: "customers",
         loadChildren: "./customers/customers.module#CustomersModule"
       },
       {
+        canActivate: [UserGuard],
         path: "coverage",
         loadChildren: "./coverage/coverage.module#CoverageModule"
       },
       {
-        path: "packages",
-        loadChildren: "./packages/packages.module#PackagesModule",
-        canActivate: [NgxPermissionsGuard],
-        data: {
-          permissions: {
-            only: ["Admin"]
-          }
-        }
+        canActivate: [UserGuard],
+        path: "stock",
+        loadChildren: "./stock/stock.module#StockModule"
       },
       {
+        canActivate: [UserGuard],
+        path: "login-manager",
+        loadChildren: "./login-manager/login-manager.module#LoginManagerModule"
+      },
+      {
+        canActivate: [UserGuard],
+        path: "configuration",
+        loadChildren: "./configuration/configuration.module#ConfigurationModule"
+      },
+      {
+        canActivate: [UserGuard],
+        path: "packages",
+        loadChildren: "./packages/packages.module#PackagesModule",
+      },
+      {
+        canActivate: [UserGuard],
         path: "complaints",
         loadChildren: "./complaints/complain.module#ComplainModule"
       },
       {
+        canActivate: [UserGuard],
         path: "basestation",
         loadChildren: "./basestation/basestation.module#BaseStationModule",
-        canActivate: [NgxPermissionsGuard],
-        data: {
-          permissions: {
-            only: ["Admin"]
-          }
-        }
       },
       {
+        canActivate: [UserGuard],
         path: "connections",
         loadChildren: "./connections/connections.module#ConnectionsModule"
       },
       {
+        canActivate: [UserGuard],
         path: "permissions",
         loadChildren: "./permissions/permissions.module#PermissionsModule",
-        canActivate: [NgxPermissionsGuard],
-        data: {
-          permissions: {
-            only: ["Admin"]
-          }
-        }
+      },
+      {
+        path: "welcome",
+        component: WelcomeComponent,
+      },
+      {
+        path: "",
+        redirectTo: "welcome",
+        pathMatch: "full",
+      },
+      {
+        path: "**",
+        component: NotFoundComponent
       },
       // {
       //   path: 'ui-features',
@@ -116,15 +126,6 @@ const routes: Routes = [
       //   path: 'miscellaneous',
       //   loadChildren: './miscellaneous/miscellaneous.module#MiscellaneousModule',
       // },
-      {
-        path: "",
-        redirectTo: "dashboard",
-        pathMatch: "full"
-      },
-      {
-        path: "**",
-        component: NotFoundComponent
-      }
     ]
   }
 ];
@@ -133,4 +134,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class PagesRoutingModule {}
+export class PagesRoutingModule { }

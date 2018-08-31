@@ -1,55 +1,71 @@
 import { NbMenuItem } from "@nebular/theme";
 
 export const MENU_ITEMS: NbMenuItem[] = [
+
+  ///////////////////////////////////////////////////////////////////Dash Board///////////////////////////////////////////////////////////////////
+
   {
     title: "Dashboard",
     icon: "nb-home",
     link: "/pages/dashboard",
-    home: true
   },
-  // {
-  //   title: 'Accounts',
-  //   icon: 'nb-compose',
-  //   link: '/pages/accounts',
-  //   children: [
-  //     {
-  //       title: 'Chart Of Accounts',
-  //       link: '/pages/accounts/ChartOfAccounts',
-  //     },
-  //   ],
-  // },
+
+  ///////////////////////////////////////////////////////////////////Accounts///////////////////////////////////////////////////////////////////
+
   {
-    title: "User",
-    icon: "nb-person",
-    link: "/pages/user",
+    title: 'Accounts',
+    icon: 'nb-compose',
+    link: '/pages/accounts',
     children: [
       {
-        title: "Add User",
-        link: "/pages/user/addUser"
+        title: 'Chart Of Accounts',
+        link: '/pages/accounts/chart-of-accounts',
       },
       {
-        title: "List User",
-        link: "/pages/user/listUser"
-      }
-    ]
+        title: 'Journal Entry',
+        link: '/pages/accounts/journal-entry',
+      },
+      {
+        title: 'Journal Entry List',
+        link: '/pages/accounts/journal-entry-list',
+      },
+      {
+        title: 'General Ledger',
+        link: '/pages/accounts/general-ledger',
+      }],
   },
+
+  ///////////////////////////////////////////////////////////////////Connection///////////////////////////////////////////////////////////////////
+
   {
-    title: "Package",
-    icon: "nb-gear",
-    link: "/pages/packages",
+    title: "Connections",
+    icon: "nb-shuffle",
+    link: "/pages/connections/",
     children: [
       {
-        title: "Add Package",
-        link: "/pages/packages/addPackage"
+        title: "Add Connection",
+        link: "/pages/connections/addConnection"
       },
       {
-        title: "List Package",
-        link: "/pages/packages/listPackage"
-      }
+        title: "Renew Connections",
+        link: "/pages/connections/renew",
+      },
+      {
+        title: "List Connections",
+        link: "/pages/connections/listConnections"
+      },
+      {
+        title: "Connection Expiration",
+        link: "/pages/connections/exConnections"
+      },
+
     ]
   },
+
+  ///////////////////////////////////////////////////////////////////Customer///////////////////////////////////////////////////////////////////
+
   {
-    title: "Customer",
+    title: "Customers",
     icon: "nb-person",
     link: "/pages/customers/",
     children: [
@@ -63,45 +79,87 @@ export const MENU_ITEMS: NbMenuItem[] = [
       }
     ]
   },
+
+
+  ///////////////////////////////////////////////////////////////////User///////////////////////////////////////////////////////////////////
+
   {
-    title: "Dealer Packages",
+    title: "Users",
     icon: "nb-person",
-    link: "/pages/dealerpackage/addDealerPackage"
-    // children: [
-    //   {
-    //     title: 'Add Dealer Packages',
-    //     link: '/pages/dealerpackage/addDealerPackage',
-    //   },
-    // {
-    //   title: 'List Customer',
-    //   link: '/pages/customers/listCustomer',
-    // },
-    // ],
-  },
-  {
-    title: "Notifications",
-    icon: "nb-notifications",
-    link: "/pages/notification/noti"
-  },
-  {
-    title: "Connections",
-    icon: "nb-shuffle",
-    link: "/pages/connections/",
+    link: "/pages/user",
     children: [
       {
-        title: "Add Connection",
-        link: "/pages/connections/addConnection"
+        title: "Add User",
+        link: "/pages/user/addUser"
       },
       {
-        title: "List Connections",
-        link: "/pages/connections/listConnections"
-      },
-      {
-        title: "Connection Expiration",
-        link: "/pages/connections/exConnections"
+        title: "List User",
+        link: "/pages/user/listUser"
       }
     ]
   },
+
+  ///////////////////////////////////////////////////////////////////Package///////////////////////////////////////////////////////////////////
+
+  {
+    title: "Packages",
+    icon: "nb-gear",
+    link: "/pages/packages",
+    children: [
+      {
+        title: "Add Package",
+        link: "/pages/packages/addPackage"
+      },
+      {
+        title: "List Package",
+        link: "/pages/packages/listPackage"
+      }
+    ]
+  },
+
+  ///////////////////////////////////////////////////////////////////Dealer Packages///////////////////////////////////////////////////////////////////
+
+  {
+    title: "Dealer Packages",
+    icon: "nb-person",
+    link: "/pages/dealerpackage/addDealerPackage",
+    home: true,
+  },
+  ///////////////////////////////////////////////////////////////////Stock///////////////////////////////////////////////////////////////////
+
+  {
+    title: "Stock",
+    icon: "nb-bar-chart",
+    link: "/pages/stock",
+    children: [
+      {
+        title: "Warehouses",
+        link: "/pages/stock/warehouses"
+      },
+      {
+        title: "Items",
+        link: "/pages/stock/items"
+      },
+      {
+        title: "Stock In",
+        link: "/pages/stock/stock-in"
+      },
+      {
+        title: "Stock Out",
+        link: "/pages/stock/stock-out"
+      }
+    ]
+  },
+
+  ///////////////////////////////////////////////////////////////////Coverage///////////////////////////////////////////////////////////////////
+
+  {
+    title: "Coverage",
+    icon: "nb-location",
+    link: "/pages/coverage/cov"
+  },
+
+  ///////////////////////////////////////////////////////////////////////Complaints//////////////////////////////////////////////////////////////
 
   {
     title: "Complaints",
@@ -119,32 +177,89 @@ export const MENU_ITEMS: NbMenuItem[] = [
       }
     ]
   },
-  // {
-  //   title: 'Base Station',
-  //   icon: 'nb-gear',
-  //   link: '/pages/basestation',
-  //   children: [
-  //     {
-  //       title: 'Add Base Station',
-  //       link: '/pages/basestation/addBasestation',
-  //     },
-  //     {
-  //       title: 'List Base Station',
-  //       link: '/pages/basestation/listBasestation',
-  //     },
-  //   ],
-  // },
+
+  ////////////////////////////////////////////////////////////////////////Base Station//////////////////////////////////////////////////////////////
+
   {
-    title: "Coverage",
-    icon: "nb-location",
-    link: "/pages/coverage/cov"
+    title: 'Base Station',
+    icon: 'nb-gear',
+    link: '/pages/basestation',
+    children: [
+      {
+        title: 'Add Base Station',
+        link: '/pages/basestation/addBasestation',
+      },
+      {
+        title: 'List Base Station',
+        link: '/pages/basestation/listBasestation',
+      },
+    ],
   },
+
+  ///////////////////////////////////////////////////////////////////// Login Manager/////////////////////////////////////////////////////////////
+
+  {
+    title: "Login Manager",
+    icon: "nb-home",
+    link: "/pages/login-manager",
+    children: [
+      {
+        title: 'Document Verification',
+        link: '/pages/login-manager/document-verification',
+      },
+      {
+        title: 'Connection Verification',
+        link: '/pages/login-manager/recharge-connection',
+      },
+    ],
+  },
+  ///////////////////////////////////////////////////////////////////Notifications///////////////////////////////////////////////////////////////////
+
+  {
+    title: "Notifications",
+    icon: "nb-notifications",
+    link: "/pages/notification",
+    children: [
+      {
+        title: "Add Notification",
+        link: "/pages/notification/add"
+      },
+      {
+        title: "List Notification",
+        link: "/pages/notification/list"
+      },
+    ]
+  },
+
+  ///////////////////////////////////////////////////////////////////////Configuration//////////////////////////////////////////////////////////////
+
+  {
+    title: "Configurations",
+    icon: "nb-gear",
+    link: "/pages/configuration",
+    children: [
+      {
+        title: "Rules",
+        link: "/pages/configuration/rules",
+      },
+      {
+        title: "Rules List",
+        link: "/pages/configuration/rules-list",
+      }
+    ]
+  },
+
+  ////////////////////////////////////////////////////////////////////////Permissions//////////////////////////////////////////////////////////////
 
   {
     title: "Permissions",
     icon: "nb-locked",
     link: "/pages/permissions",
     children: [
+      {
+        title: "Assign Views",
+        link: "/pages/permissions/assign-views"
+      },
       {
         title: "Role Permissions",
         link: "/pages/permissions/rolePermissions"
@@ -154,7 +269,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: "/pages/permissions/userPermissions"
       }
     ]
-  }
+  },
+
+  ///////////////////////////////////////////////////////////////////////// < Menu End >////////////////////////////////////////////////////////////////////////
 
   // {
   //   title: 'UI Features',

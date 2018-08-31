@@ -12,14 +12,6 @@ const routes: Routes = [
       path: 'addDealerPackage',
       component: AddDealerPackagesComponent,
       },
-      // {
-      //   path: 'listCustomer',
-      //   component: CustomersListComponent
-      // },
-      // {
-      //   path: 'showCustomer/:id',
-      //   component: DealerPackagesComponent,
-      // }
     ]
   }
 ];

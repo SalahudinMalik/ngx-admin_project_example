@@ -4,6 +4,8 @@ import { ConnectionsComponent } from "./connections.component";
 import { AddConnectionComponent } from "./add-connection/add-connection.component";
 import { ListConnectionsComponent } from "./list-connections/list-connections.component";
 import { RenewComponent } from "./modal/renew-modal/renew.component";
+import { RenewPageComponent } from "./renew/renew.component";
+
 import { ExConnectionComponent } from './ex-connection/ex-connection.component';
 const routes: Routes = [
   {
@@ -23,9 +25,17 @@ const routes: Routes = [
         component: ExConnectionComponent,
       },
       {
+        path: 'renew-popup',
+        component: RenewComponent,
+      },
+      {
+        path: 'renew',
+        component: RenewPageComponent,
+      },
+      {
         path: 'showConnection/:id',
         component: AddConnectionComponent,
-      }
+      },
     ]
   }
 ];
@@ -34,11 +44,12 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ConnectionsRoutingModule {}
+export class ConnectionsRoutingModule { }
 export const routedComponents = [
   ConnectionsComponent,
   AddConnectionComponent,
   ListConnectionsComponent,
   ExConnectionComponent,
-  RenewComponent
+  RenewComponent,
+  RenewPageComponent
 ];

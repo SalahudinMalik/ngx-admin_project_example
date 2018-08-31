@@ -2,6 +2,10 @@
   display: table;
   margin: 0 auto;
 }
+.verification-btns{
+  margin-top: 2rem;
+  position: relative;
+}
 @import "../../../@theme/styles/themes";
 @import "~bootstrap/scss/mixins/breakpoints";
 @import "~@nebular/theme/styles/global/bootstrap/breakpoints";
@@ -356,3 +360,26 @@ h6 {
 }
 
 ///////////////////////////////////////////////////////////////////////////
+
+
+.cnic {
+  // width: 100%;
+  width: 400px;
+  // image-orientation: 
+  
+  height: 22%;
+}
+
+.loader {
+  border: 10px solid #f3f3f3; /* Light grey */
+  border-top: 10px solid #a1a1e5; /* Blue */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

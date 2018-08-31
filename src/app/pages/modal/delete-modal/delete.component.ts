@@ -27,10 +27,10 @@ import { CustomersService } from "../../../@core/data/customers.service";
      <div class=" form-group" >
      <!-- <input type="number" placeholder="CNIC Number" class="form-control"/> -->
      <input type="text" placeholder="CNIC Number" class="form-control"  [formControl]="form.controls['cnicNo']" [ngClass] = "{'form-control-danger': form.controls['cnicNo'].hasError('required') && form.controls['cnicNo'].touched}"/>
-     <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['cnicNo'].hasError('required') && form.controls['cnicNo'].touched">CNIC is required</div>
-     <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['cnicNo'].hasError('maxlength')">CNIC must be 13 digits.</div>
-     <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['cnicNo'].hasError('minlength')">CNIC must be 13 digits.</div>
-     <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['cnicNo'].hasError('pattern')">CNIC must be in number formate.</div>
+     <div  class="m-1" *ngIf="form.controls['cnicNo'].hasError('required') && form.controls['cnicNo'].touched">CNIC is required</div>
+     <div  class="m-1" *ngIf="form.controls['cnicNo'].hasError('maxlength')">CNIC must be 13 digits.</div>
+     <div  class="m-1" *ngIf="form.controls['cnicNo'].hasError('minlength')">CNIC must be 13 digits.</div>
+     <div  class="m-1" *ngIf="form.controls['cnicNo'].hasError('pattern')">CNIC must be in number formate.</div>
    </div>
 
     </div>
@@ -76,7 +76,6 @@ export class DeleteComponent implements OnInit {
     this.activeModal.close();
   }
   onSubmit() {
-    //  console.log(this.form.valid);  // false
     if (this.form.value.cnicNo == this.modalUCnic) {
       this.customersService.deleteCustomer(this.modalU_ID).subscribe(
         data1 => {

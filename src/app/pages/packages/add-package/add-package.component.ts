@@ -35,16 +35,15 @@ export class AddPackageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.form = this.fb.group({
-      packageName: [null, Validators.compose([Validators.required])],
-      bandwidth: [null, Validators.compose([Validators.required])],
-      dataLimit: [null, Validators.compose([Validators.required])],
-      costPrice: [null, Validators.compose([Validators.required])]
+      packageName: [null, Validators.required],
+      bandwidth: [null, Validators.required],
+      dataLimit: [null, Validators.required],
+      costPrice: [null, Validators.required]
     });
 
     this.btnSave = true;
     this.sub = this.route.params.subscribe(params => {
       this.id = params["id"]; // (+) converts string 'id' to a number
-      // console.log('this.id ' + this.id);
       if (this.id !== undefined) {
         this.editable = true;
         this.packageService.getOnePackage(this.id).subscribe(data => {
@@ -59,7 +58,6 @@ export class AddPackageComponent implements OnInit, OnDestroy {
           this.form.disable();
           this.btnSave = false;
           this.onChange();
-          // console.log('form.valid ' + this.form.valid + ' btnSave ' + this.btnSave)
         });
       }
 
@@ -99,11 +97,11 @@ export class AddPackageComponent implements OnInit, OnDestroy {
     if (this.btnSave) {
       this.packageService.savePackage(data).subscribe(
         data1 => {
-          this.toastr.success("Data inserted successfully.", data1);
+          this.toastr.success("package add successfully.");
           this.form.reset();
         },
-        error => {
-          this.toastr.error("Data not inserted error occured.", error);
+        err => {
+          this.toastr.error(err.error.err || err.error);
         }
       );
     } else if (!this.btnSave) {
@@ -112,8 +110,8 @@ export class AddPackageComponent implements OnInit, OnDestroy {
         data => {
           this.toastr.success("Data updated successfully.");
         },
-        error => {
-          this.toastr.error("Error occured while updating.", error);
+        err => {
+          this.toastr.error(err.error.err || err.error);
         }
       );
     }

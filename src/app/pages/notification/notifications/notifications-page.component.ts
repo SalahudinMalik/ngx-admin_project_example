@@ -36,11 +36,11 @@ export class NotificationsPageComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      expiringIn: [null, Validators.compose([Validators.required])],
-      everyDay: [null, Validators.compose([Validators.required])],
-      time: [null, Validators.compose([Validators.required])]
-      // min: [null, Validators.compose([Validators.required])]
-      // assignto: [null, Validators.compose([Validators.required])]
+      expiringIn: [null, Validators.required],
+      everyDay: [null, Validators.required],
+      time: [null, Validators.required]
+      // min: [null, Validators.required]
+      // assignto: [null, Validators.required]
     });
   }
 
@@ -49,7 +49,6 @@ export class NotificationsPageComponent implements OnInit {
       expires_in: this.form.value.expiringIn,
       cron_job_time: this.form.value.time
     };
-    console.log(data);
     this.notify.createNotification(data).subscribe(
       result => {
         this.form.reset();

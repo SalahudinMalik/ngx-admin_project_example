@@ -49,9 +49,9 @@ export class UpdateComponent implements OnInit {
       this.routes = data.routes;
     });
     this.form = this.fb.group({
-      id: [null, Validators.compose([Validators.required])],
-      userOrRole: [null, Validators.compose([Validators.required])],
-      route: [null, Validators.compose([Validators.required])]
+      id: [null, Validators.required],
+      userOrRole: [null, Validators.required],
+      route: [null, Validators.required]
     });
   }
   // private cObj: CustomersListComponent =
@@ -74,13 +74,12 @@ export class UpdateComponent implements OnInit {
           // this.customersListComponent.refresh();
           this.activeModal.close();
         },
-        error => {
-          this.toastr.error("Updation Error");
+        err => {
+          this.toastr.error(err.error.err || err.error);
         }
       );
     }
   }
-  //  console.log(this.form.valid);  // false
   //   if (this.form.value.cnicNo) {
   //     this.customersService.deleteCustomer(this.modalU_ID).subscribe(
   //       data1 => {

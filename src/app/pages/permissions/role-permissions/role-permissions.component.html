@@ -1,9 +1,11 @@
 <nb-card>
   <nb-card-header>
     Permission List
+    <button type="button" class="btn-icon btn btn-outline-primary" style="float: right;" (click)="addPermissions()">
+      <i class="nb-plus"></i>
+    </button>
     <!-- <i (click)="refresh()" class="ion-refresh float-right"></i> -->
   </nb-card-header>
-
   <nb-card-body>
     <ng2-smart-table [settings]="settings" [source]="source" (edit)="openUpdateModal($event)">
     </ng2-smart-table>

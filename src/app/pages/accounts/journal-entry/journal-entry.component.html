@@ -1,0 +1,156 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <nb-card>
+    <nb-card-body>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group has-feedback">
+            <label>Entry Type</label>
+            <select class="form-control select" formControlName="entry_type" [ngClass]="{'form-control-danger': form.controls['entry_type'].hasError('required')  && form.controls['entry_type'].touched}">
+              <option *ngFor="let type of entryTypes; let typeIndex=index" [ngValue]="typeIndex">{{type}}</option>
+            </select>
+            <div class="m-1" *ngIf="form.controls['entry_type'].hasError('required') && form.controls['entry_type'].touched">Entry Type is Required</div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group has-feedback">
+            <label>Posting Date</label>
+            <input type="date" value="form.value.date | date:'yyyy-MM-dd'" class="form-control" formControlName="date" id="date" [ngClass]="{'form-control-danger': form.controls['date'].hasError('required')  && form.controls['date'].touched}"
+            />
+            <div class="m-1" *ngIf="form.controls['date'].hasError('required') && form.controls['date'].touched">Posting Date is Required</div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group has-feedback">
+            <label>Series</label>
+            <select class="form-control select" formControlName="series">
+              <option *ngFor="let sery of series" [ngValue]="sery">{{sery}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group has-feedback">
+            <label>Company</label>
+            <input type="search" class="form-control" formControlName="company" id="company" />
+          </div>
+        </div>
+      </div>
+      <hr>
+      <nb-card style="padding: 2rem">
+        <div formArrayName="journalentryaccount">
+          <div class="row" style="text-align: center">
+            <div class="col-lg-3 form-group has-feedback">
+              <label>Account</label>
+            </div>
+            <div class="col-lg-3 form-group has-feedback">
+              <label>Debit</label>
+            </div>
+            <div class="col-lg-3 form-group has-feedback">
+              <label>Credit</label>
+            </div>
+            <div class="col-lg-3">
+            </div>
+          </div>
+          <div class="row" *ngFor="let item of journalentryaccount.controls; let pointIndex=index" [formGroupName]="pointIndex">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-3 form-group has-feedback">
+              <select class="form-control select" formControlName="account">
+                <option *ngFor="let account of accounts" [ngValue]="account.id" id="account">{{account.name}}</option>
+              </select>
+            </div>
+            <div class="col-lg-3 form-group has-feedback">
+              <input type="number" class="form-control" (change)="debitCreditChange(pointIndex)" (ngModelChange)="calTotalDebit()" formControlName="debit"
+                id="debit" />
+            </div>
+            <div class="col-lg-3 form-group has-feedback">
+              <input type="number" class="form-control" (change)="debitCreditChange(pointIndex)" (ngModelChange)="calTotalCredit()" formControlName="credit"
+                id="credit" />
+            </div>
+            <div class="col-lg-1">
+              <button type="button" class="btn btn-md btn-icon btn-danger state-value" (click)="deleteJEA(pointIndex)">
+                <i class="nb-trash"></i>
+              </button>
+            </div>
+            <div class="col-lg-1"></div>
+          </div>
+          <div class="row">
+            <div class="col-lg-10"></div>
+            <div class="col-lg-1">
+              <button type="button" class="btn btn-md btn-icon btn-primary state-value" (click)="addJEA()">
+                <i class="nb-plus"></i>
+              </button>
+            </div>
+            <div class="col-lg-1"></div>
+          </div>
+        </div>
+      </nb-card>
+      <!-- {{ this.form.value | json }} -->
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="form-group has-feedback">
+            <label>Reference Type</label>
+            <input type="text" class="form-control" formControlName="reference_type" id="reference_type" />
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group has-feedback">
+            <label>Total Debit</label>
+            <input type="number" disabled class="form-control" [(ngModel)]="totalDebit" [ngModelOptions]="{standalone: true}" id="totalDebit"
+            />
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-lg-6">
+          <div class="form-group has-feedback">
+            <label>Reference Date</label>
+            <input type="date" class="form-control" formControlName="reference_date" id="reference_date" />
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group has-feedback">
+            <label>Total Credit</label>
+            <input type="number" disabled class="form-control" [(ngModel)]="totalCredit" [ngModelOptions]="{standalone: true}" id="totalCredit"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="col-lg-6">
+          <div class="form-group has-feedback">
+            <label>User Remark</label>
+            <input type="text" class="form-control" formControlName="user_remarks" id="user_remarks" />
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <!-- <div class="form-group has-feedback">
+            <label>Multi Currency</label>
+            <br/>
+            <input type="checkbox" class="checkbox-custom" [formControl]="form.controls['Multi']" id="totalCredit" />
+          </div> -->
+        </div>
+      </div>
+      <div class="row mt-3">
+
+        <div class="col-lg-6">
+          <button type="button" (click)="newEntry()" class="btn btn-primary btn-block">New Entry</button>
+        </div>
+
+        <div class="col-lg-6" *ngIf="!saved || !submitted">
+          <button [hidden]="saved" [disabled]="!form.valid" type="submit" class="btn btn-primary btn-block"> Save
+          </button>
+          <button [disabled]="!form.valid&&submitted" [hidden]="!saved" type="submit" class="btn btn-primary btn-block"> Submit
+          </button>
+        </div>
+        <!-- <div style="text-align: center;color: yellowgreen;font-size:2rem" class="col-lg-12" *ngIf="saved&&submitted">
+          <label>Saved and Submitted</label>
+        </div> -->
+      </div>
+    </nb-card-body>
+  </nb-card>
+</form>

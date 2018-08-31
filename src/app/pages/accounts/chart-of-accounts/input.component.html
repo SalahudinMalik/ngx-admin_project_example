@@ -1,21 +1,47 @@
 <form class="form" role="form" [formGroup]="form" (ngSubmit)="okClick()">
-    <fieldset>
+  <fieldset>
     <div class="modal-header">
-        <span>{{ modalHeader }}</span>
-        <button class="close" aria-label="Close" (click)="closeModal()">
-          <span aria-hidden="true">&times;</span>
-        </button>
+      <span>{{ modalHeader }}</span>
+      <button class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Account Name</label>
+        <input type="text" placeholder="Name" class="form-control" [formControl]="form.controls['name']" [ngClass]="{'form-control-danger': form.controls['name'].hasError('required') && form.controls['name'].touched}"
+        />
+        <div class="m-1" *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched">Account Name is required</div>
       </div>
-  
-      <div class="modal-body">
-       <div class=" form-group" >
-  <input type="text" placeholder="Name" class="form-control"  [formControl]="form.controls['node']" [ngClass] = "{'form-control-danger': form.controls['node'].hasError('required') && form.controls['node'].touched}"/>
-  <div style="color:red" class="m-1 form-control-feedback" *ngIf="form.controls['node'].hasError('required') && form.controls['node'].touched">Name is required</div>
-     </div>
-  
+      <div class="form-group">
+        <label>Account Number</label>
+        <input type="text" placeholder="Account Number" class="form-control" [formControl]="form.controls['account_number']" [ngClass]="{'form-control-danger': form.controls['account_number'].hasError('required') && form.controls['account_number'].touched}"
+        />
+        <div class="m-1" *ngIf="form.controls['account_number'].hasError('required') && form.controls['account_number'].touched">Account Number is required</div>
       </div>
-      <div class="modal-footer">
-        <button  type="submit" [disabled]="!form.valid" class="btn btn-md btn-primary" >Save</button>
+      <!-- <div class="form-group">
+        <label>Root Type</label>
+        <select class="form-control select" formControlName="root_type" [ngClass]="{'form-control-danger': form.controls['root_type'].hasError('required')  && form.controls['root_type'].touched}">
+          <option *ngFor="let type of rootType; let typeIndex=index" [ngValue]="typeIndex + 1">{{type}}</option>
+        </select>
+        <div class="m-1" *ngIf="form.controls['root_type'].hasError('required') && form.controls['root_type'].touched">Root Type is Required</div>
+      </div> -->
+      <div class="form-group">
+        <label>Account Type</label>
+        <select class="form-control select" formControlName="account_type" [ngClass]="{'form-control-danger': form.controls['account_type'].hasError('required')  && form.controls['account_type'].touched}">
+          <option *ngFor="let type of accountType; let typeIndex=index" [ngValue]="typeIndex+1">{{type}}</option>
+        </select>
+        <div class="m-1" *ngIf="form.controls['account_type'].hasError('required') && form.controls['account_type'].touched">Account Type is Required</div>
       </div>
-      </fieldset>
-  </form>
+      <div class=" form-group">
+        <label>Will Have Child Accounts ?</label>
+        <input type="checkbox" class="form-control" [formControl]="form.controls['is_group']" />
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" [disabled]="!form.valid" class="btn btn-md btn-primary">Save</button>
+    </div>
+  </fieldset>
+</form>

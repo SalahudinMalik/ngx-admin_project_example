@@ -1,0 +1,20 @@
+<nb-card>
+  <nb-card-body>
+    <div class="form-group">
+      <label class="mr-3">Search User</label>
+      <custom-search [title]="'Type here..'" [dataToSearch]="usersSearchAbleArray" (onSelection)='afterSelectingUsersRecord($event)'></custom-search>
+    </div>
+    <div class="form-group">
+      <label class="mr-3">Search Route</label>
+      <custom-search [title]="'Type here..'" [dataToSearch]="routesSearchAbleArray" (onSelection)='afterSelectingRoutesRecord($event)'></custom-search>
+    </div>
+    <div class="form-group">
+      <label class="mr-3">Description</label>
+      <textarea [(ngModel)]="description" rows="4" placeholder="Type here .." class="form-control"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button [disabled]="!selectedRoute && !selectedRole" type="button" class="btn btn-md btn-primary" (click)="add()">Save</button>
+    </div>
+  </nb-card-body>
+
+</nb-card>

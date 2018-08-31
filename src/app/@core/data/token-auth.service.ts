@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { NbAuthService, NbAuthToken, NbAuthJWTToken } from "@nebular/auth";
 import { HttpHeaders } from "../../../../node_modules/@angular/common/http";
 
-
 @Injectable({
     providedIn: 'root',
 })
@@ -23,23 +22,7 @@ export class TokenAuthService {
         this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
             if (token.isValid()) {
                 this.user = token.getPayload();
-                console.log('ng On it header' , this.user);
             }
         });
     }
-    // getUser() {
-    //     this.authService.onTokenChange().subscribe((token: NbAuthJWTToken) => {
-    //         if (token.isValid()) {
-    //             this.token = token;
-    //             const tokenPayload = token.getPayload();
-    //             this.userService.getOneUser(tokenPayload.user).subscribe((users: any) => {
-    //                 this.user = users;
-    //                 console.log(this.user);
-    //             },
-    //                 error => {
-    //                 });
-
-    //         }
-    //     });
-    // }
 }

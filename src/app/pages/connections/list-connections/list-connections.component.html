@@ -2,10 +2,8 @@
   <nb-card-header>
     Connections List
   </nb-card-header>
-
   <nb-card-body>
-    <ng2-smart-table [settings]="settings" [source]="source" (edit)="renewModal($event)" (userRowSelect)="onUserRowSelect($event)"
-      (delete)="deleteConnection($event)">
+    <ng2-smart-table [settings]="settings" [source]="source" (edit)="renewModal($event)" (userRowSelect)="onUserRowSelect($event)" (delete)="onDeleteConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>

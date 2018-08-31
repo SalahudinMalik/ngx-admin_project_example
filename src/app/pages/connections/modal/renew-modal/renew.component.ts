@@ -1,14 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { NgForm } from "@angular/forms";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
-import { ConnectionsService } from "../../../../@core/data/connections.service";
+import { GenericStockService } from "../../../../@core/data/generic-stock.service";
 
 @Component({
   selector: "ngx-modal",
@@ -24,20 +19,19 @@ export class RenewComponent implements OnInit {
     private activeModal: NgbActiveModal,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private renewService: ConnectionsService
-  ) {}
-
+    public genericService: GenericStockService
+  ) { }
   ngOnInit() {
+    this.createForm();
+  }
+  createForm() {
     this.form = this.fb.group({
-      name: [null, Validators.compose([Validators.required])],
-      packageName: [null, Validators.compose([Validators.required])],
-      price: [null, Validators.compose([Validators.required])],
-      isWireless: [null, Validators.compose([Validators.required])]
-      //   registrationDate: [null, Validators.compose([Validators.required])]
+      name: [null, Validators.required],
+      packageName: [null, Validators.required],
+      price: [null, Validators.required],
+      isWireless: [null, Validators.required]
     });
   }
-  // private cObj: CustomersListComponent =
-  //  new CustomersListComponent(null , null , null , null , null , null , null , this.authService ) ;
   closeModal() {
     this.activeModal.close();
   }
@@ -48,15 +42,13 @@ export class RenewComponent implements OnInit {
       connection_id: this.modalContent.id,
       renewal_price: this.price
     };
-    console.log(renew);
-    this.renewService.renewConnection(renew).subscribe(
+    this.genericService.create('/connrenewal/create', renew).subscribe(
       data1 => {
         this.toastr.success("Successfully Renewed");
-
         this.activeModal.close();
       },
-      error => {
-        this.toastr.error("Renewal Error");
+      err => {
+        this.toastr.error(err.error.err || err.error);
       }
     );
   }

@@ -1,18 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { LocalDataSource } from "ng2-smart-table";
 import { Router } from "@angular/router";
-import { DatePipe } from "@angular/common";
-import { Http } from "@angular/http";
-import { ServerDataSource } from "ng2-smart-table";
-import { Globals } from "../../../../Globals";
-import { NbAuthService } from "@nebular/auth";
-import { ToastrService } from "ngx-toastr";
-import { CustomersService } from "../../../@core/data/customers.service";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { DeleteComponent } from "../../modal/delete-modal/delete.component";
-import { ServerSourceConf } from "../../../../../node_modules/ng2-smart-table/lib/data-source/server/server-source.conf";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { PermissionsService } from "../../../@core/data/permission.service";
+import { ToastrService } from "../../../../../node_modules/ngx-toastr";
+import { GenericStockService } from "../../../@core/data/generic-stock.service";
 
 @Component({
   selector: "ngx-customers-list",
@@ -22,60 +12,11 @@ import { PermissionsService } from "../../../@core/data/permission.service";
 export class CustomersListComponent implements OnInit {
   delete: any;
   source: LocalDataSource = new LocalDataSource();
-  sourceConf: ServerSourceConf;
-  token: any;
-  data: any;
-  // public dummyData = [
-  //   { name: "Usama", cnic: "34101-7943164-9", phoneNo: 923026326656 },
-  //   { name: "Usman", cnic: "34202-7943164-9", phoneNo: 923036326656 },
-  //   { name: "danish", cnic: "34303-7943164-9", phoneNo: 923046326656 },
-  //   { name: "awais", cnic: "34404-7943164-9", phoneNo: 923056326656 },
-  //   { name: "alamgir", cnic: "34505-7943164-9", phoneNo: 923056326656 },
-  //   { name: "Usama", cnic: "34101-7943164-9", phoneNo: 923026326656 },
-  //   { name: "Usman", cnic: "34202-7943164-9", phoneNo: 923036326656 },
-  //   { name: "danish", cnic: "34303-7943164-9", phoneNo: 923046326656 },
-  //   { name: "awais", cnic: "34404-7943164-9", phoneNo: 923056326656 },
-  //   { name: "alamgir", cnic: "34505-7943164-9", phoneNo: 923056326656 },
-  //   { name: "Usama", cnic: "34101-7943164-9", phoneNo: 923026326656 },
-  //   { name: "Usman", cnic: "34202-7943164-9", phoneNo: 923036326656 },
-  //   { name: "danish", cnic: "34303-7943164-9", phoneNo: 923046326656 },
-  //   { name: "awais", cnic: "34404-7943164-9", phoneNo: 923056326656 },
-  //   { name: "alamgir", cnic: "34505-7943164-9", phoneNo: 923056326656 },
-  //   { name: "Usama", cnic: "34101-7943164-9", phoneNo: 923026326656 },
-  //   { name: "Usman", cnic: "34202-7943164-9", phoneNo: 923036326656 },
-  //   { name: "danish", cnic: "34303-7943164-9", phoneNo: 923046326656 },
-  //   { name: "awais", cnic: "34404-7943164-9", phoneNo: 923056326656 },
-  //   { name: "alamgir", cnic: "34505-7943164-9", phoneNo: 923056326656 }
-  // ];
   constructor(
     private router: Router,
-    private datePipe: DatePipe,
-    private http: Http,
-    private globals: Globals,
-    private customersService: CustomersService,
-    private toastr: ToastrService,
-    private modalService: NgbModal,
-    private authService: NbAuthService,
-    private role: PermissionsService
+    public genericService: GenericStockService,
+    private toaster: ToastrService
   ) {
-    this.token = authService.getToken();
-    this.token = this.token.value.token;
-    // this.customersService.getAllCustomers()
-    //   .subscribe((data1: any) => {
-    //     this.data = data1.customers;
-    //   });
-
-    // this.source = new ServerDataSource(http,
-    //   {
-    //     endPoint: globals.weburl + '/customers' + '?access_token=' + this.token,
-    //     // pagerLimitKey: '_limit',
-    //     // pagerPageKey: '_page',
-    //     // sortDirKey:  '_order',
-    //     // sortFieldKey: '_sort',
-    //     // dataKey: 'data',
-    //     // totalKey: 'x_total_count',
-    //   },
-    // );
   }
   settings = {
     pager: {
@@ -83,6 +24,9 @@ export class CustomersListComponent implements OnInit {
       perPage: "10"
     },
     columns: {
+      id: {
+        title: "Customer ID"
+      },
       first_name: {
         title: "First Name"
       },
@@ -97,14 +41,47 @@ export class CustomersListComponent implements OnInit {
       },
       email: {
         title: "Email"
-      }
+      },
+      customerverify: {
+        title: "Verification",
+        type: "html",
+        filter: false,
+        valuePrepareFunction: (customerverify) => {
+          // if (customerverify) {
+
+          // } else {
+          //   return `<span>Submitted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+          // }
+          let phone, card;
+          if (customerverify.length > 1) {
+            for (let c of customerverify) {
+              if (c.doc_type == 1) {
+                if (c.is_verified)
+                  phone = '<span class="nb-phone float-left text-success"></span>'
+                else
+                  phone = '<span class="nb-phone float-left"></span>'
+              }
+              else if (c.doc_type == 2) {
+                if (c.is_verified)
+                  card = '<span class="ion-card float-right text-success"></span>'
+                else
+                  card = '<span class="ion-card float-right"></span>'
+              }
+            }
+            // let result = '<span class="nb-phone float-left '+customerverify.cod+'></span> <span class="ion-card float-right"></span>';
+            return card + phone;
+          }
+          else{
+            return '<span class="nb-phone float-left"></span> <span class="ion-card float-right"></span>';
+          }
+        }
+      },
+
     },
     actions: {
       add: false,
       edit: false,
       delete: this.delete
-      // custom: [{ name: 'print', title: `<i class="fa fa-print p-0 m-0 float-left"></i>` },   ],
-      // position:  'left',
     },
     delete: {
       position: "right",
@@ -112,67 +89,21 @@ export class CustomersListComponent implements OnInit {
       confirmDelete: true
     }
   };
-
   ngOnInit() {
-    if (this.role.role.Admin) {
-      this.delete = true;
-      this.settings.actions.delete = this.delete;
-    } else if (this.role.role.Dealer) {
-      this.delete = false;
-      this.settings.actions.delete = this.delete;
-    }
-    this.customersService.getAllCustomers().subscribe((data1: any) => {
-      if (data1.customers) {
-        this.data = data1.customers;
-        this.source.load(data1.customers);
-      }
-    });
+    this.getList();
   }
-
-  public onUserRowSelect(event): void {
-    console.log(event);
-    this.router.navigate(["/pages/customers/showCustomer", event.data.id]);
+  getList() {
+    this.genericService.find('/customer/find').subscribe(data => {
+      this.source = data.customers
+    }, err => { this.toaster.error(err.error.err) });
   }
   onDeleteConfirm(event): void {
-    // if (window.confirm('Are you sure you want to delete?')) {
-    //   event.confirm.resolve();
-    //   this.customersService.deleteCustomer(event.data.id)
-    //     .subscribe(data1 => {
-    //       this.toastr.success('Deleted Successfully')
-    //     },
-    //   error => {
-    //     this.toastr.error('Deletion Error')
-    //   });
-
-    // } else {
-    //   event.confirm.reject();
-    // }
-    console.log("user " + event.data.firstName);
-    const activeModal = this.modalService.open(DeleteComponent, {
-      size: "lg",
-      container: "nb-layout"
-    });
-
-    activeModal.componentInstance.modalHeader = "Delete";
-    activeModal.componentInstance.modalContent = event.data.first_name;
-    activeModal.componentInstance.modalUCnic = event.data.cnic;
-    activeModal.componentInstance.modalU_ID = event.data.id;
-    activeModal.componentInstance.modalSrc = this.data;
-    activeModal.result.then(
-      () => {
-        this.refresh();
-      },
-      () => {
-        console.log("Backdrop click");
-      }
-    );
+    this.genericService.deleteOne('/customer/delete', event.data.id).subscribe(data => {
+      this.toaster.success('Deleted');
+      this.getList();
+    }, err => { this.toaster.error(err.error.err) });
   }
-  public refresh(): void {
-    this.ngOnInit();
-    console.log("refresh ");
-  }
-
-  print(event): void {
-    // this.router.navigate(['print/customerprint', event.data.id]);
+  public onUserRowSelect(event): void {
+    this.router.navigate(["/pages/customers/showCustomer", event.data.id]);
   }
 }

@@ -2,9 +2,8 @@
   <nb-card-header>
     Base Station List
   </nb-card-header>
-
   <nb-card-body>
-    <ng2-smart-table [settings]="settings" [source]="source" *ngIf = "source" (userRowSelect)="onUserRowSelect($event)" (deleteConfirm)="onDeleteConfirm($event)">
+    <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)" (deleteConfirm)="onDeleteConfirm($event)">
     </ng2-smart-table>
   </nb-card-body>
 </nb-card>

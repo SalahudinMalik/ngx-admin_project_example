@@ -1,0 +1,27 @@
+<nb-card style="padding: 2rem">
+  <div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4 form-group">
+      <label>Select Role</label>
+      <select (change)="getM($event.target.value)" [(ngModel)]="role_id" class="form-control ">
+        <option class="col-md-6 offset-md-3" *ngFor="let d of allRoles">{{d.name}}</option>
+      </select>
+    </div>
+    <div class="col-lg-4"></div>
+  </div>
+</nb-card>
+<nb-card style="padding: 2rem">
+
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-lg-4" *ngFor="let item of menu">
+        <label style="font-size: 1.5rem">
+          <input class="check" type="checkbox" name="item.title" value="{{item.hidden}}" [(ngModel)]="item.hidden" /> {{item.title}}
+        </label>
+      </div>
+    </div>
+    <br/>
+    <button [hidden]="menu.length==0" class="btn btn-md btn-primary" (click)="getselectedviews()">Update Role</button>
+  </div>
+</nb-card>

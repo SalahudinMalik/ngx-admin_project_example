@@ -2,6 +2,8 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { NotificationsPageComponent } from "./notifications/notifications-page.component";
 import { NotificationComponent } from "./notification.component";
+import { ListNotificationsComponent } from './list-notifications/list-notifications.component';
+
 
 const routes: Routes = [
   {
@@ -9,8 +11,12 @@ const routes: Routes = [
     component: NotificationComponent,
     children: [
       {
-        path: "noti",
+        path: "add",
         component: NotificationsPageComponent
+      },
+      {
+        path: "list",
+        component: ListNotificationsComponent
       }
     ]
   }
@@ -24,5 +30,6 @@ export class NotificatiosRoutingModule {}
 
 export const routedComponents = [
   NotificationComponent,
-  NotificationsPageComponent
+  NotificationsPageComponent,
+  ListNotificationsComponent
 ];

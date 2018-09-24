@@ -4,6 +4,7 @@ import { takeWhile } from "rxjs/operators/takeWhile";
 import { UserService } from "../../@core/data/appuser.service";
 import { DashboardService } from "../../@core/data/dashboard.service";
 import { PermissionsService } from "../../@core/data/permission.service";
+import { TokenAuthService } from "../../@core/data/token-auth.service";
 
 interface CardSettings {
   title: string;
@@ -19,6 +20,7 @@ interface CardSettings {
 export class DashboardComponent implements OnDestroy {
   dealerCustomers: any;
   users: any = [];
+  user:any;
   data: any;
   total: any;
   expiringToday: any = [];
@@ -87,7 +89,7 @@ export class DashboardComponent implements OnDestroy {
     private themeService: NbThemeService,
     private userService: UserService,
     private dash: DashboardService,
-    private role: PermissionsService
+    public tokenAuthService: TokenAuthService,
   ) {
     this.themeService
       .getJsTheme()
@@ -97,7 +99,8 @@ export class DashboardComponent implements OnDestroy {
       });
   }
   ngOnInit() {
-    if (this.role['tokenAuthService'].user.user.role.name == 'Admin') {
+    this.user = this.tokenAuthService.user.user;
+    if (this.user.role.id == 1 || this.user.role.id == 6) {
       this.userService.getAllUser().subscribe((data1: any) => {
         this.users = data1.users;
       });

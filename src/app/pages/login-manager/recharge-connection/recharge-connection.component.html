@@ -9,7 +9,7 @@
         </nb-card-header>
         <nb-card-body>
 
-            <div class="row">
+            <div class="row" *ngIf="incomingConnection">
 
                 <div class="inner" style="margin: 0 auto;" *ngIf="countDown">
                     <h2>{{countDown | async}} seconds</h2>
@@ -23,7 +23,7 @@
                 <div class="col-lg-6">
                     <div class="form-group has-feedback">
                         <label>Login Name</label>
-                        <input type="text" class="form-control" [formControl]="form.controls['loginName']" id="loginName" />
+                        <input type="text" disabled class="form-control" [formControl]="form.controls['loginName']" id="loginName" />
                         <span (click)="copyToClipBoard('loginName')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                     </div>
                     <div class="form-group has-feedback" style="opacity: 0.7;">
@@ -34,14 +34,14 @@
                     <div class="singlePackage" [hidden]="isPackageChanged">
                         <div class="form-group has-feedback">
                             <label>Package</label>
-                            <input type="text" class="form-control" [formControl]="form.controls['package']" id="package" />
+                            <input type="text" disabled class="form-control" [formControl]="form.controls['package']" id="package" />
                             <span (click)="copyToClipBoard('package')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                         </div>
                     </div>
                     <div class="multiplePackage" [hidden]="!isPackageChanged">
                         <div class="form-group has-feedback">
                             <label>Old Package</label>
-                            <input type="text" class="form-control" [formControl]="form.controls['package']" id="package" />
+                            <input type="text" disabled class="form-control" [formControl]="form.controls['package']" id="package" />
                             <span (click)="copyToClipBoard('package')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                         </div>
                         
@@ -54,7 +54,7 @@
                     </div>
                     <div class="form-group has-feedback">
                         <label>First Name</label>
-                        <input type="text" class="form-control" [formControl]="form.controls['firstName']" id="firstName" />
+                        <input type="text" disabled class="form-control" [formControl]="form.controls['firstName']" id="firstName" />
                         <span (click)="copyToClipBoard('firstName')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                     </div>
                     <div class="form-group has-feedback" style="opacity: 0.7;">
@@ -63,17 +63,17 @@
                     </div>
                     <div class="form-group has-feedback">
                         <label>Password</label>
-                        <input type="text" class="form-control" [formControl]="form.controls['password']" id="password" />
+                        <input type="text" disabled class="form-control" [formControl]="form.controls['password']" id="password" />
                         <span (click)="copyToClipBoard('password')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                     </div>
                     <div class="form-group has-feedback">
                         <label>Phone No</label>
-                        <input type="text" class="form-control" [formControl]="form.controls['phoneNo']" id="phoneNo" />
+                        <input type="text" disabled class="form-control" [formControl]="form.controls['phoneNo']" id="phoneNo" />
                         <span (click)="copyToClipBoard('phoneNo')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                     </div>
                     <div class="form-group has-feedback">
                         <label>Address</label>
-                        <input type="text" class="form-control" [formControl]="form.controls['address']" id="address" />
+                        <input type="text" disabled class="form-control" [formControl]="form.controls['address']" id="address" />
                         <span (click)="copyToClipBoard('address')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                     </div>
                 </div>
@@ -83,44 +83,44 @@
                 <div class="col-lg-6">
                     <div class="form-group has-feedback">
                         <label>CNIC</label>
-                        <input type="search" class="form-control" [formControl]="form.controls['cnic']" id="cnic" />
+                        <input type="text" disabled class="form-control" [formControl]="form.controls['cnic']" id="cnic" />
                         <span (click)="copyToClipBoard('cnic')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
-                        <span (click)="copyToClipBoard('cnic')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
+                       
                     </div>
                     <div class="form-group has-feedback" style="opacity: 0.7;">
                         <label>Partner Id</label>
-                        <input type="text" disabled class="form-control" [formControl]="form.controls['partnerId']" id="partnerId" />
+                        <input type="text" disabled disabled class="form-control" [formControl]="form.controls['partnerId']" id="partnerId" />
                     </div>
                     <div class="form-group has-feedback"  [hidden]="!isPackageChanged">
                             <label>New Package</label>
-                            <input type="text" class="form-control" [formControl]="form.controls['new_package']" id="new_package" />
+                            <input type="text" disabled class="form-control" [formControl]="form.controls['new_package']" id="new_package" />
                             <span (click)="copyToClipBoard('new_package')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                     </div>
                     <div class="form-group has-feedback">
                         <label>Email</label>
-                        <input type="text" class="form-control" [formControl]="form.controls['email']" id="email" />
+                        <input type="text" disabled class="form-control" [formControl]="form.controls['email']" id="email" />
                         <span (click)="copyToClipBoard('email')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                     </div>
                     <div class="form-group has-feedback">
                         <label>Last Name</label>
-                        <input type="text" class="form-control" [formControl]="form.controls['lastName']" id="lastName" />
+                        <input type="text" disabled class="form-control" [formControl]="form.controls['lastName']" id="lastName" />
                         <span (click)="copyToClipBoard('lastName')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                     </div>
                     <div class="spacer">
                     </div>
                     <div class="form-group has-feedback">
                         <label>Confirm Password</label>
-                        <input type="text" class="form-control" [formControl]="form.controls['confirmPassword']" id="confirmPassword" />
+                        <input type="text" disabled class="form-control" [formControl]="form.controls['confirmPassword']" id="confirmPassword" />
                         <span (click)="copyToClipBoard('confirmPassword')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                     </div>
                     <div class="form-group has-feedback">
                         <label>Mobile No</label>
-                        <input type="text" class="form-control" [formControl]="form.controls['mobileNo']" id="mobileNo" />
+                        <input type="text" disabled class="form-control" [formControl]="form.controls['mobileNo']" id="mobileNo" />
                         <span (click)="copyToClipBoard('mobileNo')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                     </div>
                     <div class="form-group has-feedback">
                         <label>Remarks</label>
-                        <input type="text" class="form-control" [formControl]="form.controls['remarks']" id="remarks" />
+                        <input type="text" disabled class="form-control" [formControl]="form.controls['remarks']" id="remarks" />
                         <span (click)="copyToClipBoard('remarks')" class="glyphicon glyphicon-copy form-control-feedback clipIcon"></span>
                     </div>
                 </div>

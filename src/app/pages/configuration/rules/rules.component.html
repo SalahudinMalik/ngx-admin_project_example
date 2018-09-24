@@ -5,10 +5,13 @@
         <div class="col-lg-3 form-group has-feedback">
           <label>Account</label>
         </div>
-        <div class="col-lg-4 form-group has-feedback">
+        <div class="col-lg-2 form-group has-feedback">
+            <label>Workflow number</label>
+          </div>
+        <div class="col-lg-3 form-group has-feedback">
           <label>Debit</label>
         </div>
-        <div class="col-lg-4 form-group has-feedback">
+        <div class="col-lg-3 form-group has-feedback">
           <label>Credit</label>
         </div>
         <div class="col-lg-1">
@@ -18,11 +21,15 @@
         <div class="col-lg-3 form-group has-feedback">
           <custom-search [dataToSearch]="accountsNames" (onSelection)='selectedAccount($event)'></custom-search>
         </div>
-        <div class="col-lg-4 form-group has-feedback">
+        <div class="col-lg-2 form-group has-feedback">
+            <input type="number" class="form-control" formControlName="wf_number" id="wf_number"
+            />
+          </div>
+        <div class="col-lg-3 form-group has-feedback">
           <input type="text" class="form-control" readonly (click)="createFormula('debit',$event)" formControlName="debit" id="debit"
           />
         </div>
-        <div class="col-lg-4 form-group has-feedback">
+        <div class="col-lg-3 form-group has-feedback">
           <input type="text" class="form-control" readonly (click)="createFormula('credit',$event)" formControlName="credit" id="credit"
           />
         </div>

@@ -126,7 +126,7 @@ export class UserPermissionsComponent implements OnInit {
   print(event): void {
     // this.router.navigate(['print/customerprint', event.data.id]);
   }
-  addPermissions(s) {
+  addPermissions() {
     const activeModal = this.modalService.open(CreateUpComponent, {
       size: "lg",
       container: "nb-layout"

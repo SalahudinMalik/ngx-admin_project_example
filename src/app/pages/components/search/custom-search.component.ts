@@ -15,7 +15,8 @@ export class SearchComponent {
   @Input() public dataToSearch;
   @Output() public onSelection = new EventEmitter<any>();
   results: Array<any> = [];
-  constructor(private searchService: SearchService) {
+  //private searchService: SearchService
+  constructor() {
   }
   searchEntries(term: string) {
     let res: Array<any> = [];
@@ -35,5 +36,8 @@ export class SearchComponent {
     setTimeout(() => {
       this.results = [];
     }, 200);
+  }
+  public mapValue (value: string) {
+    this.formControlValue = value;
   }
 }

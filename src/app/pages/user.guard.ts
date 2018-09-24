@@ -28,7 +28,7 @@ export class UserGuard implements CanActivate {
         }
       }
     }
-    this.toastr.warning('Permission Not allowed "Contact Administrator"')
+    // this.toastr.warning('Permission Not allowed "Contact Administrator"')
     this.router.navigateByUrl('pages/welcome');
     return false
   }

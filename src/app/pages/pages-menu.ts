@@ -32,36 +32,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: 'General Ledger',
         link: '/pages/accounts/general-ledger',
+      },
+      {
+        title: 'Payment Entry',
+        link: '/pages/accounts/payment-entry',
       }],
   },
 
-  ///////////////////////////////////////////////////////////////////Connection///////////////////////////////////////////////////////////////////
-
-  {
-    title: "Connections",
-    icon: "nb-shuffle",
-    link: "/pages/connections/",
-    children: [
-      {
-        title: "Add Connection",
-        link: "/pages/connections/addConnection"
-      },
-      {
-        title: "Renew Connections",
-        link: "/pages/connections/renew",
-      },
-      {
-        title: "List Connections",
-        link: "/pages/connections/listConnections"
-      },
-      {
-        title: "Connection Expiration",
-        link: "/pages/connections/exConnections"
-      },
-
-    ]
-  },
-
+ 
   ///////////////////////////////////////////////////////////////////Customer///////////////////////////////////////////////////////////////////
 
   {
@@ -79,7 +57,65 @@ export const MENU_ITEMS: NbMenuItem[] = [
       }
     ]
   },
+////////////////////////////////////////invoices ///////////////////////////////////////////////////////
+{
+  title: "Invoice",
+  icon: "nb-compose",
+  link: "/pages/invoices/add-invoice",
+  children: [
+    {
+      title: "Add Invoice",
+      link: "/pages/invoices/add-invoice"
+    },
+    {
+      title: "List Invoice",
+      link: "/pages/invoices/list-invoice"
+    }
+  ]
+},
+ ///////////////////////////////////////////////////////////////////Connection///////////////////////////////////////////////////////////////////
 
+ {
+  title: "Connections",
+  icon: "nb-shuffle",
+  link: "/pages/connections/",
+  children: [
+    {
+      title: "Add Connection",
+      link: "/pages/connections/addConnection"
+    },
+    {
+      title: "Renew Connections",
+      link: "/pages/connections/renew",
+    },
+    {
+      title: "List Connections",
+      link: "/pages/connections/listConnections"
+    },
+    {
+      title: "Connection Expiration",
+      link: "/pages/connections/exConnections"
+    },
+
+  ]
+},
+ ///////////////////////////////////////////////////////////////////// Login Manager/////////////////////////////////////////////////////////////
+
+ {
+  title: "Login Manager",
+  icon: "nb-home",
+  link: "/pages/login-manager",
+  children: [
+    {
+      title: 'Document Verification',
+      link: '/pages/login-manager/document-verification',
+    },
+    {
+      title: 'Connection Verification',
+      link: '/pages/login-manager/recharge-connection',
+    },
+  ],
+},
 
   ///////////////////////////////////////////////////////////////////User///////////////////////////////////////////////////////////////////
 
@@ -196,23 +232,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
 
-  ///////////////////////////////////////////////////////////////////// Login Manager/////////////////////////////////////////////////////////////
-
-  {
-    title: "Login Manager",
-    icon: "nb-home",
-    link: "/pages/login-manager",
-    children: [
-      {
-        title: 'Document Verification',
-        link: '/pages/login-manager/document-verification',
-      },
-      {
-        title: 'Connection Verification',
-        link: '/pages/login-manager/recharge-connection',
-      },
-    ],
-  },
+ 
   ///////////////////////////////////////////////////////////////////Notifications///////////////////////////////////////////////////////////////////
 
   {
@@ -269,6 +289,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
         link: "/pages/permissions/userPermissions"
       }
     ]
+  },
+  ///////////////////////////////////////////////////////////////////Dealer Packages///////////////////////////////////////////////////////////////////
+
+  {
+    title: "Help",
+    icon: "nb-play",
+    link: "/pages/help",
+    home: true,
   },
 
   ///////////////////////////////////////////////////////////////////////// < Menu End >////////////////////////////////////////////////////////////////////////

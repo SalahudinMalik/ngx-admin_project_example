@@ -10,9 +10,9 @@ import { ToastrService } from '../../../../../node_modules/ngx-toastr';
   styleUrls: ['./assign-views.component.scss']
 })
 export class AssignViewsComponent implements OnInit {
-  private menu: any = [];
+   menu: any = [];
   public role_id;
-  private allRoles: any;
+   allRoles: any;
   public dataToSend = {
     role_id: '',
     menu: '',

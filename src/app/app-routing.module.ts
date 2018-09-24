@@ -47,6 +47,10 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'print',
+    loadChildren: './print/print.module#PrintModule'
+  },
   { path: '', redirectTo: 'pages', pathMatch: 'full' },
   { path: '**', redirectTo: 'auth/login' },
 ];

@@ -13,21 +13,36 @@ import { Router } from "@angular/router";
 })
 
 export class ListConnectionsComponent implements OnInit {
+  loader:boolean = false;
   settings = {
     pager: {
       display: true,
       perPage: '10',
     },
-    mode: "external",
+    // mode: "external",
     columns: {
-      id: {
-        title: "ID"
+      // id: {
+      //   title: "ID"
+      // },
+      username: {
+        title: "Username"
       },
-      address: {
-        title: "Address"
+      cnic: {
+        title: "CNIC",
       },
-      is_wireless: {
-        title: "Wireless?"
+      package: {
+        title: "Package",
+      },
+      customer: {
+        title: "Customer",
+  
+      },
+      registration_date: {
+        title: "Activation Date",
+      },
+      dealer: {
+        title: "Dealer",
+        
       },
       status_id: {
         type: "html",
@@ -35,31 +50,24 @@ export class ListConnectionsComponent implements OnInit {
         filter: false,
         valuePrepareFunction: (status_id) => {
           if (status_id == 1) {
-            return `<span>Pending&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+            return `<span class="fa fa-caret-square-o-right m-0 p-0">Pending&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
           }
           else if (status_id == 15) {
-            return `<span>Rejected&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+            return `<span class="fa fa-times-circle-o m-0 p-0">Rejected&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
           } 
           else if (status_id == 22) {
-            return `<span>Package Change&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+            return `<span class="fa fa-refresh m-0 p-0">Package Change&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
           }  
           else {
-            return `<span>Actived&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
+            return `<span class="fa fa-check m-0 p-0">Actived&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
           }
         }
       },
-      customers: {
-        title: "Customer ID",
-        type: "html",
-        filter: false,
-        valuePrepareFunction: (customers) => {
-            return `<span>`+customers.id+`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`;
-        }
-      }
     },
     actions: {
       add: false,
       delete:false,
+      edit:false,
     },
 
     edit: {
@@ -81,8 +89,9 @@ export class ListConnectionsComponent implements OnInit {
     this.getList();
   }
   getList() {
-    this.genericService.find('/connection/find').subscribe(data => { this.source = data.connection },
-       err => { this.source.refresh(); this.toaster.error(err.error.err || err.error)
+    this.loader = true;
+    this.genericService.find('/connection/connectionList').subscribe(data => { this.loader = false; this.source = data.connection },
+       err => { this.source.refresh();  this.loader = false; this.toaster.error(err.error.err || err.error)
        });
   }
   onDeleteConfirm(event): void {

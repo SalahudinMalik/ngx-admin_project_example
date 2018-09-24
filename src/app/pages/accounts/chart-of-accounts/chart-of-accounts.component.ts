@@ -14,10 +14,10 @@ declare global {
   styleUrls: ['./chart-of-accounts.component.scss']
 })
 export class ChartOfAccountsComponent implements OnInit {
-  private gridApi;
-  private gridColumnApi;
-  private rowData: any[];
-  private columnDefs = [
+  public gridApi;
+  public gridColumnApi;
+  public rowData: any[];
+  public columnDefs = [
     {
       field: "account_id",
       headerName: "Account ID",
@@ -27,15 +27,15 @@ export class ChartOfAccountsComponent implements OnInit {
       headerName: "Balance",
     },
   ];
-  private components;
-  private groupDefaultExpanded;
-  private getDataPath;
-  private getRowNodeId;
-  private autoGroupColumnDef;
-  private parentSelected: boolean;
+  public components;
+  public groupDefaultExpanded;
+  public getDataPath;
+  public getRowNodeId;
+  public autoGroupColumnDef;
+  public parentSelected: boolean;
   public parent_id: number;
   public root_type:number;
-  constructor(private modalService: NgbModal, public router: Router, public genericService: GenericStockService) {
+  constructor(public modalService: NgbModal, public router: Router, public genericService: GenericStockService) {
     this.setLicenceKey();
     this.components = { fileCellRenderer: getFileCellRenderer() };
     this.groupDefaultExpanded = -1;

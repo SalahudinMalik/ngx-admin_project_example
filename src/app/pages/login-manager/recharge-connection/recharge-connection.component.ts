@@ -86,7 +86,7 @@ export class RechargeConnectionComponent implements OnInit, OnDestroy {
         this.countUp = timer(0, 1000);
         this.timerSub = this.countUp.subscribe(x => {
 
-          if (x % 60 == 0) {
+          if (x % 60 == 0 && this.incomingConnection != null) {
             this.genericService.update('/connection/increaseTimer', { id: data.id }).subscribe();
             this.count = 60;
             this.countDown = timer(0, 1000).pipe(
@@ -115,7 +115,7 @@ export class RechargeConnectionComponent implements OnInit, OnDestroy {
         this.countUp = timer(0, 1000);
         this.timerSub = this.countUp.subscribe(x => {
 
-          if (x % 60 == 0) {
+          if (x % 60 == 0 && this.incomingConnection != null) {
             this.genericService.update('/connection/increaseTimer', { id: data.id }).subscribe();
             this.count = 60;
             this.countDown = timer(0, 1000).pipe(
@@ -144,7 +144,7 @@ export class RechargeConnectionComponent implements OnInit, OnDestroy {
         this.countUp = timer(0, 1000);
         this.timerSub = this.countUp.subscribe(x => {
 
-          if (x % 60 == 0) {
+          if (x % 60 == 0 && this.incomingConnection != null) {
             this.genericService.update('/connection/increaseTimer', { id: data.id }).subscribe();
             this.count = 60;
             this.countDown = timer(0, 1000).pipe(
@@ -249,4 +249,5 @@ export class RechargeConnectionComponent implements OnInit, OnDestroy {
 
     });
   }
+  onSubmit(){}
 }

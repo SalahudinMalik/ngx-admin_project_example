@@ -8,7 +8,7 @@
 </div> -->
 
 
-<div class="row">
+<div class="row" >
   <!-- <div class="col-xxxl-9 col-xl-12">
     <ngx-rooms></ngx-rooms>
   </div> -->
@@ -43,14 +43,14 @@
   </div> -->
 </div>
 
-<div class="row">
+<div class="row" *ngIf="this.user.role.id == 1 || this.user.role.id == 6">
 
 
   <div class="col-xxxl-12 col-xxl-12 col-lg-12 col-md-12">
     <ngx-electricity></ngx-electricity>
   </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="this.user.role.id == 1 || this.user.role.id == 6">
   <div *ngFor="let user of users" class="col-xxxl-3 col-xxl-3 col-lg-5 col-md-6">
     <ngx-solar [chartValue]="user"></ngx-solar>
 

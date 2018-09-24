@@ -13,7 +13,7 @@
           <nb-card-header>Customer Information </nb-card-header>
           <nb-card-body>
 
-            <div class="form-group" >
+            <div class="form-group"  *ngIf="!id">
               <label class="mr-3" >Customer</label>
               <custom-search  [title]="'Search Customer by username'" (change)="customerFieldChange()" [dataToSearch]="searchAbleArray"
                 (onSelection)='afterSelectingRecord($event)'></custom-search>
@@ -87,24 +87,22 @@
                 is required.</div>
             </div>
             <div class="form-group ">
-              <div><label>Packages</label></div>
-              <div class="form-inline" style="width: 100%; align-items: start;">
-                <select class="form-control"  style="width: 97%" [(ngModel)]="selectedPackage" [formControl]="form.controls['packages']" (change)="packageChange($event)"
+              <label>Packages*</label>
+             
+                <select class="form-control"   [(ngModel)]="selectedPackage" [formControl]="form.controls['packages']" (change)="packageChange()"
                   [ngClass]="{'form-control-danger': form.controls['packages'].hasError('required') && form.controls['packages'].touched}">
                   <option *ngFor="let package of packagesList" [ngValue]="package">{{package.packages?.package_name}}</option>
                 </select>
-                <span class="m-1">*</span>
-              </div>
+          
               <div class="m-1" *ngIf="form.controls['packages'].hasError('required') && form.controls['packages'].touched">package
                 is required.</div>
             </div>
             <div class=" form-group">
-              <div><label>Packages Price</label></div>
-              <div class="form-inline" style="width: 100%; align-items: start;">
-              <input type="number" style="width: 97%" placeholder="Packages Price" [formControl]="form.controls['connection_price']" [ngClass]="{'form-control-danger': form.controls['connection_price'].hasError('required') && form.controls['connection_price'].touched}"
+              <label>Packages Price*</label>
+             
+              <input type="number" placeholder="Packages Price" [formControl]="form.controls['connection_price']" [ngClass]="{'form-control-danger': form.controls['connection_price'].hasError('required') && form.controls['connection_price'].touched}"
                 class="form-control" />
-                <span class="m-1">*</span>
-              </div>
+              
               <div class="m-1" *ngIf="form.controls['connection_price'].hasError('required') && form.controls['connection_price'].touched">Packages
                 Price is required.</div>
             </div>
@@ -112,7 +110,7 @@
               <label>Is Wireless</label>
               <select class="form-control" [formControl]="form.controls['is_wireless']">
                 <option value="1">Yes</option>
-                <option value="0" [selected]="true">No</option>
+                <option value="0">No</option>
               </select>
             </div>
             <div class="form-group" *ngIf="user.role.id != 2">
@@ -126,8 +124,9 @@
             <div class="form-group">
               <label>Router of</label>
               <select class="form-control" [formControl]="form.controls['router_of']">
+                 
                 <option value="0">Customer</option>
-                <option value="1" [selected]="true">Company</option>
+                <option value="1">Company</option>
                 <option value="2">Dealer</option>
               </select>
             </div>
@@ -147,8 +146,9 @@
             <div class=" form-group">
               <label>DropWire of</label>
               <select class="form-control" [formControl]="form.controls['drop_wire_of']">
+                 
                 <option value="0">Customer</option>
-                <option value="1" [selected]="true">Company</option>
+                <option value="1">Company</option>
                 <option value="2">Dealer</option>
               </select>
             </div>
@@ -164,7 +164,7 @@
             </div>
 
             <div class="form-group">
-              <label>Attach Signed Document</label>
+              <label>Attach Signed Document*</label>
               <div class="form-control">
                 <label class="btn btn-primary ">
                   Browse
@@ -172,7 +172,9 @@
                 </label>
                 <label [hidden]="signedDoc">&nbsp;&nbsp; Signed Document &nbsp;&nbsp; </label>
                 <label class="m-1" *ngIf="signedDoc?.name">&nbsp;&nbsp;Signed Document Added</label>
+               
               </div>
+              <!-- <span class="m-1">*</span> -->
             </div>
             <div class=" form-group">
               <label>Connection Address</label>

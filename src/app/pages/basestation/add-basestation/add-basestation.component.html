@@ -31,7 +31,7 @@
               <div class="m-1" *ngIf="form.controls['address'].hasError('required') && form.controls['address'].touched">Maxusers is required.</div>
             </div>
             <div class="float-right">
-              <button type="submit" [disabled]="!form.valid && btnSave" class="btn btn-primary btn-md">Save</button>
+              <button type="submit" [disabled]="!form.valid" class="btn btn-primary btn-md">Save</button>
             </div>
           </nb-card-body>
         </nb-card>

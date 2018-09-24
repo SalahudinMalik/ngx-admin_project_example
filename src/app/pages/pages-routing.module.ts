@@ -35,8 +35,18 @@ var routes: Routes = [
       },
       {
         canActivate: [UserGuard],
+        path: "invoices",
+        loadChildren: "./invoices/invoices.module#InvoicesModule",
+      },
+      {
+        canActivate: [UserGuard],
         path: "user",
         loadChildren: "./user/user.module#DealersModule",
+      },
+      {
+        canActivate: [UserGuard],
+        path: "help",
+        loadChildren: "./help/help.module#HelpModule",
       },
       {
         canActivate: [UserGuard],

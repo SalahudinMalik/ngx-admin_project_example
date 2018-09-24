@@ -35,6 +35,7 @@ export class RulesComponent implements OnInit {
       journalentryaccount: this.formbuilder.array([
         this.formbuilder.group({
           account: [null, Validators.required],
+          wf_number: [null, Validators.required],
           debit: [null, Validators.required],
           credit: [null, Validators.required]
         })], Validators.required)
@@ -48,6 +49,7 @@ export class RulesComponent implements OnInit {
     if (cNull.account != null && cNull.debit != null && cNull.credit != null) {
       this.journalentryaccount.push(this.formbuilder.group({
         account: [null, Validators.required],
+        wf_number: [null, Validators.required],
         debit: [0, Validators.required],
         credit: [0, Validators.required]
       }));
@@ -71,10 +73,10 @@ export class RulesComponent implements OnInit {
     activeModal.result.then(
       (data: any) => {
         if (creditOrDebit == 'debit') {
-          this.journalentryaccount.at(lengthOfWF - 1).patchValue({ debit: data });
+          this.journalentryaccount.at(lengthOfWF - 1).patchValue({ debit: data.trim() });
         }
         else {
-          this.journalentryaccount.at(lengthOfWF - 1).patchValue({ credit: data });
+          this.journalentryaccount.at(lengthOfWF - 1).patchValue({ credit: data.trim() });
         }
       }, () => {
         // consol

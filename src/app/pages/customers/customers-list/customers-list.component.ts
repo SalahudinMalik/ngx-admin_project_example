@@ -11,6 +11,7 @@ import { GenericStockService } from "../../../@core/data/generic-stock.service";
 })
 export class CustomersListComponent implements OnInit {
   delete: any;
+  loader:boolean = false;
   source: LocalDataSource = new LocalDataSource();
   constructor(
     private router: Router,
@@ -24,9 +25,9 @@ export class CustomersListComponent implements OnInit {
       perPage: "10"
     },
     columns: {
-      id: {
-        title: "Customer ID"
-      },
+      // id: {
+      //   title: "Customer ID"
+      // },
       first_name: {
         title: "First Name"
       },
@@ -39,8 +40,24 @@ export class CustomersListComponent implements OnInit {
       mobile: {
         title: "Mobile No"
       },
-      email: {
-        title: "Email"
+      createdBy: {
+        title: "Dealer",
+        type:"html",
+        filter:true,
+        valuePrepareFunction:(createdBy) =>{
+          return createdBy.first_name;
+        },
+        filterFunction(cell?: any, search?: string): boolean {          
+          // if (cell >= search || search === '') {
+          //   return true;
+          // } else {
+          //   return false;
+          // }       
+          if(cell.toLowerCase().indexOf(search) > -1)
+            return true;
+          return false;   
+        }
+
       },
       customerverify: {
         title: "Verification",
@@ -93,9 +110,11 @@ export class CustomersListComponent implements OnInit {
     this.getList();
   }
   getList() {
+    this.loader = true;
     this.genericService.find('/customer/find').subscribe(data => {
       this.source = data.customers
-    }, err => { this.toaster.error(err.error.err) });
+      this.loader = false;
+    }, err => { this.loader = false; this.toaster.error(err.error.err) });
   }
   onDeleteConfirm(event): void {
     this.genericService.deleteOne('/customer/delete', event.data.id).subscribe(data => {

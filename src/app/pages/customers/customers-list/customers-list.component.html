@@ -1,10 +1,15 @@
 <nb-card>
   <nb-card-header>
     Customer List
-    <i (click)="refresh()" class="ion-refresh float-right"></i>
+    <i (click)="ngOnInit()" class="ion-refresh float-right"></i>
   </nb-card-header>
   <nb-card-body>
-    <ng2-smart-table [settings]="settings" (custom)="print($event)" [source]="source" (userRowSelect)="onUserRowSelect($event)" (deleteConfirm)="onDeleteConfirm($event)">
-    </ng2-smart-table>
+    <div class="loader" *ngIf="loader">
+
+    </div>
+    <div *ngIf="!loader">
+      <ng2-smart-table [settings]="settings" [source]="source" (userRowSelect)="onUserRowSelect($event)" (deleteConfirm)="onDeleteConfirm($event)">
+      </ng2-smart-table>
+    </div>
   </nb-card-body>
 </nb-card>

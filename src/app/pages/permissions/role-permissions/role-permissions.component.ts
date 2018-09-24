@@ -111,7 +111,7 @@ export class RolePermissionsComponent implements OnInit {
       }
     );
   }
-  addPermissions(s) {
+  addPermissions() {
     const activeModal = this.modalService.open(CreateComponent, {
       size: "lg",
       container: "nb-layout"

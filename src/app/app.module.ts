@@ -55,8 +55,8 @@ import { PermissionsModule } from "./pages/permissions/permissions.module";
             class: NbAuthJWTToken,
             key: "token"
           },
-          // baseEndpoint: "http://35.240.250.237:1337/",
-          baseEndpoint: "http://192.168.31.93:1337/",
+          baseEndpoint: "http://35.240.250.237:1337/",
+          // baseEndpoint: "http://192.168.0.123:1337/",
           login: {
             endpoint: "user/login",
             method: "post",

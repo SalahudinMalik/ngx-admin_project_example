@@ -8,6 +8,7 @@ import { InputComponent } from './chart-of-accounts/input.component';
 import { Ng2SmartTableModule } from '../../../../node_modules/ng2-smart-table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
+import { ComponentsModule } from '../components/components.module';
 @NgModule({
   entryComponents: [InputComponent],
   imports: [
@@ -18,6 +19,7 @@ import { AgGridModule } from 'ag-grid-angular';
     AngularFontAwesomeModule,
     Ng2SmartTableModule,
     ReactiveFormsModule,
+    ComponentsModule,
     AgGridModule.withComponents([])
   ],
   declarations: [...routedComponents]

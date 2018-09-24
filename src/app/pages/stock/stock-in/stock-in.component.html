@@ -4,7 +4,7 @@
     <i (click)="addWareHouse()" class="ion-plus float-right"></i>
   </nb-card-header>
   <nb-card-body>
-    <ng2-smart-table [settings]="settings" (custom)="print($event)" [source]="source" (userRowSelect)="onUserRowSelect($event)"
+    <ng2-smart-table [settings]="settings"  [source]="source" 
       (deleteConfirm)="deleteWareHouse($event)">
     </ng2-smart-table>
   </nb-card-body>

@@ -63,7 +63,7 @@ export class StockOutComponent implements OnInit {
 
   public ngOnInit() {
     this.genericStockService.find('/stockout/find').subscribe(data => {
-      this.source.load(data.stockIn);
+      this.source.load(data.stockOut);
     }, err => {
     });
   }

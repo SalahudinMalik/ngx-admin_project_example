@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GenericStockService } from '../../../@core/data/generic-stock.service';
 import { LocalDataSource } from '../../../../../node_modules/ng2-smart-table';
 import { ToastrService } from '../../../../../node_modules/ngx-toastr';
-
+import { DatePipe } from '../../../../../node_modules/@angular/common';
 @Component({
   selector: 'rules-list',
   templateUrl: './rules-list.component.html',
@@ -25,14 +25,38 @@ export class RulesListComponent implements OnInit {
       },
       createdAt: {
         title: "Creation Date",
-        filter: true
+        filter: true,
+        valuePrepareFunction: (purchase_date) => {
+          var raw = new Date(purchase_date);
+          var formatted = this.datePipe.transform(raw, 'dd MMM yyyy');
+          return formatted;
+        }
       },
       credit: {
         title: "Credit Formula "
       },
       debit: {
         title: "Debit Formula"
-      }
+      },
+      account: {
+        title: "Account Name",
+        type:"html",
+        filter:true,
+        valuePrepareFunction:(account) =>{
+          return account.name;
+        },
+        filterFunction(cell?: any, search?: string): boolean {          
+          // if (cell >= search || search === '') {
+          //   return true;
+          // } else {
+          //   return false;
+          // }       
+          if(cell.toLowerCase().indexOf(search) > -1)
+            return true;
+          return false;   
+        }
+
+      },
     },
     actions: {
       add: false,
@@ -44,7 +68,8 @@ export class RulesListComponent implements OnInit {
     }
 
   }
-  constructor(public genericService: GenericStockService, public toaster: ToastrService) { }
+  constructor(public genericService: GenericStockService,
+    private datePipe: DatePipe, public toaster: ToastrService) { }
 
   ngOnInit() {
     this.getWFs();

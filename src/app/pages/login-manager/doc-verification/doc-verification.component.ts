@@ -75,6 +75,9 @@ export class DocVerificationComponent implements OnInit {
     this.genericService.find('/connection/docFind').subscribe(data => {
       // console.log(data);
       this.incomingConnection = data;
+      this.cnicBack = '/assets/images/loading.gif';
+    this.cnicFront ='/assets/images/loading.gif';
+    this.regForm = '/assets/images/loading.gif';
       this.patchValuesOnFE();
       this.countDown = timer(0, 1000).pipe(
         take(this.count),
@@ -84,7 +87,7 @@ export class DocVerificationComponent implements OnInit {
       this.countUp = timer(0, 1000);
       this.timerSub = this.countUp.subscribe(x => {
 
-        if (x % 60 == 0) {
+        if (x % 60 == 0 && this.incomingConnection != null) {
           this.genericService.update('/connection/increaseTimer', { id: data.id }).subscribe();
           this.count = 60;
           this.countDown = timer(0, 1000).pipe(
@@ -103,7 +106,7 @@ export class DocVerificationComponent implements OnInit {
       this.regForm = null   });
   }
   public patchValuesOnFE() {
-
+    
     this.form.patchValue({
       loginName: this.incomingConnection.customers.username,
       cnicNo: this.incomingConnection.customers.cnic,
@@ -160,7 +163,6 @@ export class DocVerificationComponent implements OnInit {
     // activeModal.componentInstance.modalContent = event.data;
     activeModal.result.then(
       (result) => {
-        console.log('result' , result);
         if(result){
           this.genericService.create('/connection/rejectDoc' , {id:this.incomingConnection.id , rejectType:result})
             .subscribe((res:any) =>{

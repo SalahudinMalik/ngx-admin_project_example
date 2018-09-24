@@ -10,7 +10,7 @@ import * as _ from 'lodash';
 import { CustomValidationService } from "./customValidationService";
 import { CustomersService } from "../../../@core/data/customers.service";
 import { ToastrService } from "ngx-toastr";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Customer } from "../../../models/customer.model";
 import { FileUploadService } from "../../../@core/data/file-upload.service";
 import { GenericStockService } from "../../../@core/data/generic-stock.service";
@@ -43,6 +43,7 @@ export class CustomerComponent implements OnInit {
   dealerList: any = [];
   private sub: any;
   btnSave: boolean;
+  cbRole: any;
   public form: FormGroup;
   public formm: FormGroup;
   constructor(
@@ -53,15 +54,14 @@ export class CustomerComponent implements OnInit {
     private route: ActivatedRoute,
     private genericService: GenericStockService,
     private tokenAuthService: TokenAuthService,
-    private userService: UserService,
+    private router: Router
   ) {
 
   }
   ngOnInit() {
 
     this.user = this.tokenAuthService.user.user;
-    this.cnicFront = '/assets/images/cnicFront.jpg';
-    this.cnicBack = '/assets/images/cnicBack.jpg';
+
     this.showTimeline = false;
     this.form = this.fb.group({
       firstName: [null, Validators.required],
@@ -92,26 +92,51 @@ export class CustomerComponent implements OnInit {
       password: [null,
         // Validators.pattern("^[0-9]*$"),
       ],
-
+      rbRole: [null],
     });
+    // this.form.patchValue({ rbRole: '1' });
     this.sub = this.route.params.subscribe(params => {
       this.id = params["id"]; // (+) converts string 'id' to a number
       if (this.id !== undefined) {
+        this.cnicBack = this.cnicFront = '/assets/images/loading.gif';
         this.showTimeline = true;
         this.editable = true;
         this.customersService.getOneCustomer(this.id).subscribe((data: any) => {
           this.data = data;
+          this.mobileNumber = data.mobile;
           this.form.patchValue({
             firstName: data.first_name,
             lastName: data.last_name,
             cnicNo: data.cnic,
             email: data.email,
             mobileNo: data.mobile,
-            password: data.password,
+            // password: '12312'//parseInt(data.password),
           });
+          this.selectedDealer = data.createdBy;
           // this.form.('password');
           this.cnicBack = data.cnicBack;
           this.cnicFront = data.cnicFront;
+          this.verifyM = data.manually_mobile_verified;
+
+          for (let c of data.customerverify) {
+            if (c.doc_type == 1) {
+              this.numberVerified = c.is_verified;
+              this.verifyM = c.is_verified;
+            }
+          }
+          this.password = parseInt(data.password);
+          this.form.get('password').setValidators([
+            Validators.required,
+          ]);
+          this.form.get('cnicNo').setValidators([
+            Validators.required,
+            Validators.compose([
+              // Validators.required,
+              Validators.minLength(13),
+              Validators.maxLength(15),
+              Validators.pattern("^[1-9]{1}[0-9]{4}(-)?[0-9]{7}(-)?[0-9]{1}$")
+            ])
+          ]);
           this.form.disable();
           this.btnSave = false;
           this.onChange();
@@ -120,8 +145,12 @@ export class CustomerComponent implements OnInit {
             this.toastr.error(err.error.err || err.error);
           });
       }
+      else {
+        this.cnicFront = '/assets/images/cnicFront.jpg';
+        this.cnicBack = '/assets/images/cnicBack.jpg';
+      }
     });
-    if (this.user.role.id == 1) {
+    if (this.user.role.id == 1 || this.user.role.id == 6) {
       this.genericService.find('/user/find?filters%5B%5D=1&role_id=2').subscribe(data => {
         this.dealerList = data.users;
       }, err => {
@@ -134,7 +163,12 @@ export class CustomerComponent implements OnInit {
     this.form.enable();
     this.editable = false;
   }
-
+  rbchange() {
+    // console.log(this.form.value.rbRole);
+    if (this.form.value.rbRole == 1) {
+      this.selectedDealer = null;
+    }
+  }
   disableEdit() {
     this.form.disable();
     this.editable = true;
@@ -187,9 +221,10 @@ export class CustomerComponent implements OnInit {
       email: this.form.value.email,
       password: this.form.value.password,
       verifyManually: this.verifyM,
-      createdBy: this.selectedDealer == undefined ? null : this.selectedDealer.id,
+      createdBy: this.selectedDealer == undefined ? this.user.role.id == 6 ? 1 : null :
+        this.selectedDealer.role == 6 ? 1 : this.selectedDealer.id,
     };
-    console.log(data);
+    // console.log(data);
     if (!this.showTimeline) {
       this.genericService.create('/customer/create', data).subscribe(
         data => {
@@ -197,7 +232,10 @@ export class CustomerComponent implements OnInit {
             this.uploadFile(data.id);
           }
           this.form.reset();
+          this.cnicFront = '/assets/images/cnicFront.jpg';
+          this.cnicBack = '/assets/images/cnicBack.jpg';
           this.toastr.success("customer added successfully.");
+          this.router.navigateByUrl('pages/customers/listCustomer');
         },
         err => {
           this.toastr.error(err.error.err || err.error);
@@ -207,7 +245,7 @@ export class CustomerComponent implements OnInit {
       );
       this.verifyM = false;
     } else if (this.showTimeline) {
-      this.customersService.updateCustomer(data).subscribe(
+      this.genericService.update('/customer/update', data).subscribe(
         data1 => {
           console.log('upload filed', data1)
           if (this.cnicBackPic && this.cnicFrontPic && data.id) {
@@ -215,6 +253,7 @@ export class CustomerComponent implements OnInit {
             this.uploadFile(data.id);
           }
           this.toastr.success("Customer Data Updated.");
+          this.router.navigateByUrl('pages/customers/listCustomer');
 
         },
         err => {
@@ -272,6 +311,7 @@ export class CustomerComponent implements OnInit {
         if (data.validity == true) {
           this.toastr.success("Code Verified :)")
           this.numberVerified = true;
+          this.mobileNumber = this.form.value.mobileNo;
         }
         else {
           this.toastr.error('Wrong or Expired code');
@@ -286,7 +326,8 @@ export class CustomerComponent implements OnInit {
     this.toastr.success('please wait')
     this.loader = true;
     if (this.form.value.mobileNo) {
-      this.genericService.create('/customer/getToken', { mobile: this.form.value.mobileNo }).subscribe((data) => {
+      this.verificationCode = null;
+      this.genericService.create('/customer/getToken', { mobile: this.form.value.mobileNo , id:this.id }).subscribe((data) => {
         if (data[0].status == '1') {
           this.toastr.success('code sent to your mobile number');
         }
@@ -301,11 +342,22 @@ export class CustomerComponent implements OnInit {
         });
     }
   }
+
   controlVerifyNo() {
     this.verificationCode = null;
-    this.numberVerified = false;
+    if (this.mobileNumber != this.form.value.mobileNo) {
+      this.numberVerified = false;
+      this.verifyM = false;
+    }
+    if (this.mobileNumber == this.form.value.mobileNo) {
+      this.numberVerified = true;
+    }
   }
+
   verifyManually() {
     this.verifyM = true;
+    this.numberVerified = true;
+    this.mobileNumber = this.form.value.mobileNo;
+    this.toastr.success('Mobile number verified.')
   }
 }

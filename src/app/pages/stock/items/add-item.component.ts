@@ -39,4 +39,5 @@ export class AddItem implements OnInit {
             this.activeModal.close(this.modalData);
         });
     }
+    dealerChange(){}
 }

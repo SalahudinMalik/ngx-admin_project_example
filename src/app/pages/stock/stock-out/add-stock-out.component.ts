@@ -79,7 +79,7 @@ export class AddStockOut implements OnInit {
         this.userService.getAllUser(2).subscribe((data: any) => { this.clientData = data.users });
     }
     public getCustomers() {
-        this.genericStockService.find('/customer/find').subscribe(data => { this.clientData = data.supplier });
+        this.genericStockService.find('/customer/find').subscribe(data => { this.clientData = data.customers });
     }
 
     typeChange() {

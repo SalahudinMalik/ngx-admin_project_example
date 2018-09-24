@@ -11,6 +11,7 @@ import { ToastrService } from "../../../../../node_modules/ngx-toastr";
 })
 export class ExConnectionComponent implements OnInit {
   delete: boolean;
+  loader: boolean = false;
   settings = {
     pager: {
       display: true,
@@ -39,7 +40,7 @@ export class ExConnectionComponent implements OnInit {
     actions: {
       add: false,
       edit: false,
-      delete: this.delete
+      delete: false,
     },
     delete: {
       deleteButtonContent: '<i class="nb-trash"></i>',
@@ -52,7 +53,7 @@ export class ExConnectionComponent implements OnInit {
     private role: PermissionsService,
     public toaster: ToastrService
   ) {
-    
+
   }
 
   ngOnInit() {
@@ -66,8 +67,15 @@ export class ExConnectionComponent implements OnInit {
     this.getList();
   }
   getList() {
+    this.loader = true;
     this.genericService.find('/connrenewal/finddata').subscribe(data => {
-      if (data.dataArray) { this.source = data.dataArray } else { this.toaster.error(data.msg); }
-    }, err => { this.toaster.error(err.error.err || err.error)});
+      if (data.dataArray) { this.source = data.dataArray }
+      else {
+        this.toaster.error(data.msg);
+        
+      }
+      this.loader = false;
+    },
+      err => { this.toaster.error(err.error.err || err.error); this.loader = false; });
   }
 }

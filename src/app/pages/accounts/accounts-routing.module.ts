@@ -6,6 +6,7 @@ import { InputComponent } from './chart-of-accounts/input.component';
 import { JournalEntryListComponent } from './journal-entry-list/journal-entry-list.component';
 import { JournalEntryComponent } from './journal-entry/journal-entry.component';
 import { GeneralLedgerComponent } from './general-ledger/general-ledger.component';
+import { PaymentEntryComponent } from './payment-entry/payment-entry.component';
 const routes: Routes = [
   {
     path: '',
@@ -31,6 +32,14 @@ const routes: Routes = [
     {
       path: "general-ledger/:id",
       component: GeneralLedgerComponent
+    },
+    {
+      path: "payment-entry",
+      component: PaymentEntryComponent
+    },
+    {
+      path: "payment-entry/invoice",
+      component: PaymentEntryComponent
     }
     ]
   }
@@ -47,5 +56,6 @@ export const routedComponents = [
   InputComponent,
   JournalEntryComponent,
   JournalEntryListComponent,
-  GeneralLedgerComponent
+  GeneralLedgerComponent,
+  PaymentEntryComponent
 ];

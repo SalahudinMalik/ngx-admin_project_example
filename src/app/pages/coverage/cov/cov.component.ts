@@ -21,6 +21,7 @@ export class CovComponent implements OnInit {
   dealerId: any;
   selectedOverlay: any;
   dealers: any;
+  user: any;
   permission: any;
   polygonoptions: PolygonOptions = {
     fillColor: "#3d3780",
@@ -34,15 +35,12 @@ export class CovComponent implements OnInit {
     public userService: UserService,
     public mapService: MapService,
     private toasterService: ToastrService,
-    private permissionService: NgxPermissionsService,
-    private activeUser: TokenAuthService
+    private tokenAuthService: TokenAuthService,
   ) {}
   ngOnInit() {
-    var permissions = this.permissionService.getPermissions();
-    this.permissionService.permissions$.subscribe(permissions => {
-      this.permission = permissions;
-    });
-
+    this.user = this.tokenAuthService.user.user;
+   
+    
     this.drawingManager["initialized$"].subscribe(dm => {
       google.maps.event.addListener(dm, "overlaycomplete", event => {
         if (event.type !== google.maps.drawing.OverlayType.MARKER) {
@@ -67,21 +65,21 @@ export class CovComponent implements OnInit {
       });
     });
     this.getDealers();
-    if (this.permission.Admin) {
+    if (this.user.role.id !== 2) {
       this.findAllDealersMap();
     }
   }
   getDealers() {
-    if (this.permission.Admin) {
+    if (this.user.role.id !== 2) {
       this.userService.getAllUser().subscribe((data: any) => {
         if (data) {
           this.dealers = data.users;
-          this.dealerId = this.dealers.id;
+          this.dealerId = this.user.id;
         }
       });
-    } else if (this.permission.Dealer) {
-      this.dealers = this.activeUser.user.user;
-      this.dealerId = this.activeUser.user.user.id;
+    } else if (this.user.role.id == 2) {
+      this.dealers = this.user;
+      this.dealerId = this.user.id;
       this.findOne(this.dealerId);
     }
   }

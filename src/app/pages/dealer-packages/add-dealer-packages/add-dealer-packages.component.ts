@@ -14,6 +14,7 @@ import { Ng2SmartTableModule, LocalDataSource } from "ng2-smart-table";
 import { DealerPackageService } from "../../../@core/data/dealerpackage.service";
 import { ToastrService } from "ngx-toastr";
 import * as _ from "lodash";
+import { GenericStockService } from "../../../@core/data/generic-stock.service";
 
 @Component({
   selector: "add-dealer-packages",
@@ -37,7 +38,8 @@ export class AddDealerPackagesComponent implements OnInit {
     private userService: UserService,
     private modalService: NgbModal,
     private dpService: DealerPackageService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private genericService:GenericStockService,
   ) { }
 
   settings = {
@@ -71,8 +73,10 @@ export class AddDealerPackagesComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.userService.getAllUser().subscribe((data: any) => {
+    this.genericService.find('/user/find?filters%5B%5D=1&role_id=2').subscribe(data => {
       this.dealerObj = data.users;
+    }, err => {
+      this.toastr.error(err.error.err || err.error);
     });
     this.form = this.fb.group({
       dealerGroup: [null, Validators.required]

@@ -9,7 +9,7 @@
             </button>
           </nb-card-header>
           <nb-card-body>
-            <div class="row">
+            <div class="row" *ngIf="incomingConnection">
 
               <div class="inner" style="margin: 0 auto;" *ngIf="countDown">
                 <h2>{{countDown | async}} seconds</h2>
@@ -36,7 +36,7 @@
               <div class="col-lg-6">
                 <div class="form-group">
                   <label class="control-label">Mobile Number</label>
-                  <input [(ngModel)]="mobileNumber" type="text" placeholder="XXXX-XXXXXXX" mask="0000-0000000" class="form-control" pattern="[0][3][01234][0123456789][0-9]{7}"
+                  <input type="text" placeholder="XXXX-XXXXXXX" mask="0000-0000000" class="form-control" pattern="[0][3][01234][0123456789][0-9]{7}"
                     [formControl]="form.controls['mobileNo']" disabled />
                 </div>
               </div>
@@ -44,7 +44,7 @@
                 <div class=" form-group">
                   <label>CNIC</label>
                   <input #cnic id="cnicInput" value="" type="text" placeholder="XXXXX-XXXXXXXX-X" mask="00000-0000000-0" class="form-control"
-                    [(ngModel)]="cnicNo" [formControl]="form.controls['cnicNo']" disabled />
+                     [formControl]="form.controls['cnicNo']" disabled />
 
                 </div>
               </div>

@@ -33,7 +33,7 @@ export class RenewPageComponent implements OnInit {
       connection_address: selectedConnection.address,
       dealer_name: selectedConnection.dealer.first_name,
       dealer_mobile: selectedConnection.dealer.mobile,
-      package_name: selectedConnection.packages.package_name,
+      package_name: selectedConnection.new_package.package_name,
       connection_price: selectedConnection.connection_price,
     });
   }

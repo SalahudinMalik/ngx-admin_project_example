@@ -240,7 +240,7 @@ export class RechargeConnectionComponent implements OnInit, OnDestroy {
       firstName: this.incomingConnection.customers.first_name,
       lastName: this.incomingConnection.customers.last_name,
       // status: this.incomingConnection.customers.status,
-      password: this.incomingConnection.password,
+      password: this.incomingConnection.customers.password,
       confirmPassword: this.incomingConnection.password,
       // phoneNo: this.incomingConnection.customers.phoneNo,
       mobileNo: this.incomingConnection.customers.mobile,

@@ -1,36 +1,41 @@
 <form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
   <fieldset>
-      <div class="row mr-1" id="outer">
+    <div class="row mr-1" id="outer">
 
-          <div class="col-lg-12" *ngIf="rejectReason">
-              <h5 class="text-danger text-center">Form Rejection Reason : {{rejectReason}}</h5>
-          </div>
+      <div class="col-lg-12" *ngIf="rejectReason">
+        <h5 class="text-danger text-center">Form Rejection Reason : {{rejectReason}}</h5>
       </div>
+    </div>
     <div class="row " id="outer">
-       
+
       <div id="inner" class="col-lg-6">
         <nb-card>
           <nb-card-header>Customer Information </nb-card-header>
           <nb-card-body>
 
-            <div class="form-group"  *ngIf="!id">
-              <label class="mr-3" >Customer</label>
-              <custom-search  [title]="'Search Customer by username'" (change)="customerFieldChange()" [dataToSearch]="searchAbleArray"
+            <div class="form-group" *ngIf="!id">
+              <label class="mr-3">Customer</label>
+              <custom-search [title]="'Search Customer by username'" (change)="customerFieldChange()" [dataToSearch]="searchAbleArray"
                 (onSelection)='afterSelectingRecord($event)'></custom-search>
             </div>
             <div *ngIf="selectedRecord" class="customerDetails">
+              <div class="form-group">
+                <label>Invoice Number</label>
+                <input readonly type="text" [disabled]="true" id="normal-field" placeholder="Invoice" class="form-control"
+                  [formControl]="form.controls['invoices']" [ngClass]="{'form-control-danger': form.controls['invoices'].hasError('required') && form.controls['invoices'].touched}" />
+              </div>
               <div class="row">
+
                 <div class="col-sm-6  form-group">
                   <label>First Name</label>
-                  <input readonly type="text" [disabled]="true" id="normal-field" placeholder="First Name" class="form-control" [formControl]="form.controls['first_name']"
-                    [ngClass]="{'form-control-danger': form.controls['first_name'].hasError('required') && form.controls['first_name'].touched}"
-                  />
+                  <input readonly type="text" [disabled]="true" id="normal-field" placeholder="First Name" class="form-control"
+                    [formControl]="form.controls['first_name']" [ngClass]="{'form-control-danger': form.controls['first_name'].hasError('required') && form.controls['first_name'].touched}" />
                 </div>
+
                 <div class="col-sm-6  form-group">
                   <label>Last Name</label>
-                  <input readonly type="text" [disabled]="true" placeholder="Last Name" class="form-control" [formControl]="form.controls['last_name']"
-                    [ngClass]="{'form-control-danger': form.controls['last_name'].hasError('required') && form.controls['last_name'].touched}"
-                  />
+                  <input readonly type="text" [disabled]="true" placeholder="Last Name" class="form-control"
+                    [formControl]="form.controls['last_name']" [ngClass]="{'form-control-danger': form.controls['last_name'].hasError('required') && form.controls['last_name'].touched}" />
                 </div>
               </div>
               <div class=" form-group">
@@ -40,14 +45,13 @@
               </div>
               <div class=" form-group">
                 <label>CNIC</label>
-                <input readonly type="text" [disabled]="true" placeholder="CNIC Number" class="form-control" [formControl]="form.controls['cnic']"
-                  [ngClass]="{'form-control-danger': form.controls['cnic'].hasError('required')  && form.controls['cnic'].touched}"
-                />
+                <input readonly type="text" [disabled]="true" placeholder="CNIC Number" class="form-control"
+                  [formControl]="form.controls['cnic']" [ngClass]="{'form-control-danger': form.controls['cnic'].hasError('required')  && form.controls['cnic'].touched}" />
               </div>
               <div class="form-group">
                 <label>Mobile Number</label>
-                <input readonly type="text" [disabled]="true" placeholder="Mobile Number" class="form-control" [formControl]="form.controls['mobile']"
-                  [ngClass]="{'form-control-danger': form.controls['mobile'].hasError('required') && form.controls['mobile'].touched}">
+                <input readonly type="text" [disabled]="true" placeholder="Mobile Number" class="form-control"
+                  [formControl]="form.controls['mobile']" [ngClass]="{'form-control-danger': form.controls['mobile'].hasError('required') && form.controls['mobile'].touched}">
               </div>
             </div>
           </nb-card-body>
@@ -74,35 +78,36 @@
           <nb-card-body>
             <div class="form-group">
               <label>Username</label>
-              <input disabled type="text" placeholder="Username" class="form-control" [formControl]="form.controls['username']" [ngClass]="{'form-control-danger': form.controls['username'].hasError('required')  && form.controls['username'].touched}"
-              />
+              <input disabled type="text" placeholder="Username" class="form-control" [formControl]="form.controls['username']"
+                [ngClass]="{'form-control-danger': form.controls['username'].hasError('required')  && form.controls['username'].touched}" />
               <div class="m-1" *ngIf="form.controls['username'].hasError('required') && form.controls['username'].touched">username
                 is required.</div>
             </div>
             <div class="form-group">
               <label>Password</label>
-              <input type="text" disabled placeholder="Password" class="form-control" [formControl]="form.controls['password']" [ngClass]="{'form-control-danger': !btnSave &&form.controls['password'].hasError('required')  && form.controls['password'].touched}"
-              />
+              <input type="text" disabled placeholder="Password" class="form-control" [formControl]="form.controls['password']"
+                [ngClass]="{'form-control-danger': !btnSave &&form.controls['password'].hasError('required')  && form.controls['password'].touched}" />
               <div class="m-1" *ngIf="!btnSave &&form.controls['password'].hasError('required') && form.controls['password'].touched">password
                 is required.</div>
             </div>
             <div class="form-group ">
               <label>Packages*</label>
-             
-                <select class="form-control"   [(ngModel)]="selectedPackage" [formControl]="form.controls['packages']" (change)="packageChange()"
-                  [ngClass]="{'form-control-danger': form.controls['packages'].hasError('required') && form.controls['packages'].touched}">
-                  <option *ngFor="let package of packagesList" [ngValue]="package">{{package.packages?.package_name}}</option>
-                </select>
-          
+
+              <select class="form-control" [(ngModel)]="selectedPackage" [formControl]="form.controls['packages']"
+                (change)="packageChange()" [ngClass]="{'form-control-danger': form.controls['packages'].hasError('required') && form.controls['packages'].touched}">
+                <option *ngFor="let package of packagesList" [ngValue]="package">{{package.packages?.package_name}}</option>
+              </select>
+
               <div class="m-1" *ngIf="form.controls['packages'].hasError('required') && form.controls['packages'].touched">package
                 is required.</div>
             </div>
             <div class=" form-group">
               <label>Packages Price*</label>
-             
-              <input type="number" placeholder="Packages Price" [formControl]="form.controls['connection_price']" [ngClass]="{'form-control-danger': form.controls['connection_price'].hasError('required') && form.controls['connection_price'].touched}"
+
+              <input type="number" placeholder="Packages Price" [formControl]="form.controls['connection_price']"
+                [ngClass]="{'form-control-danger': form.controls['connection_price'].hasError('required') && form.controls['connection_price'].touched}"
                 class="form-control" />
-              
+
               <div class="m-1" *ngIf="form.controls['connection_price'].hasError('required') && form.controls['connection_price'].touched">Packages
                 Price is required.</div>
             </div>
@@ -124,43 +129,43 @@
             <div class="form-group">
               <label>Router of</label>
               <select class="form-control" [formControl]="form.controls['router_of']">
-                 
+
                 <option value="0">Customer</option>
                 <option value="1">Company</option>
                 <option value="2">Dealer</option>
               </select>
             </div>
-            <div class="form-group">
+            <div class="form-group" *ngIf="form.value.router_of">
               <label>Router Brand</label>
               <input type="text" placeholder="Router Brand" [formControl]="form.controls['router_brand']" class="form-control" />
             </div>
-            <div class="  form-group">
+            <div class="form-group" *ngIf="form.value.router_brand">
               <label>Router Model</label>
               <input type="text" placeholder="Router Model" [formControl]="form.controls['router_model']" class="form-control" />
 
             </div>
-            <div class="form-group">
+            <div class="form-group" *ngIf="form.value.router_brand">
               <label>Router Price</label>
               <input type="number" placeholder="Router Price" [formControl]="form.controls['router_price']" class="form-control" />
             </div>
             <div class=" form-group">
               <label>DropWire of</label>
               <select class="form-control" [formControl]="form.controls['drop_wire_of']">
-                 
+
                 <option value="0">Customer</option>
                 <option value="1">Company</option>
                 <option value="2">Dealer</option>
               </select>
             </div>
-            <div class=" form-group">
+            <div class=" form-group" *ngIf="form.value.drop_wire_of">
               <label>DropWire Meter</label>
-              <input type="number" placeholder="DropWire Meter" [formControl]="form.controls['drop_wire_length']" class="form-control"
-              />
+              <input type="number" placeholder="DropWire Meter" [formControl]="form.controls['drop_wire_length']" class="form-control" />
             </div>
-            <div class=" form-group" *ngIf="form.value.drop_wire_of != 'Customer'">
+            <!-- *ngIf="form.value.drop_wire_of != 'Customer'" -->
+            <div class=" form-group" *ngIf="form.value.drop_wire_of">
               <label>DropWire Price/Meter</label>
-              <input type="number" placeholder="DropWire Price /Meter" [formControl]="form.controls['price_per_meter']" class="form-control"
-              />
+              <input type="number" placeholder="DropWire Price /Meter" [formControl]="form.controls['price_per_meter']"
+                class="form-control" />
             </div>
 
             <div class="form-group">
@@ -172,13 +177,14 @@
                 </label>
                 <label [hidden]="signedDoc">&nbsp;&nbsp; Signed Document &nbsp;&nbsp; </label>
                 <label class="m-1" *ngIf="signedDoc?.name">&nbsp;&nbsp;Signed Document Added</label>
-               
+
               </div>
               <!-- <span class="m-1">*</span> -->
             </div>
             <div class=" form-group">
               <label>Connection Address</label>
-              <textarea rows="4" placeholder="Connection Address" class="form-control" [formControl]="form.controls['address']" [ngClass]="{'form-control-danger': form.controls['address'].hasError('required') && form.controls['address'].touched}"></textarea>
+              <textarea rows="4" placeholder="Connection Address" class="form-control" [formControl]="form.controls['address']"
+                [ngClass]="{'form-control-danger': form.controls['address'].hasError('required') && form.controls['address'].touched}"></textarea>
               <div class="m-1" *ngIf="form.controls['address'].hasError('required') && form.controls['address'].touched">address
                 is required.</div>
             </div>
@@ -187,7 +193,7 @@
         <div class="float-right">
           <button *ngIf="selectedRecord?.cnic && selectedRecord?.customer_verified && selectedRecord?.password && selectedRecord?.username && !id"
             [hidden]="!selectedRecord" type="submit" [disabled]="!form.valid" class="btn btn-primary btn-md">Save</button>
-            <button *ngIf="selectedPackage && selectedRecord?.cnic && selectedRecord?.customer_verified && selectedRecord?.password && selectedRecord?.username && id"
+          <button *ngIf="selectedPackage && selectedRecord?.cnic && selectedRecord?.customer_verified && selectedRecord?.password && selectedRecord?.username && id"
             [hidden]="!selectedRecord" type="submit" [disabled]="!form.valid" class="btn btn-primary btn-md">Update</button>
         </div>
       </div>

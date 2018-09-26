@@ -6,7 +6,7 @@ import { UserGaurdService } from './user-gaurd.service';
 import { ToastrService } from '../../../node_modules/ngx-toastr';
 @Injectable()
 export class UserGuard implements CanActivate {
-  constructor(private tokenAuthService: TokenAuthService, public userGaurdService: UserGaurdService, public toastr: ToastrService, public router: Router) {
+  constructor(public tokenAuthService: TokenAuthService, public userGaurdService: UserGaurdService, public toastr: ToastrService, public router: Router) {
   }
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -27,6 +27,10 @@ export class UserGuard implements CanActivate {
           return true
         }
       }
+    }
+    // let user = this.tokenAuthService.user.user;
+    if(str == '/pages/accounts/payment-entry/invoice'){
+      return true;
     }
     // this.toastr.warning('Permission Not allowed "Contact Administrator"')
     this.router.navigateByUrl('pages/welcome');

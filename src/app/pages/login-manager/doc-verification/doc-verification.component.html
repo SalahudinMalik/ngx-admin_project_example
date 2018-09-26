@@ -50,6 +50,14 @@
               </div>
             </div>
             <div class="row">
+                <div class=" col-lg-12 form-group">
+                    <label>Address</label>
+                    <input value="" type="text" placeholder="Address" class="form-control"
+                       [formControl]="form.controls['address']" disabled />
+  
+                  </div>
+            </div>
+            <div class="row">
 
               <div class="col-lg-6" *ngIf="cnicFront">
                 <label>CNIC Front</label>

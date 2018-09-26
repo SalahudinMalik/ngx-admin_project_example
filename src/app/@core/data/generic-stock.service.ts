@@ -41,67 +41,7 @@ export class GenericStockService {
         return this.http
             .post<any>(url,options.body ,options)
             .map((result: any) => result);
-        // var data = {
-        //     template: { 'shortid': 'HJfm6LPNQ' },
-        //     options: {
-        //       preview: true,
-      
-        //     },
-        //     data: {
-        //         "customer": [
-        //             {
-        //                 "createdAt": 1536566980726,
-        //                 "updatedAt": 1536566980726,
-        //                 "id": 1,
-        //                 "first_name": "Haroon",
-        //                 "last_name": "Abbas",
-        //                 "email": "",
-        //                 "username": "3433444040",
-        //                 "password": "test1234",
-        //                 "mobile": "03433444040",
-        //                 "customer_verified": true,
-        //                 "manually_mobile_verified": true,
-        //                 "cnic": "31303-7925061-9",
-        //                 "status_id": 16,
-        //                 "createdBy": 2
-        //             },
-        //             {
-        //                 "createdAt": 1536566981168,
-        //                 "updatedAt": 1536566981168,
-        //                 "id": 4,
-        //                 "first_name": "Hafaz",
-        //                 "last_name": "Raza Akmal",
-        //                 "email": "",
-        //                 "username": "3336040820",
-        //                 "password": "6013131",
-        //                 "mobile": "03336040820",
-        //                 "customer_verified": true,
-        //                 "manually_mobile_verified": true,
-        //                 "cnic": "31303-6013131-1",
-        //                 "status_id": 16,
-        //                 "createdBy": 2
-        //             },
-        //             {
-        //                 "createdAt": 1536566981492,
-        //                 "updatedAt": 1536566981492,
-        //                 "id": 5,
-        //                 "first_name": "Saad",
-        //                 "last_name": "Muhammad Khan",
-        //                 "email": "",
-        //                 "username": "3038687887",
-        //                 "password": "8199791",
-        //                 "mobile": "03038687887",
-        //                 "customer_verified": true,
-        //                 "manually_mobile_verified": true,
-        //                 "cnic": "31303-8199791-3",
-        //                 "status_id": 16,
-        //                 "createdBy": 2
-        //             },
-    
-        //         ]
-        //     },
-      
-        //   }
+
         // let options = {
         //     headers: new HttpHeaders({ 'content-type': 'application/json'}),
         //     body: { json: data }

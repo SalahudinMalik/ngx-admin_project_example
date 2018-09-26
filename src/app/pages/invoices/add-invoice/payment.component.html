@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <span>{{ modalHeader }}</span>
+    <button class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <label>Amount</label>
+        <input type="number" disabled placeholder="0" class="form-control" [(ngModel)]="modalAmount" />
+        <p *ngIf='modalAmount < 1 '>Amount must be greater than zero</p>
+    </div>
+    <button type="button" (click)="submit()" class="btn btn-primary btn-block"> Submit </button>
+</div>

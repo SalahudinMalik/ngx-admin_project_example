@@ -1,0 +1,110 @@
+<div class="col-lg-12 col-sm-12 col-md-12">
+  <div class="card" *ngIf="customerdetails">
+      <div class="card-block">
+          <img src="assets/images/logo.png" height="80" width="auto" class="avatar-xs m-4 float-right" alt="">
+
+          <div class="row mb-3">
+              <div class="col">
+                  <h5>
+                      <strong style="color:black">Invoice #0001</strong>
+                  </h5>
+                  <p class="mb-0">Issued on 01 Jun 2016</p>
+                  <p class="mb-0">Payment due by 31 May 2016</p>
+              </div>
+          </div>
+
+          <div class="row mb-3">
+              <div class="col">
+                  <p class="mb-0">Company LLC</p>
+                  <p class="mb-0">company@address.com</p>
+                  <p class="mb-0">+012 345 678 90</p>
+              </div>
+          </div>
+
+          <div class="mt-5 mb-5">
+              <h5>
+                  <strong style="color:black">Client Details</strong>
+              </h5>
+              <p class="mb-0">{{customerdetails.customers.first_name}} {{customerdetails.customers.last_name}}</p>
+              <p class="mb-0">{{customerdetails.customers.mobile}}</p>
+              <p class="mb-0">{{customerdetails.customers.cnic}}</p>
+              <p class="mb-0">{{customerdetails.packages.package_name}}</p>
+              <p class="mb-0">{{customerdetails.package_price}}</p>
+          </div>
+      </div>
+      <div class="table-responsive mb-5" *ngIf="customerdetails.stocks.length > 0">
+          <table class="table table-hover mb-0 align-middle">
+              <thead class="thead-inverse">
+                  <tr>
+                      <th>Stock Item</th>
+                      <th>Stock Wharehouse</th>
+                      <th>Stock Qantity</th>
+                      <th>Stock Price</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let row of customerdetails.stocks">
+                      <td>{{row.items}}</td>
+                      <td>{{row.warehouse}}</td>
+                      <td>{{row.quantity}}</td>
+                      <td>{{row.price}}</td>
+                  </tr>
+              </tbody>
+              <!-- <tbody>
+          <tr *ngFor="let item of invoiceItems">
+            <td>
+              <strong>{{item.title}}</strong><br/>
+              <span class="text-muted">{{item.subtitle}}</span>
+            </td>
+            <td>{{item.price | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{ (item.price * item.quantity) | currency:'USD':true:'1.2-2'}}</td>
+          </tr>
+        </tbody> -->
+          </table>
+      </div>
+      <div class="card-block">
+
+          <!-- <div class="row mb-5">
+              <div class="col mt-1 mb-1">
+                  <h5 style="color:black">Drop Wire Of</h5>
+                  <p class="text-uppercase m-0">
+                      <strong>{{customerdetails.dropWireOf}}</strong>
+                  </p>
+
+              </div>
+              <div class="col mt-1 mb-1">
+                  <h5 style="color:black">Drop Wire Length</h5>
+                  <p class="text-uppercase m-0">
+                      <strong>{{customerdetails.dropWireLength}}</strong>
+                  </p>
+
+              </div>
+              <div class="col mt-1 mb-1">
+                  <h5 style="color:black">Drop Wire Price</h5>
+                  <p class="text-uppercase m-0">
+                      <strong>{{customerdetails.dropWirePricePL}}</strong>
+                  </p>
+
+              </div> -->
+              <!-- <div class="col mt-1 mb-1 text-xs-left text-sm-right">
+                  <p class="text-uppercase m-0">
+                      <strong>Price</strong>
+                  </p>
+                  <h3 class="m-0 text-success">{{customerdetails.routerPrice}}</h3>
+              </div> -->
+          <!-- </div> -->
+          <small class="p-t-2">
+              <strong>
+                  PAYMENT TERMS AND POLICIES
+              </strong>
+              All accounts are to be paid within 7 days from receipt of invoice. To be paid by cheque or credit card or direct payment
+              online. If account is not paid within 7 days the credits details supplied as confirmation of work undertaken
+              will be charged the agreed quoted fee noted above. If the Invoice remails unpaid. our dept recovery agency,
+              Urban, may charge you a fee of 25% of the unpaid portion of the invoice amount and other legal and collection
+              costs not covered by the fee.
+          </small>
+      </div>
+  </div>
+</div>
+<!-- text-sm-right text-md-left -->

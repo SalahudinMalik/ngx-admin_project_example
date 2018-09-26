@@ -1,0 +1,56 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <fieldset>
+    <div class="row " id="outer">
+      <div id="inner" class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+        <nb-card>
+          <nb-card-header>Payment Entry</nb-card-header>
+          <nb-card-body>
+            <div class="form-group">
+              <label>Party</label>
+
+              <select class="form-control" [formControl]="form.controls['partyOf']" (change)="partyChange()"
+                [ngClass]="{'form-control-danger': form.controls['partyOf'].hasError('required') && form.controls['partyOf'].touched}">
+                <option *ngFor="let partyOf of PartiesList" [ngValue]="partyOf">{{partyOf}}</option>
+              </select>
+
+              <div class="m-1" *ngIf="form.controls['partyOf'].hasError('required') && form.controls['partyOf'].touched">Party
+                is required.</div>
+            </div>
+            <div class="form-group" *ngIf="this.form.value.partyOf">
+              <label class="mr-3">{{this.form.value.partyOf}}</label>
+              <custom-search [title]='title' (change)="fieldChange()" [dataToSearch]="searchAbleArray"
+              [inputString]='title' (onSelection)='afterSelectingRecord($event)'></custom-search>
+            </div>
+            <div class="form-group" *ngIf="this.form.value.partyOf == 'Customer' && selectedRecord">
+                <label>Name</label>
+  
+                <input type="text" disabled  placeholder="name" [formControl]="form.controls['name']" class="form-control" />
+  
+              </div>
+            <div class="form-group" *ngIf="this.form.value.partyOf">
+              <label>Amount</label>
+
+              <input type="number"  placeholder="Amount..." [formControl]="form.controls['amount']" [ngClass]="{'form-control-danger': form.controls['amount'].hasError('required') && form.controls['amount'].touched}"
+                class="form-control" />
+
+              <div class="m-1" *ngIf="form.controls['amount'].hasError('required') && form.controls['amount'].touched">Amount
+                is required.</div>
+            </div>
+
+            <div class="row mt-5">
+              <div class="col-12">
+                <button style="float:right" type="submit" [disabled]="!form.valid" class="btn btn-primary btn-md">
+                  Submit</button>
+
+              </div>
+            </div>
+
+          </nb-card-body>
+        </nb-card>
+
+      </div>
+
+
+    </div>
+  </fieldset>
+</form>

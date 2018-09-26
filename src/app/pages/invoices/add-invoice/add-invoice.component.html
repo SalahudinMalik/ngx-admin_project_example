@@ -1,0 +1,151 @@
+<form class="form" role="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <nb-card style="padding: 2rem">
+    <fieldset>
+      <!-- <div class="row " id="outer">
+        <div id="inner" class="col-lg-12"> -->
+
+      <div class="row" *ngIf="!id">
+
+        <!-- <div class="inner" style="margin: 0 auto;"> -->
+        <div class="form-group col-lg-6 ">
+          <label class="mr-3">Customer</label>
+          <custom-search [title]="'Search Customer by username'" (change)="customerFieldChange()" [dataToSearch]="searchAbleArray"
+            (onSelection)='afterSelectingRecord($event)'></custom-search>
+        </div>
+        <!-- </div> -->
+
+      </div>
+      <div *ngIf="selectedRecord">
+        <div class="row">
+          <div class="col-sm-6  form-group">
+            <label>First Name</label>
+            <input type="text" disabled id="normal-field" placeholder="First Name" class="form-control" [formControl]="form.controls['first_name']" />
+
+          </div>
+          <div class="col-sm-6  form-group">
+            <label>Last Name</label>
+            <input disabled type="text" placeholder="Last Name" class="form-control" [formControl]="form.controls['last_name']" />
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="control-label">Mobile Number</label>
+              <input type="text" placeholder="XXXX-XXXXXXX" mask="0000-0000000" class="form-control" pattern="[0][3][01234][0123456789][0-9]{7}"
+                [formControl]="form.controls['mobile']" disabled />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class=" form-group">
+              <label>CNIC</label>
+              <input #cnic id="cnicInput" value="" type="text" placeholder="XXXXX-XXXXXXXX-X" mask="00000-0000000-0"
+                class="form-control" [formControl]="form.controls['cnic']" disabled />
+
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+              <label>Package</label>
+            <select class="form-control" formControlName="packages" [(ngModel)]="selectedPackage" (change)="packageChange()" >
+              <option *ngFor="let package of packageList" [ngValue]="package">{{package.packages?.package_name}}</option>
+            </select>
+  
+          </div>
+          <div class="col-lg-6">
+            <label>Package Price</label>
+            <input type="number" class="form-control" formControlName="package_price" id="package_price" />
+          </div>
+        </div>
+        
+        <!-- <div class="row" > -->
+        <br>
+        <div formArrayName="stocks" *ngIf="this.user.role.id == 1 || this.user.role.id == 6 ">
+          <div class="row">
+            <div class="col-lg-3 form-group has-feedback">
+              <label>Stock Item</label>
+            </div>
+            <div class="col-lg-3 form-group has-feedback">
+              <label>Stock Wharehouse</label>
+            </div>
+            <div class="col-lg-2 form-group has-feedback">
+              <label>Stock Qantity</label>
+            </div>
+            <div class="col-lg-3 form-group has-feedback">
+              <label>Stock Price</label>
+            </div>
+            <!-- <div class="col-lg-3 form-group has-feedback">
+                      <label>Debit</label>
+                    </div>
+                    <div class="col-lg-3 form-group has-feedback">
+                      <label>Credit</label>
+                    </div> -->
+            <div class="col-lg-1">
+            </div>
+          </div>
+          <div class="row" *ngFor="let stock of stocks.controls; let pointIndex=index" [formGroupName]="pointIndex">
+            
+            <div class="col-lg-3 form-group has-feedback">
+              <!-- <custom-search [dataToSearch]="packageNames" (onSelection)='selectedPackage($event)'></custom-search>
+                   -->
+              <select class="form-control" formControlName="items" id="items">
+                <option *ngFor="let item of itemList" [ngValue]="item.id">{{item.name}}</option>
+              </select>
+
+
+            </div>
+            <div class="col-lg-3 form-group has-feedback">
+              <!-- <custom-search [dataToSearch]="packageNames" (onSelection)='selectedPackage($event)'></custom-search>
+                   -->
+              <select class="form-control" formControlName="warehouse" >
+                <option *ngFor="let warehouse of warehouseList" [ngValue]="warehouse.id">{{warehouse.name}}</option>
+              </select>
+
+
+            </div>
+            <div class="col-lg-2 form-group has-feedback">
+              <input type="number" class="form-control" formControlName="quantity" id="quantity" />
+            </div>
+            <div class="col-lg-3 form-group has-feedback">
+              <input type="number" class="form-control" formControlName="price" id="price" />
+            </div>
+            <div class="col-lg-1">
+              <button type="button" [disabled]="id" class="btn btn-md btn-icon btn-danger state-value" (click)="deleteJEA(pointIndex)">
+                <i class="nb-trash"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+        <div class="row" *ngIf="this.user.role.id == 1 || this.user.role.id == 6 ">
+          <div class="col-lg-11"></div>
+          <div class="col-lg-1">
+            <button type="button" class="btn btn-md btn-icon btn-primary state-value" (click)="addStock()">
+              <i class="nb-plus"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row mt-5">
+        <div class="col-12">
+          <button style="float:right" *ngIf="!id" type="button" (click)="print($event)" [disabled]="!form.valid" class="btn btn-primary btn-md">Create
+            Invoice</button>
+            <div class="float-right" *ngIf="id">
+            <button type="button" [disabled] = 'form.value.paid' (click)="payment()" class="btn btn-primary btn-md mr-1">
+               Payment</button>
+            <button   type="button" (click)="print($event)" class="btn btn-primary btn-md">Print
+                </button>
+              </div>
+        </div>
+      </div>
+
+
+      <!-- </div> -->
+      <!-- </div> -->
+    </fieldset>
+  </nb-card>
+</form>

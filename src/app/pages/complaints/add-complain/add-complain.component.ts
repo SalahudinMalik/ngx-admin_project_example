@@ -48,11 +48,10 @@ export class AddComplainComponent implements OnInit {
     this.route.params.subscribe(params => {
       const id = params["id"];
       if (id !== undefined) {
-        this.genericService.find(id).subscribe(data => {
+        this.genericService.findOne('/complaints/findOne',id).subscribe(data => {
           this.form.patchValue({
-            subject: data.customerId,
-            complaint: data.complaintStatus,
-            assignto: data.assignedTo
+            subject: data.subject,
+            complaint: data.description,
           });
           this.form.disable();
         });

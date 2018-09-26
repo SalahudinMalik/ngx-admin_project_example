@@ -7,7 +7,7 @@ import {
 } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 // import { NgProgress } from '@ngx-progressbar/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { PackagesService } from "../../../@core/data/packages.service";
 import { Package } from "../../../models/package.model";
 import { DISABLED } from "@angular/forms/src/model";
@@ -30,6 +30,7 @@ export class AddPackageComponent implements OnInit, OnDestroy {
     private packageService: PackagesService,
     private toastr: ToastrService,
     // private ngProgress: NgProgress,
+    private router: Router,
     private route: ActivatedRoute
   ) {}
 
@@ -98,7 +99,8 @@ export class AddPackageComponent implements OnInit, OnDestroy {
       this.packageService.savePackage(data).subscribe(
         data1 => {
           this.toastr.success("package add successfully.");
-          this.form.reset();
+          // this.form.reset();
+            this.router.navigateByUrl('pages/packages/listPackage');
         },
         err => {
           this.toastr.error(err.error.err || err.error);
@@ -109,6 +111,7 @@ export class AddPackageComponent implements OnInit, OnDestroy {
       this.packageService.updatePackage(data).subscribe(
         data => {
           this.toastr.success("Data updated successfully.");
+          this.router.navigateByUrl('pages/packages/listPackage');
         },
         err => {
           this.toastr.error(err.error.err || err.error);

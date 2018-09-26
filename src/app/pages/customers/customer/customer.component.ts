@@ -16,6 +16,8 @@ import { FileUploadService } from "../../../@core/data/file-upload.service";
 import { GenericStockService } from "../../../@core/data/generic-stock.service";
 import { TokenAuthService } from "../../../@core/data/token-auth.service";
 import { UserService } from "../../../@core/data/appuser.service";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 @Component({
   selector: "ngx-customer",
   templateUrl: "./customer.component.html",
@@ -43,9 +45,9 @@ export class CustomerComponent implements OnInit {
   dealerList: any = [];
   private sub: any;
   btnSave: boolean;
-  cbRole: any;
   public form: FormGroup;
-  public formm: FormGroup;
+  destroySubject: Subject<void> = new Subject();
+  // .pipe(takeUntil(this.destroySubject))
   constructor(
     private fileUploadService: FileUploadService,
     private fb: FormBuilder,
@@ -95,13 +97,13 @@ export class CustomerComponent implements OnInit {
       rbRole: [null],
     });
     // this.form.patchValue({ rbRole: '1' });
-    this.sub = this.route.params.subscribe(params => {
+    this.sub = this.route.params.pipe(takeUntil(this.destroySubject)).subscribe(params => {
       this.id = params["id"]; // (+) converts string 'id' to a number
       if (this.id !== undefined) {
         this.cnicBack = this.cnicFront = '/assets/images/loading.gif';
         this.showTimeline = true;
         this.editable = true;
-        this.customersService.getOneCustomer(this.id).subscribe((data: any) => {
+        this.customersService.getOneCustomer(this.id).pipe(takeUntil(this.destroySubject)).subscribe((data: any) => {
           this.data = data;
           this.mobileNumber = data.mobile;
           this.form.patchValue({
@@ -124,6 +126,7 @@ export class CustomerComponent implements OnInit {
               this.verifyM = c.is_verified;
             }
           }
+          
           this.password = parseInt(data.password);
           this.form.get('password').setValidators([
             Validators.required,
@@ -151,7 +154,7 @@ export class CustomerComponent implements OnInit {
       }
     });
     if (this.user.role.id == 1 || this.user.role.id == 6) {
-      this.genericService.find('/user/find?filters%5B%5D=1&role_id=2').subscribe(data => {
+      this.genericService.find('/user/find?filters%5B%5D=1&role_id=2').pipe(takeUntil(this.destroySubject)).subscribe(data => {
         this.dealerList = data.users;
       }, err => {
         this.toastr.error(err.error.err || err.error);
@@ -159,9 +162,15 @@ export class CustomerComponent implements OnInit {
     }
 
   }
+  ngOnDestroy() {
+    this.destroySubject.next();
+  }
   enableEdit() {
     this.form.enable();
     this.editable = false;
+    if(this.verifyM){
+      this.form.get('mobileNo').disable();
+    }
   }
   rbchange() {
     // console.log(this.form.value.rbRole);
@@ -174,7 +183,7 @@ export class CustomerComponent implements OnInit {
     this.editable = true;
   }
   onChange() {
-    this.form.valueChanges.subscribe(r => {
+    this.form.valueChanges.pipe(takeUntil(this.destroySubject)).subscribe(r => {
       if (
         r.firstName == this.data.first_name &&
         r.lastName == this.data.last_name &&
@@ -226,7 +235,7 @@ export class CustomerComponent implements OnInit {
     };
     // console.log(data);
     if (!this.showTimeline) {
-      this.genericService.create('/customer/create', data).subscribe(
+      this.genericService.create('/customer/create', data).pipe(takeUntil(this.destroySubject)).subscribe(
         data => {
           if (this.cnicBackPic && this.cnicFrontPic && data.id) {
             this.uploadFile(data.id);
@@ -245,9 +254,8 @@ export class CustomerComponent implements OnInit {
       );
       this.verifyM = false;
     } else if (this.showTimeline) {
-      this.genericService.update('/customer/update', data).subscribe(
+      this.genericService.update('/customer/update', data).pipe(takeUntil(this.destroySubject)).subscribe(
         data1 => {
-          console.log('upload filed', data1)
           if (this.cnicBackPic && this.cnicFrontPic && data.id) {
 
             this.uploadFile(data.id);
@@ -307,7 +315,7 @@ export class CustomerComponent implements OnInit {
   }
   verifyCode() {
     if (this.verificationCode.length == 5) {
-      this.genericService.create('/customer/verifyToken', { token: this.verificationCode, mobile: this.form.value.mobileNo }).subscribe((data) => {
+      this.genericService.create('/customer/verifyToken', { token: this.verificationCode, mobile: this.form.value.mobileNo }).pipe(takeUntil(this.destroySubject)).subscribe((data) => {
         if (data.validity == true) {
           this.toastr.success("Code Verified :)")
           this.numberVerified = true;
@@ -327,7 +335,7 @@ export class CustomerComponent implements OnInit {
     this.loader = true;
     if (this.form.value.mobileNo) {
       this.verificationCode = null;
-      this.genericService.create('/customer/getToken', { mobile: this.form.value.mobileNo , id:this.id }).subscribe((data) => {
+      this.genericService.create('/customer/getToken', { mobile: this.form.value.mobileNo , id:this.id }).pipe(takeUntil(this.destroySubject)).subscribe((data) => {
         if (data[0].status == '1') {
           this.toastr.success('code sent to your mobile number');
         }

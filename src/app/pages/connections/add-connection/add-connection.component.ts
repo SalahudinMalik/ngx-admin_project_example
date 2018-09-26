@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { FileUploadService } from "../../../@core/data/file-upload.service";
 import { GenericStockService } from "../../../@core/data/generic-stock.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { async } from "rxjs/internal/scheduler/async";
 import { TokenAuthService } from "../../../@core/data/token-auth.service";
 
@@ -29,6 +29,7 @@ export class AddConnectionComponent implements OnInit {
     private toastr: ToastrService, private fileUploadService: FileUploadService,
     private route: ActivatedRoute,
     private tokenAuthService: TokenAuthService,
+    private router: Router
   ) { }
   async ngOnInit() {
     this.user = this.tokenAuthService.user.user;
@@ -100,7 +101,8 @@ export class AddConnectionComponent implements OnInit {
       email: [null],
       mobile: [null],
       search: [],
-      address: [null],
+      invoices: [null, { disabled: true }],
+      address: [null, Validators.required],
       username: [null],
       password: [null, { disabled: true }],
       router_of: [null],
@@ -122,11 +124,11 @@ export class AddConnectionComponent implements OnInit {
   }
   onSubmit() {
     this.form.value.packages = this.selectedPackage.packages.id;
-    if (this.signedDoc) {
+    
       if (this.id) {
         this.genericService.create('/connection/update', this.form.value).subscribe(
           data => {
-            if (this.id) {
+            if (this.id && this.signedDoc) {
               this.uploadFile(this.id);
             }
             this.toastr.success("connection updated successfully.");
@@ -141,28 +143,30 @@ export class AddConnectionComponent implements OnInit {
           });
       }
       else {
-
+        if (this.signedDoc) {
         this.genericService.create('/connection/create', this.form.value).subscribe(
           data => {
             if (data.id) {
               this.uploadFile(data.id);
             }
             this.toastr.success("connection add successfully.");
-            this.selectedRecord = false;
-            this.ngOnInit();
-            this.docPic = null;
-            this.searchAbleArray = [];
-            this.form.reset();
+            this.router.navigateByUrl('pages/connections/listConnections');
+            // this.selectedRecord = false;
+            // this.ngOnInit();
+            // this.docPic = null;
+            // this.searchAbleArray = [];
+            // this.form.reset();
           },
           err => {
             this.toastr.error(err.error.err || err.error);
           }
         );
       }
-    }
-    else {
-      this.toastr.warning('Signed Document is required');
-    }
+      else {
+        this.toastr.warning('Signed Document is required');
+      }
+      }
+   
   }
   uploadFile(id) {
     if (this.signedDoc) {
@@ -202,7 +206,7 @@ export class AddConnectionComponent implements OnInit {
       username: this.selectedRecord.username,
       password: this.selectedRecord.password,
       address: this.selectedRecord.address,
-
+      invoices: this.selectedRecord.invoices[0].id
     });
     this.getPackages();
   }
@@ -253,7 +257,7 @@ export class AddConnectionComponent implements OnInit {
               mobile: this.selectedRecord.mobile,
               username: this.selectedRecord.username,
               password: this.selectedRecord.password,
-
+              invoices: data.invoices[0].id
             });
 
             // console.log('form value', data.rejectdoc[0])
@@ -276,11 +280,13 @@ export class AddConnectionComponent implements OnInit {
             this.searchAbleArray.length = 0;
             this.searchAbleArray.push(this.selectedRecord.username);
             this.docPic = data.regForm;
-            this.signedDoc = data.regForm;
-
+            // this.signedDoc = data.regForm;
+           
             this.selectedPackage = data.new_package;
             this.getPackages();
-
+            if(data.status_id == 16 || data.status_id == 18){
+              this.form.disable();
+            }
             return resolve(true);
 
           },

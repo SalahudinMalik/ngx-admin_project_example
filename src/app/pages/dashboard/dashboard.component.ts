@@ -100,11 +100,11 @@ export class DashboardComponent implements OnDestroy {
   }
   ngOnInit() {
     this.user = this.tokenAuthService.user.user;
-    if (this.user.role.id == 1 || this.user.role.id == 6) {
-      this.userService.getAllUser().subscribe((data1: any) => {
-        this.users = data1.users;
-      });
-    }
+    // if (this.user.role.id == 1 || this.user.role.id == 6) {
+    //   this.userService.getAllUser().subscribe((data1: any) => {
+    //     this.users = data1.users;
+    //   });
+    // }
   }
   ngOnDestroy() {
     this.alive = false;
